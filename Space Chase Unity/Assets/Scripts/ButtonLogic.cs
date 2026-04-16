@@ -18,10 +18,10 @@ public class ButtonLogic : MonoBehaviour
     {
         int travelDistance = 0;
 
-        if (_gameController._energy - travelDistance > 0)
-        {
+        //if (_gameController._energy - travelDistance > 0)
+        //{
             _shipMap.gameObject.SetActive(false);
             // _bridge.gameObject.SetActive(true);
-        }
+        //}
     }
 }
