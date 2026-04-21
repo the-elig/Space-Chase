@@ -7,7 +7,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform playerTransform;
 
+    [SerializeField] private GameObject map;
+
     private bool canInteract;
+    private bool mapActive;
 
     public delegate void EmptyDelegate();
     public event EmptyDelegate Interact;
@@ -16,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         canInteract = false;
+        mapActive = false;
     }
 
     void Update()
@@ -40,6 +44,21 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.E) && canInteract)
         {
             Interact?.Invoke();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            //Key to open map
+            if (mapActive == false)
+            {
+                map.SetActive(true);
+                mapActive = true;
+            }
+            else
+            {
+                map.SetActive(false);
+                mapActive = false;
+            }
         }
     }
 

@@ -4524,6 +4524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   playerTransform: {fileID: 1469062238}
+  map: {fileID: 1715551273}
 --- !u!212 &1469062237
 SpriteRenderer:
   m_ObjectHideFlags: 0
