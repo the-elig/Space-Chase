@@ -2172,6 +2172,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1469062236}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: station
+      value: 
+      objectReference: {fileID: 754843618}
     - target: {fileID: 1317625592301553376, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.109429
@@ -2512,7 +2520,7 @@ GameObject:
   - component: {fileID: 754843621}
   - component: {fileID: 754843620}
   m_Layer: 5
-  m_Name: ShieldStation
+  m_Name: StationPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3495,6 +3503,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1469062236}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: station
+      value: 
+      objectReference: {fileID: 754843618}
     - target: {fileID: 1317625592301553376, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.3222094
@@ -4905,6 +4921,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1469062236}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: station
+      value: 
+      objectReference: {fileID: 754843618}
     - target: {fileID: 1317625592301553376, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.304932
@@ -6762,6 +6786,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1469062236}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: station
+      value: 
+      objectReference: {fileID: 754843618}
     - target: {fileID: 1317625592301553376, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.591305
