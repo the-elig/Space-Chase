@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Passage
+  - Station
   layers:
   - Default
   - TransparentFX

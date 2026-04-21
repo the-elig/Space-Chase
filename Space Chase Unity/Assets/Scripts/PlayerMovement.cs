@@ -11,15 +11,22 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canInteract;
     private bool mapActive;
+    private bool inPassage;
+    private bool atStation;
 
     public delegate void EmptyDelegate();
     public event EmptyDelegate Interact;
     public event EmptyDelegate LeftInteractZone;
 
+    public event EmptyDelegate LeftStation;
+    public event EmptyDelegate StationInteract;
+
     void Start()
     {
         canInteract = false;
         mapActive = false;
+        inPassage = false;
+        atStation = false;
     }
 
     void Update()
@@ -43,10 +50,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && canInteract)
         {
-            Interact?.Invoke();
+            if (atStation)
+            {
+                StationInteract?.Invoke();
+            }
+            else
+            {
+                Interact?.Invoke();
+            }
         }
 
-        if(Input.GetKeyDown(KeyCode.Tab))
+
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             //Key to open map
             if (mapActive == false)
@@ -65,6 +80,14 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         canInteract = true;
+        if (col.gameObject.CompareTag("Passage"))
+        {
+            inPassage = true;
+        }
+        if (col.gameObject.CompareTag("Station"))
+        {
+            atStation = true;
+        }
     }
     void OnTriggerExit2D(Collider2D col)
     {
@@ -72,6 +95,12 @@ public class PlayerMovement : MonoBehaviour
         if(col.gameObject.CompareTag("Passage"))
         {
             LeftInteractZone?.Invoke();
+            inPassage = false;
+        }
+        if (col.gameObject.CompareTag("Station"))
+        {
+            LeftStation?.Invoke();
+            atStation = false;
         }
     }
 }
