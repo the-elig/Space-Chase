@@ -25,8 +25,6 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Energy = " +  _energy);
-
         if (_energy > 0)
         {
             //player turn logic
@@ -74,18 +72,21 @@ public class GameController : MonoBehaviour
         }
 
         _energy += 5; // goes to player's turn
+        Debug.Log("Energy = " + _energy);
     }
 
     private void useDoor()
     {
         _energy -= 1;
         Debug.Log("Used door");
+        Debug.Log("Energy = " + _energy);
     }
 
     private void useStation()
     {
         _energy -= 2;
         Debug.Log("Used station");
+        Debug.Log("Energy = " + _energy);
     }
 
 
