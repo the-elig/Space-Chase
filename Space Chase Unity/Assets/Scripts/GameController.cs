@@ -5,12 +5,40 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private PlayerMovement _player;
+
+
     public int _energy; // add five at the beginning of each player turn
     public int _currentRoom; // can be 1 - 11
     public List<int> _damagedRooms; // can be 1 - 11
 
+    private void Start()
+    {
+        _player.Interact += useDoor;
+        _player.StationInteract += useStation;
 
-    public void enemyTurn() // called with button 
+        _energy = 0;
+        _currentRoom = 5; //sets starting location to engine
+
+        enemyTurn();
+    }
+
+    private void Update()
+    {
+        Debug.Log("Energy = " +  _energy);
+
+        if (_energy > 0)
+        {
+            //player turn logic
+        }
+        else
+        {
+            enemyTurn();
+        }
+    }
+
+
+    private void enemyTurn() // called with button 
     {
         // disable player buttons
         
@@ -48,13 +76,26 @@ public class GameController : MonoBehaviour
         _energy += 5; // goes to player's turn
     }
 
+    private void useDoor()
+    {
+        _energy -= 1;
+        Debug.Log("Used door");
+    }
 
-    public void playerLoss()
+    private void useStation()
+    {
+        _energy -= 2;
+        Debug.Log("Used station");
+    }
+
+
+    
+    private void playerLoss()
     {
         Debug.Log("player has lost");
     }
     
-    public void playerWin()
+    private void playerWin()
     {
         Debug.Log("player has won");
     }

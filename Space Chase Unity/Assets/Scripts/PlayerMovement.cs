@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] GameController controller;
+
     [SerializeField] private float speed;
     [SerializeField] private Transform playerTransform;
 
@@ -48,13 +50,13 @@ public class PlayerMovement : MonoBehaviour
             playerTransform.Translate(Vector3.right * speed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.E) && canInteract)
+        if (Input.GetKeyDown(KeyCode.E) && canInteract)
         {
-            if (atStation)
+            if (atStation && controller._energy >= 2) //stations
             {
                 StationInteract?.Invoke();
             }
-            else
+            else if (!atStation && controller._energy >= 1) //doors
             {
                 Interact?.Invoke();
             }
