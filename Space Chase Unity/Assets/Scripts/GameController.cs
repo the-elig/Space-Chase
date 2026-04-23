@@ -25,11 +25,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (_energy > 0)
-        {
-            //player turn logic
-        }
-        else
+        if (_energy == 0)
         {
             enemyTurn();
         }
@@ -39,7 +35,8 @@ public class GameController : MonoBehaviour
     private void enemyTurn() // called with button 
     {
         // disable player buttons
-        
+
+        // play cut scenes
 
         // check for game over
         if (_damagedRooms.Count >= 5) // 5 is arbitrary rn

@@ -9,10 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform playerTransform;
 
-    [SerializeField] private GameObject map;
-
     private bool canInteract;
-    private bool mapActive;
     private bool inPassage;
     private bool atStation;
 
@@ -26,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         canInteract = false;
-        mapActive = false;
         inPassage = false;
         atStation = false;
     }
@@ -59,22 +55,6 @@ public class PlayerMovement : MonoBehaviour
             else if (!atStation && controller._energy >= 1) //doors
             {
                 Interact?.Invoke();
-            }
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            //Key to open map
-            if (mapActive == false)
-            {
-                map.SetActive(true);
-                mapActive = true;
-            }
-            else
-            {
-                map.SetActive(false);
-                mapActive = false;
             }
         }
     }
