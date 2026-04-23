@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
 
     public int _energy; // add five at the beginning of each player turn
     public int _currentRoom; // can be 1 - 11
+
+    public List<string> _rooms;
     public List<int> _damagedRooms; // can be 1 - 11
 
     private void Start()
@@ -81,7 +83,7 @@ public class GameController : MonoBehaviour
 
     private void useStation()
     {
-        _energy -= 2;
+        _energy -= 1;
         Debug.Log("Used station");
         Debug.Log("Energy = " + _energy);
     }
