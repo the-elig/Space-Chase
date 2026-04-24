@@ -8,12 +8,15 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private GameObject _camera;
+    [SerializeField] private GameObject _bg;
     public delegate void IntDelegate(int x);
+    public delegate void EmptyDelegate();
     public event IntDelegate damageRoom;
 
     public int _energy; // add five at the beginning of each player turn
     public int _turnsLeft;
     public int _currentRoom; // can be 1 - 11
+    public bool _isEnemyTurn;
 
     public List<string> _rooms;
     public List<string> _damagedRooms;
@@ -32,18 +35,18 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (_energy == 0)
+        if (_turnsLeft == 0)
         {
-            enemyTurn();
+            playerWin();
         }
     }
 
 
-    private void enemyTurn() // called with button 
+    public void enemyTurn() // called with button 
     {
+        _isEnemyTurn = true;
         // disable player buttons
         _player.PauseMovement(true);
-        // play cut scenes
 
         // check for game over
         _energy = 0;
@@ -84,15 +87,22 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Enemy missed.");
         }
+        StartCoroutine(WaitEnemyTurn()); // play cutscene
+    }
+    IEnumerator WaitEnemyTurn() // play enemy turn screen and pause player movement
+    {
+        _bg.SetActive(true);
         _turnsLeft--;
+        yield return new WaitForSeconds(3f);
+        _isEnemyTurn = false;
+        _bg.SetActive(false);
         _player.PauseMovement(false);
     }
 
     private int GetRan() // gets a random value for damaged rooms
     {
         int ran = Random.Range(0, 12); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
-                                    // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
-        Debug.Log("ran value = " + ran);
+                                       // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
         return ran;
     }
 
