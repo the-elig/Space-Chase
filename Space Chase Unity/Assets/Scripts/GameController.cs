@@ -53,9 +53,7 @@ public class GameController : MonoBehaviour
 
         if (ran != 11)
         {
-            _damagedRooms.Add(_rooms[0]); // temp code to always damage comms
-            //_damagedRooms.Add(_rooms[ran]);
-            //_damagedRooms.Add(ran);
+            _damagedRooms.Add(_rooms[ran]);
             damageRoom?.Invoke();
 
             if (ran == _currentRoom)
