@@ -48,13 +48,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && canInteract)
         {
-            if (atStation && controller._energy >= 2) //stations
+            if (atStation && controller._energy >= 1) //stations
             {
                 StationInteract?.Invoke();
+                canInteract = false;
             }
             else if (!atStation && controller._energy >= 1) //doors
             {
                 Interact?.Invoke();
+                canInteract = false;
             }
         }
     }

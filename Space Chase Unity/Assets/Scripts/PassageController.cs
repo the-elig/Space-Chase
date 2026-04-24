@@ -2,30 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomController : MonoBehaviour
+public class PassageController : MonoBehaviour
 {
     [SerializeField] private GameController gameController;
-    [SerializeField] private RoomStationInteractable station;
+    [SerializeField] private PassageInteractable passage;
     [SerializeField] private GameObject warning;
-    private bool damaged;
     [SerializeField] private int id;
-
+    private bool damaged;
     void Start()
     {
-        gameController.damageRoom += DamageRoom;
-        damaged = false;
+        gameController.damageRoom += DamagePassage;
     }
-
     void Update()
     {
 
     }
-    private void DamageRoom(int room_id)
+    private void DamagePassage(int pass_id)
     {
-        if (room_id == id)
+        if (pass_id == id)
         {
-            damaged = true;
             warning.SetActive(true);
         }
-    } 
+    }
 }

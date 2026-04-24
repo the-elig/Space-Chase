@@ -87,6 +87,7 @@ public class GameController : MonoBehaviour
     private int GetRan()
     {
         int ran = Random.Range(0, 12); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
+                                    // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
         Debug.Log("ran value = " + ran);
         return ran;
     }
