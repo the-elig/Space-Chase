@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using System.Linq;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -43,24 +44,36 @@ public class GameController : MonoBehaviour
         // play cut scenes
 
         // check for game over
+        _energy = 0;
         if (_damagedRooms.Count >= 5) // 5 is arbitrary rn
         {
             playerLoss();
         }
-
-        // damage player ship
-        int ran = Random.Range(0, 11); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
-
-        if (ran != 11)
+        int room_id = GetRan();
+        _energy += 5; // energy gain is before damage so we'll need to add another thing later to switch to player turn!
+        Debug.Log("Energy = " + _energy);
+        DamagePlayerShip(room_id);
+    }
+    private void DamagePlayerShip(int room_id)
+    {
+        if (room_id != 11)
         {
-            _damagedRooms.Add(_rooms[ran]);
+            _damagedRooms.Add(_rooms[room_id]);
+            if (_damagedRooms.Count != _damagedRooms.Distinct().Count())
+            {
+                Debug.Log("duplicate room damaged, rerolling...");
+                _damagedRooms.RemoveAt(_damagedRooms.Count - 1);
+                enemyTurn(); // restarts the enemy turn to reroll value if duplicate value
+                return;
+            }
+
             for (int i = 0; i < _damagedRooms.Count; i++)
             {
                 Debug.Log(_damagedRooms[i] + " is damaged!");
             }
-            damageRoom?.Invoke(ran); // sends out an event to all of the room controllers, child scripts handle if the number matches the room damaged
+            damageRoom?.Invoke(room_id); // sends out an event to all of the room controllers, child scripts handle if the number matches the room damaged
 
-            if (ran == _currentRoom)
+            if (room_id == _currentRoom)
             {
                 // special event or whatever that occurs when you're in damaged room
             }
@@ -69,9 +82,13 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Enemy missed.");
         }
+    }
 
-        _energy += 5; // goes to player's turn
-        Debug.Log("Energy = " + _energy);
+    private int GetRan()
+    {
+        int ran = Random.Range(0, 12); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
+        Debug.Log("ran value = " + ran);
+        return ran;
     }
 
     private void useDoor()
