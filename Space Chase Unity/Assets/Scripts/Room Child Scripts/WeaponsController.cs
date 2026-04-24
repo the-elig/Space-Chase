@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommsController : RoomController
+public class WeaponsController : RoomController
 {
     void Start()
     {
@@ -16,7 +16,7 @@ public class CommsController : RoomController
     }
     public override void DamageRoom(int room_id)
     {
-        if (room_id == 0)
+        if (room_id == 2)
         {
             damaged = true;
             warning.SetActive(true);

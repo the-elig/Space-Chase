@@ -9,5 +9,5 @@ public class RoomController : MonoBehaviour
     [SerializeField] protected GameObject warning;
     protected bool damaged;
 
-    public virtual void DamageRoom() { }
+    public virtual void DamageRoom(int room_id) { }
 }

@@ -7,8 +7,8 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _player;
 
-    public delegate void EmptyDelegate();
-    public event EmptyDelegate damageRoom;
+    public delegate void IntDelegate(int x);
+    public event IntDelegate damageRoom;
 
     public int _energy; // add five at the beginning of each player turn
     public int _currentRoom; // can be 1 - 11
@@ -49,12 +49,16 @@ public class GameController : MonoBehaviour
         }
 
         // damage player ship
-        int ran = Random.Range(0, 11);
+        int ran = Random.Range(0, 11); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
 
         if (ran != 11)
         {
             _damagedRooms.Add(_rooms[ran]);
-            damageRoom?.Invoke();
+            for (int i = 0; i < _damagedRooms.Count; i++)
+            {
+                Debug.Log(_damagedRooms[i] + " is damaged!");
+            }
+            damageRoom?.Invoke(ran); // sends out an event to all of the room controllers, child scripts handle if the number matches the room damaged
 
             if (ran == _currentRoom)
             {
