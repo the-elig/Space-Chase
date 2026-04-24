@@ -12,6 +12,7 @@ public class PassageController : MonoBehaviour
     void Start()
     {
         gameController.damageRoom += DamagePassage;
+        damaged = false;
     }
     void Update()
     {
@@ -21,6 +22,7 @@ public class PassageController : MonoBehaviour
     {
         if (pass_id == id)
         {
+            damaged = true;
             warning.SetActive(true);
         }
     }

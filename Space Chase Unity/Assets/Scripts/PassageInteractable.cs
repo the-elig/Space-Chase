@@ -21,6 +21,10 @@ public class PassageInteractable : MonoBehaviour
     {
         
     }
+    public void ToggleDamage(bool damage)
+    {
+        damaged = damage;
+    }
 
     void OpenDoor()
     {
