@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CommsController : RoomController
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        gameController.damageRoom += DamageRoom;
+        damaged = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public override void DamageRoom()
+    {
+        Debug.Log("comms damaged");
+        damaged = true;
+        warning.SetActive(true);
     }
 }

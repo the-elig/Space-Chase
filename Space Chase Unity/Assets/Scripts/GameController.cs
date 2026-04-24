@@ -7,12 +7,14 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _player;
 
+    public delegate void EmptyDelegate();
+    public event EmptyDelegate damageRoom;
 
     public int _energy; // add five at the beginning of each player turn
     public int _currentRoom; // can be 1 - 11
 
     public List<string> _rooms;
-    public List<int> _damagedRooms; // can be 1 - 11
+    public List<string> _damagedRooms;
 
     private void Start()
     {
@@ -46,19 +48,15 @@ public class GameController : MonoBehaviour
             playerLoss();
         }
 
-
         // damage player ship
-        int ran = Random.Range(1, 12);
-        while (_damagedRooms.Contains(ran))
-        {
-            ran = Random.Range(1, 12);
-        }
-        
+        int ran = Random.Range(0, 11);
 
-        if (ran != 12)
+        if (ran != 11)
         {
-            Debug.Log("Enemy damaged room " + ran);
-            _damagedRooms.Add(ran);
+            _damagedRooms.Add(_rooms[0]); // temp code to always damage comms
+            //_damagedRooms.Add(_rooms[ran]);
+            //_damagedRooms.Add(ran);
+            damageRoom?.Invoke();
 
             if (ran == _currentRoom)
             {

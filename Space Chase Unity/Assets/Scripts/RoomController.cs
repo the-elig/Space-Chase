@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class RoomController : MonoBehaviour
 {
-    [SerializeField] private GameObject station;
-    [SerializeField] private GameObject warning;
-    private bool damaged;
-    void Start()
-    {
-        
-    }
+    [SerializeField] protected GameController gameController;
+    [SerializeField] protected GameObject station;
+    [SerializeField] protected GameObject warning;
+    protected bool damaged;
 
-    void Update()
-    {
-        
-    }
+    public virtual void DamageRoom() { }
 }
