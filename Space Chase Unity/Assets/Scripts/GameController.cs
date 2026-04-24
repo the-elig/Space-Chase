@@ -7,11 +7,12 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _player;
-
+    [SerializeField] private GameObject _camera;
     public delegate void IntDelegate(int x);
     public event IntDelegate damageRoom;
 
     public int _energy; // add five at the beginning of each player turn
+    public int _turnsLeft;
     public int _currentRoom; // can be 1 - 11
 
     public List<string> _rooms;
@@ -23,6 +24,7 @@ public class GameController : MonoBehaviour
         _player.StationInteract += useStation;
 
         _energy = 0;
+        _turnsLeft = 15;
         _currentRoom = 5; //sets starting location to engine
 
         enemyTurn();
@@ -40,7 +42,7 @@ public class GameController : MonoBehaviour
     private void enemyTurn() // called with button 
     {
         // disable player buttons
-
+        _player.PauseMovement(true);
         // play cut scenes
 
         // check for game over
@@ -82,6 +84,8 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Enemy missed.");
         }
+        _turnsLeft--;
+        _player.PauseMovement(false);
     }
 
     private int GetRan() // gets a random value for damaged rooms

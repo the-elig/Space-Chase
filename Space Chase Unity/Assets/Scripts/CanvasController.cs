@@ -11,6 +11,9 @@ public class CanvasController : MonoBehaviour
     // UI elements
     [SerializeField] private GameObject map;
     [SerializeField] private TMP_Text energyText;
+    [SerializeField] private TMP_Text turnsLeftSmall;
+    [SerializeField] private TMP_Text turnsLeftBig;
+    [SerializeField] private TMP_Text enemyTurnText;
 
 
     // logic variables
@@ -39,7 +42,11 @@ public class CanvasController : MonoBehaviour
         }
 
         // update energy text
-        energyText.text = "energy = " + _gameController._energy;
+        energyText.text = "Energy = " + _gameController._energy;
+        
+        // update turns left text
+        turnsLeftSmall.text = "Turns Left: " + _gameController._turnsLeft;
+        turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
     }
     public void endPlayerTurn()
     {
