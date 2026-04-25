@@ -8,9 +8,11 @@ public class PassageInteractable : MonoBehaviour
     [SerializeField] private GameObject door;
 
     private bool doorClosed;
+    private bool damaged;
 
     void Start()
     {
+        damaged = false;
         _player.Interact += OpenDoor;
         _player.LeftInteractZone += CloseDoor;
     }
@@ -18,6 +20,10 @@ public class PassageInteractable : MonoBehaviour
     void Update()
     {
         
+    }
+    public void ToggleDamage(bool damage)
+    {
+        damaged = damage;
     }
 
     void OpenDoor()

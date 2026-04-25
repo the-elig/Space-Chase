@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canInteract;
     private bool inPassage;
     private bool atStation;
+    private bool paused;
 
     public delegate void EmptyDelegate();
     public event EmptyDelegate Interact;
@@ -28,6 +29,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update()
+    {
+        if (!paused)
+        {
+            Movement();
+        }
+    }
+    void Movement()
     {
         if(Input.GetKey(KeyCode.W))
         {
@@ -48,15 +56,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && canInteract)
         {
-            if (atStation && controller._energy >= 2) //stations
+            if (atStation && controller._energy >= 1) //stations
             {
                 StationInteract?.Invoke();
+                canInteract = false;
             }
             else if (!atStation && controller._energy >= 1) //doors
             {
                 Interact?.Invoke();
+                canInteract = false;
             }
-        }
+        }        
+    }
+
+    public void PauseMovement(bool pause)
+    {
+        Debug.Log("movement paused!");
+        paused = pause;
     }
 
     void OnTriggerEnter2D(Collider2D col)

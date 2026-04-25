@@ -1,0 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RoomController : MonoBehaviour
+{
+    [SerializeField] private GameController gameController;
+    [SerializeField] private RoomStationInteractable station;
+    [SerializeField] private GameObject warning;
+    private bool damaged;
+    [SerializeField] private int id;
+
+    void Start()
+    {
+        gameController.damageRoom += DamageRoom;
+        damaged = false;
+    }
+
+    void Update()
+    {
+
+    }
+    private void DamageRoom(int room_id)
+    {
+        if (room_id == id)
+        {
+            damaged = true;
+            warning.SetActive(true);
+        }
+    } 
+}
