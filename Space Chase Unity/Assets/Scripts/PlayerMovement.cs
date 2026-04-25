@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 StationInteract?.Invoke();
                 canInteract = false;
             }
-            else if (!atStation && controller._energy >= 1) //doors
+            else if (inPassage && controller._energy >= 1) //doors
             {
                 Interact?.Invoke();
                 canInteract = false;
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerExit2D(Collider2D col)
     {
         canInteract = false;
-        if(col.gameObject.CompareTag("Passage"))
+        if(col.gameObject.CompareTag("Passage")||col.gameObject.CompareTag("DamagedPassage"))
         {
             LeftInteractZone?.Invoke();
             inPassage = false;

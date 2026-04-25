@@ -15,15 +15,18 @@ public class PassageInteractable : MonoBehaviour
         damaged = false;
         _player.Interact += OpenDoor;
         _player.LeftInteractZone += CloseDoor;
+        
     }
 
     void Update()
     {
-        
+
     }
     public void ToggleDamage(bool damage)
     {
         damaged = damage;
+        Debug.Log("ouch");
+        gameObject.tag = "DamagedPassage";
     }
 
     void OpenDoor()
