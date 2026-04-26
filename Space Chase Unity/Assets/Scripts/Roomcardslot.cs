@@ -151,7 +151,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     DOTween.Kill(visual, true);
 
     Vector3 startPos = visual.position;
-    Vector3 throwTarget = startPos + new Vector3(-4f, 0f, 0f);
+    Vector3 throwTarget = startPos + new Vector3(-400f, 0f, 0f);
 
     Sequence seq = DOTween.Sequence();
 
