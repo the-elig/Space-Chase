@@ -55,38 +55,36 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (!instantiateVisual)
             return;
 
-        visualHandler = FindObjectOfType<VisualCardsHandler>();
-        cardVisual = Instantiate(cardVisualPrefab, visualHandler ? visualHandler.transform : canvas.transform).GetComponent<CardVisual>();
+        Transform visualParent = VisualCardsHandler.instance != null ?
+            VisualCardsHandler.instance.transform : transform;
+
+        cardVisual = Instantiate(cardVisualPrefab, visualParent).GetComponent<CardVisual>();
         cardVisual.Initialize(this);
     }
 
     void Update()
+{
+    if (isDragging)
     {
-        ClampPosition();
-
-        if (isDragging)
-        {
-            Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - offset;
-            Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-            Vector2 velocity = direction * Mathf.Min(moveSpeedLimit, Vector2.Distance(transform.position, targetPosition) / Time.deltaTime);
-            transform.Translate(velocity * Time.deltaTime);
-        }
-
-        // === ZOOM DISMISS ===
-        if (isZoomed && Input.GetMouseButtonDown(0) && !justZoomed)
-            DismissZoom();
-        justZoomed = false;
-        // ====================
+        Vector2 localPoint;
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            transform.parent as RectTransform,
+            Input.mousePosition,
+            null,
+            out localPoint
+        );
+        transform.localPosition = Vector2.Lerp(
+            transform.localPosition,
+            localPoint,
+            moveSpeedLimit * Time.deltaTime
+        );
     }
 
-    void ClampPosition()
-    {
-        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, -screenBounds.x, screenBounds.x);
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -screenBounds.y, screenBounds.y);
-        transform.position = new Vector3(clampedPosition.x, clampedPosition.y, 0);
-    }
+    if (isZoomed && Input.GetMouseButtonDown(0) && !justZoomed)
+        DismissZoom();
+    justZoomed = false;
+}
 
     // === ZOOM METHODS ===
     void ZoomCard()
@@ -96,8 +94,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         justZoomed = true;
         Canvas cardCanvas = cardVisual.GetComponent<Canvas>();
         if (cardCanvas != null) { cardCanvas.overrideSorting = true; cardCanvas.sortingOrder = 100; }
-        Vector3 center = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2f, Screen.height / 2f, 10f));
-        cardVisual.transform.DOMove(center, 0.3f).SetEase(Ease.OutBack);
+        cardVisual.transform.DOLocalMove(Vector3.zero, 0.3f).SetEase(Ease.OutBack);
         cardVisual.transform.DOScale(2f, 0.3f).SetEase(Ease.OutBack);
     }
 
@@ -116,14 +113,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (transform.parent.GetComponent<RoomCardSlot>() != null)
             return;
         BeginDragEvent.Invoke(this);
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        offset = mousePosition - (Vector2)transform.position;
         isDragging = true;
-
-        // Only disable raycast on the card image itself, NOT the whole canvas
-        // This allows IDropHandler on other objects to still receive drop events
         imageComponent.raycastTarget = false;
-
         wasDragged = true;
     }
 
@@ -173,7 +164,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             return;
 
         pointerUpTime = Time.time;
-
         PointerUpEvent.Invoke(this, pointerUpTime - pointerDownTime > .2f);
 
         if (pointerUpTime - pointerDownTime > .2f)
@@ -182,23 +172,20 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (wasDragged)
             return;
 
-        // === DOUBLE CLICK CHECK ===
         if (Time.time - lastClickTime <= 0.3f)
-{
-        // Don't zoom if card is in a room slot
-        if (transform.parent.GetComponent<RoomCardSlot>() == null)
-            ZoomCard();
-        lastClickTime = -1f;
-        return;
-}
+        {
+            if (transform.parent.GetComponent<RoomCardSlot>() == null)
+                ZoomCard();
+            lastClickTime = -1f;
+            return;
+        }
         lastClickTime = Time.time;
-        // ==========================
 
         selected = !selected;
         SelectEvent.Invoke(this, selected);
 
         if (selected)
-            transform.localPosition += (cardVisual.transform.up * selectionOffset);
+            transform.localPosition += new Vector3(0, selectionOffset, 0);
         else
             transform.localPosition = Vector3.zero;
     }
@@ -208,10 +195,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (selected)
         {
             selected = false;
-            if (selected)
-                transform.localPosition += (cardVisual.transform.up * 50);
-            else
-                transform.localPosition = Vector3.zero;
+            transform.localPosition = Vector3.zero;
         }
     }
 
@@ -232,7 +216,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     private void OnDestroy()
     {
-        if(cardVisual != null)
-        Destroy(cardVisual.gameObject);
+        if (cardVisual != null)
+            Destroy(cardVisual.gameObject);
     }
 }

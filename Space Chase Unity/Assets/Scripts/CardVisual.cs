@@ -3,9 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.EventSystems;
-using Unity.Collections;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class CardVisual : MonoBehaviour
 {
@@ -13,13 +11,13 @@ public class CardVisual : MonoBehaviour
 
     [Header("Card")]
     public Card parentCard;
-    private Transform cardTransform;
+    private RectTransform cardRect;
+    private RectTransform myRect;
     private Vector3 rotationDelta;
     private int savedIndex;
     Vector3 movementDelta;
     private Canvas canvas;
 
-    // Set this to true to stop the visual from following the card (e.g. when in a slot)
     [HideInInspector] public bool pauseFollow = false;
 
     [Header("References")]
@@ -51,7 +49,7 @@ public class CardVisual : MonoBehaviour
     [Header("Select Parameters")]
     [SerializeField] private float selectPunchAmount = 20;
 
-    [Header("Hober Parameters")]
+    [Header("Hover Parameters")]
     [SerializeField] private float hoverPunchAngle = 5;
     [SerializeField] private float hoverTransition = .15f;
 
@@ -66,17 +64,17 @@ public class CardVisual : MonoBehaviour
 
     private float curveYOffset;
     private float curveRotationOffset;
-    private Coroutine pressCoroutine;
 
     private void Start()
     {
         shadowDistance = visualShadow.localPosition;
+        myRect = GetComponent<RectTransform>();
     }
 
     public void Initialize(Card target, int index = 0)
     {
         parentCard = target;
-        cardTransform = target.transform;
+        cardRect = target.GetComponent<RectTransform>();
         canvas = GetComponent<Canvas>();
         shadowCanvas = visualShadow.GetComponent<Canvas>();
 
@@ -93,14 +91,12 @@ public class CardVisual : MonoBehaviour
 
     public void UpdateIndex(int length)
     {
-        transform.SetSiblingIndex(parentCard.transform.parent.GetSiblingIndex());
+        transform.SetSiblingIndex(Mathf.Clamp(parentCard.transform.parent.GetSiblingIndex(), 0, transform.parent.childCount - 1));
     }
 
     void Update()
     {
         if (!initalize || parentCard == null) return;
-
-        // Skip follow/tilt logic when card is in a slot
         if (pauseFollow) return;
 
         HandPositioning();
@@ -118,13 +114,14 @@ public class CardVisual : MonoBehaviour
 
     private void SmoothFollow()
     {
-        Vector3 verticalOffset = (Vector3.up * (parentCard.isDragging ? 0 : curveYOffset));
-        transform.position = Vector3.Lerp(transform.position, cardTransform.position + verticalOffset, followSpeed * Time.deltaTime);
+        Vector3 verticalOffset = Vector3.up * (parentCard.isDragging ? 0 : curveYOffset);
+        Vector3 targetPosition = cardRect.position + verticalOffset;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
     }
 
     private void FollowRotation()
     {
-        Vector3 movement = (transform.position - cardTransform.position);
+        Vector3 movement = transform.position - cardRect.position;
         movementDelta = Vector3.Lerp(movementDelta, movement, 25 * Time.deltaTime);
         Vector3 movementRotation = (parentCard.isDragging ? movementDelta : movement) * rotationAmount;
         rotationDelta = Vector3.Lerp(rotationDelta, movementRotation, rotationSpeed * Time.deltaTime);
@@ -137,9 +134,12 @@ public class CardVisual : MonoBehaviour
         float sine = Mathf.Sin(Time.time + savedIndex) * (parentCard.isHovering ? .2f : 1);
         float cosine = Mathf.Cos(Time.time + savedIndex) * (parentCard.isHovering ? .2f : 1);
 
-        Vector3 offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float tiltX = parentCard.isHovering ? ((offset.y * -1) * manualTiltAmount) : 0;
-        float tiltY = parentCard.isHovering ? ((offset.x) * manualTiltAmount) : 0;
+        Vector2 mouseScreenPos = Input.mousePosition;
+        Vector2 cardScreenPos = RectTransformUtility.WorldToScreenPoint(null, cardRect.position);
+        Vector2 offset = cardScreenPos - mouseScreenPos;
+
+        float tiltX = parentCard.isHovering ? (offset.y * -1 * manualTiltAmount * 0.01f) : 0;
+        float tiltY = parentCard.isHovering ? (offset.x * manualTiltAmount * 0.01f) : 0;
         float tiltZ = parentCard.isDragging ? tiltParent.eulerAngles.z : (curveRotationOffset * (curve.rotationInfluence * parentCard.SiblingAmount()));
 
         float lerpX = Mathf.LerpAngle(tiltParent.eulerAngles.x, tiltX + (sine * autoTiltAmount), tiltSpeed * Time.deltaTime);
@@ -162,9 +162,7 @@ public class CardVisual : MonoBehaviour
 
     public void Swap(float dir = 1)
     {
-        if (!swapAnimations)
-            return;
-
+        if (!swapAnimations) return;
         DOTween.Kill(2, true);
         shakeParent.DOPunchRotation((Vector3.forward * swapRotationAngle) * dir, swapTransition, swapVibrato, 1).SetId(3);
     }
@@ -173,7 +171,6 @@ public class CardVisual : MonoBehaviour
     {
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
-
         canvas.overrideSorting = true;
     }
 
@@ -187,7 +184,6 @@ public class CardVisual : MonoBehaviour
     {
         if (scaleAnimations)
             transform.DOScale(scaleOnHover, scaleTransition).SetEase(scaleEase);
-
         DOTween.Kill(2, true);
         shakeParent.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
     }
@@ -203,7 +199,6 @@ public class CardVisual : MonoBehaviour
         if (scaleAnimations)
             transform.DOScale(longPress ? scaleOnHover : scaleOnSelect, scaleTransition).SetEase(scaleEase);
         canvas.overrideSorting = false;
-
         visualShadow.localPosition = shadowDistance;
         shadowCanvas.overrideSorting = true;
     }
@@ -212,7 +207,6 @@ public class CardVisual : MonoBehaviour
     {
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
-
         visualShadow.localPosition += (-Vector3.up * shadowOffset);
         shadowCanvas.overrideSorting = false;
     }
