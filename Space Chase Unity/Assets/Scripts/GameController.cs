@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public enum PlayerLocation
+    {
+        comms, engine, weapons, bridge, shields, passage
+    }
+    public PlayerLocation _currentRoom;
+
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _bg;
@@ -15,7 +21,6 @@ public class GameController : MonoBehaviour
 
     public int _energy; // add five at the beginning of each player turn
     public int _turnsLeft;
-    public int _currentRoom; // can be 1 - 11
     public bool _isEnemyTurn;
 
     public List<string> _rooms;
@@ -28,7 +33,7 @@ public class GameController : MonoBehaviour
 
         _energy = 0;
         _turnsLeft = 15;
-        _currentRoom = 5; //sets starting location to engine
+        _currentRoom = PlayerLocation.engine;
 
         enemyTurn();
     }
@@ -77,11 +82,6 @@ public class GameController : MonoBehaviour
                 Debug.Log(_damagedRooms[i] + " is damaged!");
             }
             damageRoom?.Invoke(room_id); // sends out an event to all of the room controllers, child scripts handle if the number matches the room damaged
-
-            if (room_id == _currentRoom)
-            {
-                // special event or whatever that occurs when you're in damaged room
-            }
         }
         else
         {
@@ -104,6 +104,31 @@ public class GameController : MonoBehaviour
         int ran = Random.Range(0, 12); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
                                        // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
         return ran;
+    }
+
+    public void UpdatePlayerLocation(int location_id)
+    {
+        switch(location_id)
+        {
+            case 0: _currentRoom = PlayerLocation.comms; break;
+            case 1: _currentRoom = PlayerLocation.engine; break;
+            case 2: _currentRoom = PlayerLocation.weapons; break;
+            case 3: _currentRoom = PlayerLocation.bridge; break;
+            case 4: _currentRoom = PlayerLocation.shields; break;
+            default: _currentRoom = PlayerLocation.passage; break;
+        }
+    }
+    public string GetPlayerLocation()
+    {
+        switch(_currentRoom)
+        {
+            case PlayerLocation.comms: return "Communications";
+            case PlayerLocation.engine: return "Engine";
+            case PlayerLocation.weapons: return "Weapons";
+            case PlayerLocation.bridge: return "Bridge";
+            case PlayerLocation.shields: return "Shields";
+            default: return "Passage";
+        }
     }
 
     private void useDoor()
