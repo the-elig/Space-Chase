@@ -14,6 +14,9 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private TMP_Text energyText;
     [SerializeField] private GameObject energyTextObj;
 
+    [SerializeField] private TMP_Text roomText;
+    [SerializeField] private GameObject roomTextObj;
+
     [SerializeField] private TMP_Text turnsLeftSmall;
     [SerializeField] private GameObject turnsLeftSmallObj;
     [SerializeField] private GameObject endTurnObj;
@@ -47,6 +50,8 @@ public class CanvasController : MonoBehaviour
             }
         }
 
+        roomText.text = "Current Room: " + _gameController.GetPlayerLocation();
+
         playEnemyTurn(_gameController._isEnemyTurn);
 
         // update energy text
@@ -69,6 +74,7 @@ public class CanvasController : MonoBehaviour
         {
             map.SetActive(!enemy);
         }
+        roomTextObj.SetActive(!enemy);
         energyTextObj.SetActive(!enemy);
         turnsLeftSmallObj.SetActive(!enemy);
         endTurnObj.SetActive(!enemy);

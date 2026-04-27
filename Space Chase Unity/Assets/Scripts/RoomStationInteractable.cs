@@ -9,14 +9,11 @@ public class RoomStationInteractable : MonoBehaviour
 
     private bool stationBroken;
 
-    // Start is called before the first frame update
     void Start()
     {
         _player.StationInteract += OpenStation;
         _player.LeftStation += CloseStation;
     }
-
-    // Update is called once per frame
     void Update()
     {
         
