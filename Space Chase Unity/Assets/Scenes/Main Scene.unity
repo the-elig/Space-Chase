@@ -581,6 +581,8 @@ MonoBehaviour:
   station: {fileID: 1474000377}
   warning: {fileID: 193263322}
   id: 0
+  _adjacentPassages:
+  - {fileID: 1589041441}
 --- !u!1 &87120045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,6 +1944,11 @@ MonoBehaviour:
   station: {fileID: 1254217574}
   warning: {fileID: 424715384}
   id: 1
+  _adjacentPassages:
+  - {fileID: 1589041441}
+  - {fileID: 492277415}
+  - {fileID: 834203477}
+  - {fileID: 345025164}
 --- !u!1 &505006583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,6 +2717,10 @@ MonoBehaviour:
   station: {fileID: 1474000377}
   warning: {fileID: 1979559250}
   id: 3
+  _adjacentPassages:
+  - {fileID: 834203477}
+  - {fileID: 1943906568}
+  - {fileID: 1347105418}
 --- !u!1 &736353039
 GameObject:
   m_ObjectHideFlags: 0
@@ -4006,6 +4017,9 @@ MonoBehaviour:
   station: {fileID: 1361108171}
   warning: {fileID: 2028424154}
   id: 4
+  _adjacentPassages:
+  - {fileID: 345025164}
+  - {fileID: 1347105418}
 --- !u!4 &1192151783 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 165391827144558066, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
@@ -6066,6 +6080,9 @@ MonoBehaviour:
   station: {fileID: 2083147221}
   warning: {fileID: 772989116}
   id: 2
+  _adjacentPassages:
+  - {fileID: 492277415}
+  - {fileID: 1943906568}
 --- !u!1001 &1859194419
 PrefabInstance:
   m_ObjectHideFlags: 0

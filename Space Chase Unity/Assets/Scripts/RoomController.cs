@@ -9,6 +9,7 @@ public class RoomController : MonoBehaviour
     [SerializeField] private GameObject warning;
     private bool damaged;
     [SerializeField] private int id;
+    public List<PassageController> _adjacentPassages;
 
     void Start()
     {
