@@ -24,6 +24,7 @@ public class PassageController : MonoBehaviour
         {
             damaged = true;
             warning.SetActive(true);
+            passage.ToggleDamage(damaged);
         }
     }
 }
