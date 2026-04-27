@@ -106,9 +106,9 @@ public class GameController : MonoBehaviour
         return ran;
     }
 
-    private void UpdatePlayerLocation(int room_id)
+    public void UpdatePlayerLocation(int location_id)
     {
-        switch(room_id)
+        switch(location_id)
         {
             case 0: _currentRoom = PlayerLocation.comms; break;
             case 1: _currentRoom = PlayerLocation.engine; break;
@@ -116,6 +116,18 @@ public class GameController : MonoBehaviour
             case 3: _currentRoom = PlayerLocation.bridge; break;
             case 4: _currentRoom = PlayerLocation.shields; break;
             default: _currentRoom = PlayerLocation.passage; break;
+        }
+    }
+    public string GetPlayerLocation()
+    {
+        switch(_currentRoom)
+        {
+            case PlayerLocation.comms: return "Communications";
+            case PlayerLocation.engine: return "Engine";
+            case PlayerLocation.weapons: return "Weapons";
+            case PlayerLocation.bridge: return "Bridge";
+            case PlayerLocation.shields: return "Shields";
+            default: return "Passage";
         }
     }
 

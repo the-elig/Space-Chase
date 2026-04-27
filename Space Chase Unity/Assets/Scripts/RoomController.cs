@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoomController : MonoBehaviour
 {
+
     [SerializeField] private GameController gameController;
     [SerializeField] private RoomStationInteractable station;
     [SerializeField] private GameObject warning;
@@ -21,6 +22,14 @@ public class RoomController : MonoBehaviour
     {
 
     }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.CompareTag("Player"))
+        {
+            gameController.UpdatePlayerLocation(id);
+        }
+    }
+
     private void DamageRoom(int room_id)
     {
         if (room_id == id)

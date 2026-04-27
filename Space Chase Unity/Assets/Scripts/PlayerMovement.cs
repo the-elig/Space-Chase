@@ -77,7 +77,10 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        canInteract = true;
+        if(!col.gameObject.CompareTag("RoomHitBox"))
+        {
+            canInteract = true;
+        }
         if (col.gameObject.CompareTag("Passage"))
         {
             inPassage = true;
@@ -89,7 +92,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        canInteract = false;
+        if(!col.gameObject.CompareTag("RoomHitBox"))
+        {
+            canInteract = false;
+        }
         if(col.gameObject.CompareTag("Passage")||col.gameObject.CompareTag("DamagedPassage"))
         {
             LeftInteractZone?.Invoke();
