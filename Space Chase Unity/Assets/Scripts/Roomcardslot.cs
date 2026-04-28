@@ -39,7 +39,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             slotImage.color = emptyColor;
 
         cardHolder = FindObjectOfType<HorizontalCardHolder>();
-        
+
         if (gameController == null)
             gameController = FindObjectOfType<GameController>();
     }
@@ -86,57 +86,56 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     public void OnConfirm()
-{
-    if (currentCard == null) return;
-
-    if (currentCard.cardData != null)
     {
-        CardData data = currentCard.cardData;
+        if (currentCard == null) return;
 
-        // check energy cost
-        if (gameController._energy < data.energyCost)
+        if (currentCard.cardData != null)
         {
-            Debug.Log("Not enough energy!");
-            OnCancel();
-            return;
-        }
+            CardData data = currentCard.cardData;
 
-        // check station type restriction
-        if (data.allowedStation != StationType.Any)
-        {
-            string currentRoom = gameController.GetPlayerLocation().ToLower();
-            string requiredStation = data.allowedStation.ToString().ToLower();
-
-            if (currentRoom != requiredStation)
+            // check energy cost
+            if (gameController._energy < data.energyCost)
             {
-                Debug.Log("Wrong station!");
+                Debug.Log("Not enough energy!");
                 OnCancel();
                 return;
             }
-        }
 
-        // check damage requirement
-        if (data.requirement == CardRequirement.StationDamaged)
-        {
-            string currentRoom = gameController._currentRoom.ToString().ToLower();
-            string currentRoomName = gameController._currentRoom.ToString();
-            bool isDamaged = gameController._damagedRooms.Exists(r => 
-                r.ToLower() == currentRoomName.ToLower());
-
-            if (!isDamaged)
+            // check station type restriction
+            if (data.allowedStation != StationType.Any)
             {
-                Debug.Log("Station is not damaged!");
-                OnCancel();
-                return;
+                string currentRoom = gameController.GetPlayerLocation().ToLower();
+                string requiredStation = data.allowedStation.ToString().ToLower();
+
+                if (currentRoom != requiredStation)
+                {
+                    Debug.Log("Wrong station!");
+                    OnCancel();
+                    return;
+                }
             }
+
+            // check damage requirement
+            if (data.requirement == CardRequirement.StationDamaged)
+            {
+                string currentRoomName = gameController._currentRoom.ToString();
+                bool isDamaged = gameController._damagedRooms.Exists(r =>
+                    r.ToLower() == currentRoomName.ToLower());
+
+                if (!isDamaged)
+                {
+                    Debug.Log("Station is not damaged!");
+                    OnCancel();
+                    return;
+                }
+            }
+
+            // deduct energy
+            gameController._energy -= data.energyCost;
         }
 
-        // deduct energy
-        gameController._energy -= data.energyCost;
+        ExecuteConfirm();
     }
-
-    ExecuteConfirm();
-}
 
     private void ExecuteConfirm()
     {
@@ -147,6 +146,32 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
         if (slotImage != null)
             slotImage.color = emptyColor;
+
+        // if it was a repair card, fix the room
+        if (cardToDestroy.cardData != null &&
+            cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
+        {
+            string currentRoomName = gameController._currentRoom.ToString();
+
+            // remove from damaged rooms list
+            gameController._damagedRooms.RemoveAll(r =>
+                r.ToLower() == currentRoomName.ToLower());
+
+            // find the RoomController and set damaged to false
+            RoomController[] rooms = FindObjectsOfType<RoomController>();
+            foreach (RoomController room in rooms)
+            {
+                if (room.gameObject.name.ToLower().Contains(currentRoomName.ToLower()))
+                {
+                    room.damaged = false;
+                    room.warning.SetActive(false);
+                    break;
+                }
+            }
+        }
+
+        // close the station after a short delay
+        StartCoroutine(CloseStationDelay());
 
         if (cardToDestroy.cardVisual != null)
         {
@@ -164,6 +189,14 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             if (cardOriginalSlot != null)
                 Destroy(cardOriginalSlot);
         }
+    }
+
+    IEnumerator CloseStationDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        GameObject stationPanel = GameObject.Find("StationPanel");
+        if (stationPanel != null)
+            stationPanel.SetActive(false);
     }
 
     public void OnCancel()

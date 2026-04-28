@@ -7,7 +7,7 @@ public class RoomController : MonoBehaviour
 
     [SerializeField] private GameController gameController;
     [SerializeField] private RoomStationInteractable station;
-    [SerializeField] private GameObject warning;
+    [SerializeField] public GameObject warning;
     public bool damaged;
     [SerializeField] private int id;
     public List<PassageController> _adjacentPassages;
