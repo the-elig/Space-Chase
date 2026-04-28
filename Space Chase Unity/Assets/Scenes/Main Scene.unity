@@ -586,7 +586,8 @@ MonoBehaviour:
   station: {fileID: 1474000377}
   warning: {fileID: 193263322}
   id: 0
-  _adjacentPassages: []
+  _adjacentPassages:
+  - {fileID: 1589041441}
 --- !u!61 &75658354
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2073,7 +2074,11 @@ MonoBehaviour:
   station: {fileID: 1254217574}
   warning: {fileID: 424715384}
   id: 1
-  _adjacentPassages: []
+  _adjacentPassages:
+  - {fileID: 1589041441}
+  - {fileID: 492277415}
+  - {fileID: 834203477}
+  - {fileID: 345025164}
 --- !u!61 &492798770
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2835,8 +2840,8 @@ MonoBehaviour:
   map: {fileID: 242682319}
   energyText: {fileID: 1511679024}
   energyTextObj: {fileID: 1511679022}
-  roomText: {fileID: 0}
-  roomTextObj: {fileID: 0}
+  roomText: {fileID: 1303026569}
+  roomTextObj: {fileID: 1303026567}
   turnsLeftSmall: {fileID: 1941224058}
   turnsLeftSmallObj: {fileID: 1941224056}
   endTurnObj: {fileID: 755212537}
@@ -3159,7 +3164,10 @@ MonoBehaviour:
   station: {fileID: 1474000377}
   warning: {fileID: 1979559250}
   id: 3
-  _adjacentPassages: []
+  _adjacentPassages:
+  - {fileID: 834203477}
+  - {fileID: 1943906568}
+  - {fileID: 1347105418}
 --- !u!61 &734493330
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4788,7 +4796,9 @@ MonoBehaviour:
   station: {fileID: 1361108171}
   warning: {fileID: 2028424154}
   id: 4
-  _adjacentPassages: []
+  _adjacentPassages:
+  - {fileID: 345025164}
+  - {fileID: 1347105418}
 --- !u!61 &1173261061
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7277,7 +7287,9 @@ MonoBehaviour:
   station: {fileID: 2083147221}
   warning: {fileID: 772989116}
   id: 2
-  _adjacentPassages: []
+  _adjacentPassages:
+  - {fileID: 492277415}
+  - {fileID: 1943906568}
 --- !u!61 &1857497860
 BoxCollider2D:
   m_ObjectHideFlags: 0
