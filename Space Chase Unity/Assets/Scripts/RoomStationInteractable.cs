@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomStationInteractable : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _player;
+    [SerializeField] private GameObject _outline;
     [SerializeField] private GameObject station;
 
     private bool stationBroken;
@@ -27,5 +28,19 @@ public class RoomStationInteractable : MonoBehaviour
     void CloseStation()
     {
         station.SetActive(false);
+    }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.CompareTag("Player"))
+        {
+            _outline.SetActive(true);
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            _outline.SetActive(false);
+        }
     }
 }

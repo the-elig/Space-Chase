@@ -6,6 +6,8 @@ public class PassageInteractable : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private GameObject door;
+    [SerializeField] private GameObject _outline;
+    [SerializeField] private GameObject _bandage;
 
     private bool doorClosed;
     private bool damaged;
@@ -20,7 +22,13 @@ public class PassageInteractable : MonoBehaviour
 
     void Update()
     {
-
+        if(damaged)
+        {
+            _bandage.SetActive(true);
+        } else
+        {
+            _bandage.SetActive(false);
+        }
     }
     public void ToggleDamage(bool damage)
     {
@@ -41,4 +49,18 @@ public class PassageInteractable : MonoBehaviour
         door.SetActive(doorClosed);
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player") && !damaged)
+        {
+            _outline.SetActive(true);
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            _outline.SetActive(false);
+        }
+    }
 }
