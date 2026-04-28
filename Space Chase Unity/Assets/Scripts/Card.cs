@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
 
+
 public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
     private Canvas canvas;
@@ -26,6 +27,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [Header("Visual")]
     [SerializeField] private GameObject cardVisualPrefab;
     [HideInInspector] public CardVisual cardVisual;
+    public CardData cardData;
 
     [Header("States")]
     public bool isHovering;

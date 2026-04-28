@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 public class HorizontalCardHolder : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class HorizontalCardHolder : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] private int cardsToSpawn = 7;
+    [SerializeField] private Deck deck;
+    private List<CardData> shuffledDeck;
     public List<Card> cards;
 
     bool isCrossing = false;
@@ -23,16 +26,41 @@ public class HorizontalCardHolder : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < cardsToSpawn; i++)
+        if (deck != null && deck.cards.Count > 0)
         {
-            Instantiate(slotPrefab, transform);
+            // shuffle the deck
+            shuffledDeck = new List<CardData>(deck.cards);
+            for (int i = 0; i < shuffledDeck.Count; i++)
+            {
+                CardData temp = shuffledDeck[i];
+                int randomIndex = Random.Range(i, shuffledDeck.Count);
+                shuffledDeck[i] = shuffledDeck[randomIndex];
+                shuffledDeck[randomIndex] = temp;
+            }
+
+            // deal cards from deck
+            int cardsToDeal = Mathf.Min(cardsToSpawn, shuffledDeck.Count);
+            for (int i = 0; i < cardsToDeal; i++)
+            {
+                GameObject slot = Instantiate(slotPrefab, transform);
+                Card card = slot.GetComponentInChildren<Card>();
+                if (card != null)
+                    card.cardData = shuffledDeck[i];
+            }
+        }
+        else
+        {
+            // fallback - spawn without deck
+            for (int i = 0; i < cardsToSpawn; i++)
+            {
+                Instantiate(slotPrefab, transform);
+            }
         }
 
         rect = GetComponent<RectTransform>();
         cards = GetComponentsInChildren<Card>().ToList();
 
         int cardCount = 0;
-
         foreach (Card card in cards)
         {
             card.PointerEnterEvent.AddListener(CardPointerEnter);

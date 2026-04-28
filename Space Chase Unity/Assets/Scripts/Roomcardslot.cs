@@ -14,6 +14,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private Image slotImage;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject cancelButton;
+    [SerializeField] private GameController gameController;
 
     [Header("Slot Visuals")]
     [SerializeField] private Color emptyColor = new Color(1, 1, 1, 0.3f);
@@ -23,7 +24,6 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [Header("Events")]
     public UnityEvent<Card> OnCardConfirmed;
 
-    // Internal state
     private Card currentCard = null;
     private Transform cardOriginalParent;
     private int cardOriginalSiblingIndex;
@@ -39,6 +39,9 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             slotImage.color = emptyColor;
 
         cardHolder = FindObjectOfType<HorizontalCardHolder>();
+        
+        if (gameController == null)
+            gameController = FindObjectOfType<GameController>();
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -54,26 +57,19 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     void AcceptCard(Card card)
     {
         currentCard = card;
-
         cardOriginalParent = card.transform.parent;
         cardOriginalSiblingIndex = card.transform.GetSiblingIndex();
-
-        // Save the CardSlot parent BEFORE reparenting
         cardOriginalSlot = card.transform.parent.gameObject;
 
-        // Notify holder to reflow immediately
         if (cardHolder != null)
             cardHolder.RemoveCard(card);
 
-        // Pause the visual's follow so we can animate it freely
         if (card.cardVisual != null)
             card.cardVisual.pauseFollow = true;
 
-        // Move card transform to slot
         card.transform.SetParent(transform);
         card.transform.localPosition = Vector3.zero;
 
-        // Animate the visual to the slot position
         if (card.cardVisual != null)
         {
             card.cardVisual.transform.DOMove(transform.position, 0.2f).SetEase(Ease.OutBack);
@@ -90,9 +86,60 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     public void OnConfirm()
-    {
-        if (currentCard == null) return;
+{
+    if (currentCard == null) return;
 
+    if (currentCard.cardData != null)
+    {
+        CardData data = currentCard.cardData;
+
+        // check energy cost
+        if (gameController._energy < data.energyCost)
+        {
+            Debug.Log("Not enough energy!");
+            OnCancel();
+            return;
+        }
+
+        // check station type restriction
+        if (data.allowedStation != StationType.Any)
+        {
+            string currentRoom = gameController.GetPlayerLocation().ToLower();
+            string requiredStation = data.allowedStation.ToString().ToLower();
+
+            if (currentRoom != requiredStation)
+            {
+                Debug.Log("Wrong station!");
+                OnCancel();
+                return;
+            }
+        }
+
+        // check damage requirement
+        if (data.requirement == CardRequirement.StationDamaged)
+        {
+            string currentRoom = gameController._currentRoom.ToString().ToLower();
+            string currentRoomName = gameController._currentRoom.ToString();
+            bool isDamaged = gameController._damagedRooms.Exists(r => 
+                r.ToLower() == currentRoomName.ToLower());
+
+            if (!isDamaged)
+            {
+                Debug.Log("Station is not damaged!");
+                OnCancel();
+                return;
+            }
+        }
+
+        // deduct energy
+        gameController._energy -= data.energyCost;
+    }
+
+    ExecuteConfirm();
+}
+
+    private void ExecuteConfirm()
+    {
         OnCardConfirmed?.Invoke(currentCard);
 
         Card cardToDestroy = currentCard;
@@ -101,14 +148,12 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         if (slotImage != null)
             slotImage.color = emptyColor;
 
-        // Animate visual shrinking then destroy visual, card, and original CardSlot
         if (cardToDestroy.cardVisual != null)
         {
             cardToDestroy.cardVisual.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
             {
                 Destroy(cardToDestroy.cardVisual.gameObject);
                 Destroy(cardToDestroy.gameObject);
-                // Destroy the original CardSlot so the deck reflows
                 if (cardOriginalSlot != null)
                     Destroy(cardOriginalSlot);
             });
@@ -128,12 +173,10 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         Card cardToReturn = currentCard;
         currentCard = null;
 
-        // Return card transform to original parent
         cardToReturn.transform.SetParent(cardOriginalParent);
         cardToReturn.transform.SetSiblingIndex(cardOriginalSiblingIndex);
         cardToReturn.transform.localPosition = Vector3.zero;
 
-        // Re-add to card holder
         if (cardHolder != null)
             cardHolder.AddCard(cardToReturn);
 
@@ -144,29 +187,24 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     IEnumerator CancelAnimation(Card card)
-{
-    if (card.cardVisual == null) yield break;
+    {
+        if (card.cardVisual == null) yield break;
 
-    Transform visual = card.cardVisual.transform;
-    DOTween.Kill(visual, true);
+        Transform visual = card.cardVisual.transform;
+        DOTween.Kill(visual, true);
 
-    Vector3 startPos = visual.position;
-    Vector3 throwTarget = startPos + new Vector3(-400f, 0f, 0f);
+        Vector3 startPos = visual.position;
+        Vector3 throwTarget = startPos + new Vector3(-400f, 0f, 0f);
 
-    Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(visual.DOMove(throwTarget, 1.45f).SetEase(Ease.OutCubic));
+        seq.Join(visual.DORotate(new Vector3(0f, 0f, -360f), 1.45f, RotateMode.FastBeyond360));
+        seq.Append(visual.DOMove(card.transform.position, 0.35f).SetEase(Ease.InOutQuad));
+        seq.Join(visual.DORotate(Vector3.zero, 0.35f).SetEase(Ease.OutBack));
+        seq.OnComplete(() => card.cardVisual.pauseFollow = false);
 
-    seq.Append(visual.DOMove(throwTarget, 1.45f).SetEase(Ease.OutCubic));
-    seq.Join(visual.DORotate(new Vector3(0f, 0f, -360f), 1.45f, RotateMode.FastBeyond360));
-
-    // seq.AppendInterval(1f);
-
-    seq.Append(visual.DOMove(card.transform.position, 0.35f).SetEase(Ease.InOutQuad));
-    seq.Join(visual.DORotate(Vector3.zero, 0.35f).SetEase(Ease.OutBack));
-
-    seq.OnComplete(() => card.cardVisual.pauseFollow = false);
-
-    yield return seq.WaitForCompletion();
-}
+        yield return seq.WaitForCompletion();
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

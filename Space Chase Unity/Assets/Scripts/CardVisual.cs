@@ -87,6 +87,11 @@ public class CardVisual : MonoBehaviour
         parentCard.SelectEvent.AddListener(Select);
 
         initalize = true;
+
+        if (parentCard.cardData != null)
+        {
+            cardImage.sprite = parentCard.cardData.cardArt;
+        }
     }
 
     public void UpdateIndex(int length)

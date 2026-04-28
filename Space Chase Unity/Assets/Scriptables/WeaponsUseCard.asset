@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac47430e962db5468af76319eea0403, type: 3}
+  m_Name: WeaponsUseCard
+  m_EditorClassIdentifier: 
+  cardName: Weapons Use Card
+  cardArt: {fileID: 21300000, guid: 0e6babb2c1a637e44b375dc315ad6305, type: 3}
+  cardDescription: Uses the Weapons station whle actively at the weapons station
+  energyCost: 1
+  allowedStation: 1
+  requirement: 2

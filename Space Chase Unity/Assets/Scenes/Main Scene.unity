@@ -585,6 +585,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1474000377}
   warning: {fileID: 193263322}
+  damaged: 0
   id: 0
   _adjacentPassages:
   - {fileID: 1589041441}
@@ -2073,6 +2074,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1254217574}
   warning: {fileID: 424715384}
+  damaged: 0
   id: 1
   _adjacentPassages:
   - {fileID: 1589041441}
@@ -3163,6 +3165,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1474000377}
   warning: {fileID: 1979559250}
+  damaged: 0
   id: 3
   _adjacentPassages:
   - {fileID: 834203477}
@@ -4373,6 +4376,7 @@ MonoBehaviour:
   slotImage: {fileID: 1018085523}
   confirmButton: {fileID: 1171180636}
   cancelButton: {fileID: 1885699479}
+  gameController: {fileID: 0}
   emptyColor: {r: 0.7176471, g: 0, b: 0, a: 0.3}
   hoverColor: {r: 0.5803922, g: 0, b: 0, a: 0.6}
   filledColor: {r: 1, g: 1, b: 1, a: 0}
@@ -4795,6 +4799,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1361108171}
   warning: {fileID: 2028424154}
+  damaged: 0
   id: 4
   _adjacentPassages:
   - {fileID: 345025164}
@@ -6951,7 +6956,8 @@ MonoBehaviour:
   selectedCard: {fileID: 0}
   hoveredCard: {fileID: 0}
   slotPrefab: {fileID: 3655645598659960977, guid: e99c361e7acdd41f0b904fef6be48fea, type: 3}
-  cardsToSpawn: 8
+  cardsToSpawn: 4
+  deck: {fileID: 11400000, guid: 28ec63f4ccc53ea49bad1846786a2424, type: 2}
   cards: []
   tweenCardReturn: 1
 --- !u!1 &1751827889
@@ -7286,6 +7292,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 2083147221}
   warning: {fileID: 772989116}
+  damaged: 1
   id: 2
   _adjacentPassages:
   - {fileID: 492277415}
