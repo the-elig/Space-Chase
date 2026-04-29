@@ -26,10 +26,15 @@ public class GameController : MonoBehaviour
     public List<string> _rooms;
     public List<string> _damagedRooms;
 
+    AudioSource m_MyAudioSource;
+
+
     private void Start()
     {
         _player.Interact += useDoor;
         _player.StationInteract += useStation;
+
+        m_MyAudioSource = GetComponent<AudioSource>();
 
         _energy = 0;
         _turnsLeft = 15;
@@ -80,6 +85,7 @@ public class GameController : MonoBehaviour
             for (int i = 0; i < _damagedRooms.Count; i++)
             {
                 Debug.Log(_damagedRooms[i] + " is damaged!");
+                m_MyAudioSource.Play();
             }
             damageRoom?.Invoke(room_id); // sends out an event to all of the room controllers, child scripts handle if the number matches the room damaged
         }

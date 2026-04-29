@@ -11,21 +11,27 @@ public class RoomStationInteractable : MonoBehaviour
     [SerializeField] private string roomID;
     [SerializeField] private GameObject _outline;
 
+    AudioSource m_MyAudioSource;
+
     void Start()
     {
         _player.StationInteract += OpenStation;
         _player.LeftStation += CloseStation;
+
+        m_MyAudioSource = GetComponent<AudioSource>();
 
         if (gameController == null)
             gameController = FindObjectOfType<GameController>();
     }
 
     void Update()
-    {
+    {;
     }
 
     void OpenStation()
     {
+        
+
         if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
             return;
 
@@ -33,6 +39,8 @@ public class RoomStationInteractable : MonoBehaviour
             cardPicker.OpenCardPicker();
         else if (station != null)
             station.SetActive(true);
+
+        m_MyAudioSource.Play();
     }
 
     void CloseStation()
