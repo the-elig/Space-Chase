@@ -9,7 +9,7 @@ public class RoomController : MonoBehaviour
     [SerializeField] private RoomStationInteractable station;
     [SerializeField] public GameObject warning;
     public bool damaged;
-    [SerializeField] private int id;
+    [SerializeField] public int id;
     public List<PassageController> _adjacentPassages;
 
     void Start()

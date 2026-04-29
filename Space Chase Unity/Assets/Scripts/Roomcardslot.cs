@@ -17,6 +17,8 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private GameObject cancelButton;
     [SerializeField] private GameController gameController;
     [SerializeField] private TMP_Text messageText;
+    [SerializeField] private TMP_Text damagedText;
+    [SerializeField] private TMP_Text normalText;
 
     [Header("Slot Visuals")]
     [SerializeField] private Color emptyColor = new Color(1, 1, 1, 0.3f);
@@ -40,16 +42,33 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         if (confirmButton != null) confirmButton.SetActive(true);
         if (cancelButton != null) cancelButton.SetActive(true);
 
-        if (slotImage != null)
-            slotImage.color = emptyColor;
-
         if (messageText != null)
             messageText.gameObject.SetActive(false);
+        if (damagedText != null)
+            damagedText.gameObject.SetActive(false);
+        if (normalText != null)
+            normalText.gameObject.SetActive(false);
 
         cardHolder = FindObjectOfType<HorizontalCardHolder>();
 
         if (gameController == null)
             gameController = FindObjectOfType<GameController>();
+    }
+
+    public void UpdateStationMessage(bool isDamaged)
+    {
+        if (damagedText != null)
+            damagedText.gameObject.SetActive(isDamaged);
+        if (normalText != null)
+            normalText.gameObject.SetActive(!isDamaged);
+    }
+
+    public void HideStationMessages()
+    {
+        if (damagedText != null)
+            damagedText.gameObject.SetActive(false);
+        if (normalText != null)
+            normalText.gameObject.SetActive(false);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -95,6 +114,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     public void OnConfirm()
     {
+        Debug.Log("Card: " + currentCard.cardData?.cardName + " Room: " + gameController._currentRoom + " Requirement: " + currentCard.cardData?.requirement);
         if (currentCard == null) return;
 
         if (currentCard.cardData != null)
@@ -112,7 +132,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             // check station type restriction
             if (data.allowedStation != StationType.Any)
             {
-                string currentRoom = gameController.GetPlayerLocation().ToLower();
+                string currentRoom = gameController._currentRoom.ToString().ToLower();
                 string requiredStation = data.allowedStation.ToString().ToLower();
 
                 if (currentRoom != requiredStation)
@@ -123,7 +143,22 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
                 }
             }
 
-            // check damage requirement
+            // check station healthy requirement
+            if (data.requirement == CardRequirement.StationHealthy)
+            {
+                string currentRoomName = gameController._currentRoom.ToString();
+                bool isDamaged = gameController._damagedRooms.Exists(r =>
+                    r.ToLower() == currentRoomName.ToLower());
+
+                if (isDamaged)
+                {
+                    StartCoroutine(ShowMessage("This station is damaged! Repair it first."));
+                    OnCancel();
+                    return;
+                }
+            }
+
+            // check station damaged requirement
             if (data.requirement == CardRequirement.StationDamaged)
             {
                 if (openedFromPassage)
@@ -175,15 +210,26 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             }
             else
             {
+                // remove from damaged rooms list
                 string currentRoomName = gameController._currentRoom.ToString();
-
                 gameController._damagedRooms.RemoveAll(r =>
                     r.ToLower() == currentRoomName.ToLower());
+
+                // find room by ID and repair it
+                int currentRoomId = -1;
+                switch (gameController._currentRoom)
+                {
+                    case GameController.PlayerLocation.comms: currentRoomId = 0; break;
+                    case GameController.PlayerLocation.engine: currentRoomId = 1; break;
+                    case GameController.PlayerLocation.weapons: currentRoomId = 2; break;
+                    case GameController.PlayerLocation.bridge: currentRoomId = 3; break;
+                    case GameController.PlayerLocation.shields: currentRoomId = 4; break;
+                }
 
                 RoomController[] rooms = FindObjectsOfType<RoomController>();
                 foreach (RoomController room in rooms)
                 {
-                    if (room.gameObject.name.ToLower().Contains(currentRoomName.ToLower()))
+                    if (room.id == currentRoomId)
                     {
                         room.damaged = false;
                         room.warning.SetActive(false);
@@ -197,11 +243,9 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
                  cardToDestroy.cardData.allowedStation != StationType.Any)
         {
             gameController._turnsLeft--;
-            Debug.Log("Turns left: " + gameController._turnsLeft);
         }
     }
 
-    // close the station after a short delay
     StartCoroutine(CloseStationDelay());
 
     if (cardToDestroy.cardVisual != null)
@@ -222,7 +266,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 }
 
-    IEnumerator ShowMessage(string message, float duration = 2.3f)
+    IEnumerator ShowMessage(string message, float duration = 2f)
     {
         if (messageText != null)
         {

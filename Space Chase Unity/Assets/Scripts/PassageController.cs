@@ -5,7 +5,7 @@ using UnityEngine;
 public class PassageController : MonoBehaviour
 {
     [SerializeField] private GameController gameController;
-    [SerializeField] private PassageInteractable passage;
+    [SerializeField] public PassageInteractable passage;
     [SerializeField] private GameObject warning;
     [SerializeField] private int id;
     private bool damaged;
@@ -26,5 +26,10 @@ public class PassageController : MonoBehaviour
             warning.SetActive(true);
             passage.ToggleDamage(damaged);
         }
+    }
+    public void RepairPassage()
+    {
+        damaged = false;
+        warning.SetActive(false);
     }
 }

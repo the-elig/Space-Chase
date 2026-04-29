@@ -14,12 +14,12 @@ public class PassageInteractable : MonoBehaviour
     private bool doorClosed;
     private bool damaged;
 
-    void Start()
-    {
-        damaged = false;
-        _player.Interact += OpenDoor;
-        _player.LeftInteractZone += CloseDoor;
-    }
+    void Awake()
+{
+    damaged = false;
+    _player.Interact += OpenDoor;
+    _player.LeftInteractZone += CloseDoor;
+}
 
     void Update()
     {
@@ -44,13 +44,17 @@ public class PassageInteractable : MonoBehaviour
     {
         if (damaged)
         {
+            doorClosed = true;
+            door.SetActive(doorClosed);
             stationPanel.SetActive(true);
 
+            // hide station messages
             RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
             if (slot != null)
             {
                 slot.openedFromPassage = true;
                 slot.currentPassage = this;
+                slot.HideStationMessages();
             }
 
             TMP_Text[] texts = stationPanel.GetComponentsInChildren<TMP_Text>(true);
@@ -68,6 +72,13 @@ public class PassageInteractable : MonoBehaviour
         {
             doorClosed = false;
             door.SetActive(doorClosed);
+
+            RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
+            if (slot != null)
+            {
+                slot.openedFromPassage = false;
+                slot.currentPassage = null;
+            }
         }
     }
 
@@ -75,6 +86,15 @@ public class PassageInteractable : MonoBehaviour
     {
         if (damaged)
         {
+            if (!stationPanel.activeSelf)
+            {
+                RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
+                if (slot != null)
+                {
+                    slot.openedFromPassage = false;
+                    slot.currentPassage = null;
+                }
+            }
             stationPanel.SetActive(false);
         }
         else
@@ -85,12 +105,23 @@ public class PassageInteractable : MonoBehaviour
     }
 
     public void RepairPassage()
+{
+    damaged = false;
+    gameObject.tag = "Passage";
+    doorClosed = false;
+    door.SetActive(doorClosed);
+
+    // find controller by searching all controllers
+    PassageController[] controllers = FindObjectsOfType<PassageController>();
+    foreach (PassageController controller in controllers)
     {
-        damaged = false;
-        gameObject.tag = "Passage";
-        doorClosed = false;
-        door.SetActive(doorClosed);
+        if (controller.passage == this)
+        {
+            controller.RepairPassage();
+            break;
+        }
     }
+}
 
     void OnTriggerEnter2D(Collider2D col)
     {
