@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PassageInteractable : MonoBehaviour
 {
@@ -18,19 +19,20 @@ public class PassageInteractable : MonoBehaviour
         damaged = false;
         _player.Interact += OpenDoor;
         _player.LeftInteractZone += CloseDoor;
-        
     }
 
     void Update()
     {
-        if(damaged)
+        if (damaged)
         {
             _bandage.SetActive(true);
-        } else
+        }
+        else
         {
             _bandage.SetActive(false);
         }
     }
+
     public void ToggleDamage(bool damage)
     {
         damaged = damage;
@@ -39,23 +41,35 @@ public class PassageInteractable : MonoBehaviour
     }
 
     void OpenDoor()
-{
-    if (damaged)
     {
-        stationPanel.SetActive(true);
-        RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
-        if (slot != null)
+        if (damaged)
         {
-            slot.openedFromPassage = true;
-            slot.currentPassage = this;
+            stationPanel.SetActive(true);
+
+            RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
+            if (slot != null)
+            {
+                slot.openedFromPassage = true;
+                slot.currentPassage = this;
+            }
+
+            TMP_Text[] texts = stationPanel.GetComponentsInChildren<TMP_Text>(true);
+            foreach (TMP_Text text in texts)
+            {
+                if (text.gameObject.name == "MessageText")
+                {
+                    text.text = "Uh oh! This passageway has been damaged! Use a repair card to fix it.";
+                    text.gameObject.SetActive(true);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            doorClosed = false;
+            door.SetActive(doorClosed);
         }
     }
-    else
-    {
-        doorClosed = false;
-        door.SetActive(doorClosed);
-    }
-}
 
     void CloseDoor()
     {
@@ -70,6 +84,14 @@ public class PassageInteractable : MonoBehaviour
         }
     }
 
+    public void RepairPassage()
+    {
+        damaged = false;
+        gameObject.tag = "Passage";
+        doorClosed = false;
+        door.SetActive(doorClosed);
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Player") && !damaged)
@@ -77,18 +99,12 @@ public class PassageInteractable : MonoBehaviour
             _outline.SetActive(true);
         }
     }
+
     void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Player"))
         {
             _outline.SetActive(false);
         }
-    }
-    public void RepairPassage()
-    {
-        damaged = false;
-        gameObject.tag = "Passage";
-        doorClosed = false;
-        door.SetActive(doorClosed);
     }
 }

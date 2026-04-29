@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GeneralRepairCard
   m_EditorClassIdentifier: 
   cardName: General Repair Card
-  cardArt: {fileID: 21300000, guid: 71983f8d2d3f15843b41bbf29c867ddd, type: 3}
+  cardArt: {fileID: 21300000, guid: 51a6d4f21a8aa0a48b13fa947b9f7803, type: 3}
   cardDescription: Using this card at a station or hallway immediately repairs said
     station or hallway
   energyCost: 1

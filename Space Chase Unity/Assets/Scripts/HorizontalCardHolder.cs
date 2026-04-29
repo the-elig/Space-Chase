@@ -212,4 +212,20 @@ public class HorizontalCardHolder : MonoBehaviour
             card.cardVisual.UpdateIndex(transform.childCount);
         }
     }
+    public void AddCardToHand(CardData data)
+    {
+        GameObject slot = Instantiate(slotPrefab, transform);
+        Card card = slot.GetComponentInChildren<Card>();
+        if (card != null)
+        {
+            card.cardData = data;
+            cards.Add(card);
+            card.PointerEnterEvent.AddListener(CardPointerEnter);
+            card.PointerExitEvent.AddListener(CardPointerExit);
+            card.BeginDragEvent.AddListener(BeginDrag);
+            card.EndDragEvent.AddListener(EndDrag);
+            card.name = cards.Count.ToString();
+            StartCoroutine(ReflowCards());
+        }
+    }
 }

@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
+using TMPro;
 
 public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -15,6 +16,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject cancelButton;
     [SerializeField] private GameController gameController;
+    [SerializeField] private TMP_Text messageText;
 
     [Header("Slot Visuals")]
     [SerializeField] private Color emptyColor = new Color(1, 1, 1, 0.3f);
@@ -40,6 +42,9 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
         if (slotImage != null)
             slotImage.color = emptyColor;
+
+        if (messageText != null)
+            messageText.gameObject.SetActive(false);
 
         cardHolder = FindObjectOfType<HorizontalCardHolder>();
 
@@ -99,7 +104,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             // check energy cost
             if (gameController._energy < data.energyCost)
             {
-                Debug.Log("Not enough energy!");
+                StartCoroutine(ShowMessage("Not enough energy!"));
                 OnCancel();
                 return;
             }
@@ -112,7 +117,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
                 if (currentRoom != requiredStation)
                 {
-                    Debug.Log("Wrong station!");
+                    StartCoroutine(ShowMessage("This card can't be used here!"));
                     OnCancel();
                     return;
                 }
@@ -123,7 +128,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             {
                 if (openedFromPassage)
                 {
-                    // passage repair - always valid since we only open from damaged passages
+                    // passage repair - always valid
                 }
                 else
                 {
@@ -133,7 +138,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
                     if (!isDamaged)
                     {
-                        Debug.Log("Station is not damaged!");
+                        StartCoroutine(ShowMessage("This station isn't damaged!"));
                         OnCancel();
                         return;
                     }
@@ -148,18 +153,19 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     private void ExecuteConfirm()
+{
+    OnCardConfirmed?.Invoke(currentCard);
+
+    Card cardToDestroy = currentCard;
+    currentCard = null;
+
+    if (slotImage != null)
+        slotImage.color = emptyColor;
+
+    if (cardToDestroy.cardData != null)
     {
-        OnCardConfirmed?.Invoke(currentCard);
-
-        Card cardToDestroy = currentCard;
-        currentCard = null;
-
-        if (slotImage != null)
-            slotImage.color = emptyColor;
-
         // if it was a repair card, fix the room or passage
-        if (cardToDestroy.cardData != null &&
-            cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
+        if (cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
         {
             if (openedFromPassage && currentPassage != null)
             {
@@ -186,25 +192,44 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
                 }
             }
         }
-
-        // close the station after a short delay
-        StartCoroutine(CloseStationDelay());
-
-        if (cardToDestroy.cardVisual != null)
+        // if it was a station card, reduce turns left
+        else if (cardToDestroy.cardData.requirement == CardRequirement.StationHealthy &&
+                 cardToDestroy.cardData.allowedStation != StationType.Any)
         {
-            cardToDestroy.cardVisual.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
-            {
-                Destroy(cardToDestroy.cardVisual.gameObject);
-                Destroy(cardToDestroy.gameObject);
-                if (cardOriginalSlot != null)
-                    Destroy(cardOriginalSlot);
-            });
+            gameController._turnsLeft--;
+            Debug.Log("Turns left: " + gameController._turnsLeft);
         }
-        else
+    }
+
+    // close the station after a short delay
+    StartCoroutine(CloseStationDelay());
+
+    if (cardToDestroy.cardVisual != null)
+    {
+        cardToDestroy.cardVisual.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
+            Destroy(cardToDestroy.cardVisual.gameObject);
             Destroy(cardToDestroy.gameObject);
             if (cardOriginalSlot != null)
                 Destroy(cardOriginalSlot);
+        });
+    }
+    else
+    {
+        Destroy(cardToDestroy.gameObject);
+        if (cardOriginalSlot != null)
+            Destroy(cardOriginalSlot);
+    }
+}
+
+    IEnumerator ShowMessage(string message, float duration = 2.3f)
+    {
+        if (messageText != null)
+        {
+            messageText.text = message;
+            messageText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(duration);
+            messageText.gameObject.SetActive(false);
         }
     }
 

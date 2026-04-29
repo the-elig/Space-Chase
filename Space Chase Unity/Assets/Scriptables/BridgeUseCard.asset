@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BridgeUseCard
   m_EditorClassIdentifier: 
   cardName: Bridge Use Card
-  cardArt: {fileID: 21300000, guid: 48f6060f27b30d4459d944350aaa503b, type: 3}
+  cardArt: {fileID: 21300000, guid: 4a1d04465a835064ba009eed8d93c7d0, type: 3}
   cardDescription: Use this card at the bridge station to activate bridge use
   energyCost: 1
   allowedStation: 4

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CommsUse
   m_EditorClassIdentifier: 
   cardName: CommsUse
-  cardArt: {fileID: 21300000, guid: 68344e833a2c67a4a97f013c5a209f80, type: 3}
-  cardDescription: 
-  energyCost: 0
-  allowedStation: 0
-  requirement: 0
+  cardArt: {fileID: 21300000, guid: b895acfed67853b4d91a8f1d7cc79529, type: 3}
+  cardDescription: Comms use card
+  energyCost: 1
+  allowedStation: 5
+  requirement: 2

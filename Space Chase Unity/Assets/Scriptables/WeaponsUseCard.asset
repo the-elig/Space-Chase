@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WeaponsUseCard
   m_EditorClassIdentifier: 
   cardName: Weapons Use Card
-  cardArt: {fileID: 21300000, guid: 0e6babb2c1a637e44b375dc315ad6305, type: 3}
+  cardArt: {fileID: 21300000, guid: 8470fa77d49d09840a142903cc9b7d62, type: 3}
   cardDescription: Uses the Weapons station whle actively at the weapons station
   energyCost: 1
   allowedStation: 1
