@@ -10,104 +10,91 @@ public class RoomStationInteractable : MonoBehaviour
     [SerializeField] private GameController gameController;
     [SerializeField] private string roomID;
     [SerializeField] private GameObject _outline;
-
     AudioSource m_MyAudioSource;
 
     void Start()
     {
         _player.StationInteract += OpenStation;
         _player.LeftStation += CloseStation;
-
         m_MyAudioSource = GetComponent<AudioSource>();
-
         if (gameController == null)
             gameController = FindObjectOfType<GameController>();
     }
 
     void Update()
     {
-        
     }
 
     void OpenStation()
     {
-
-
         if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
             return;
 
+        bool isDamaged = gameController._damagedRooms.Exists(r =>
+            r.ToLower() == roomID.ToLower());
+
+        if (isDamaged)
         {
-            if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
-                return;
-
-            bool isDamaged = gameController._damagedRooms.Exists(r =>
-                r.ToLower() == roomID.ToLower());
-
-            if (isDamaged)
+            if (station != null)
             {
-                if (station != null)
-                {
-                    station.SetActive(true);
-                    RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
-                    if (slot != null)
-                        slot.UpdateStationMessage(true);
-                }
-            }
-            else
-            {
-                if (cardPicker != null)
-                    cardPicker.OpenCardPicker();
-                else if (station != null)
-                {
-                    station.SetActive(true);
-
-                    m_MyAudioSource.Play();
-
-                    RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
-                    if (slot != null)
-                        slot.UpdateStationMessage(false);
-                }
+                station.SetActive(true);
+                RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
+                if (slot != null)
+                    slot.UpdateStationMessage(true);
             }
         }
-
-        void CloseStation()
+        else
         {
-            if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
-                return;
-
-            bool isDamaged = gameController._damagedRooms.Exists(r =>
-                r.ToLower() == roomID.ToLower());
-
-            if (isDamaged)
+            if (cardPicker != null)
+                cardPicker.OpenCardPicker();
+            else if (station != null)
             {
-                if (station != null)
-                    station.SetActive(false);
-            }
-            else
-            {
-                if (cardPicker != null)
-                    cardPicker.CloseCardPicker();
-                else if (station != null)
-                    station.SetActive(false);
+                station.SetActive(true);
+                m_MyAudioSource.Play();
+                RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
+                if (slot != null)
+                    slot.UpdateStationMessage(false);
             }
         }
+    }
 
-        void OnTriggerEnter2D(Collider2D col)
+    void CloseStation()
+    {
+        if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
+            return;
+
+        bool isDamaged = gameController._damagedRooms.Exists(r =>
+            r.ToLower() == roomID.ToLower());
+
+        if (isDamaged)
         {
-            if (col.gameObject.CompareTag("Player"))
-            {
-                if (_outline != null)
-                    _outline.SetActive(true);
-            }
+            if (station != null)
+                station.SetActive(false);
         }
-
-        void OnTriggerExit2D(Collider2D col)
+        else
         {
-            if (col.gameObject.CompareTag("Player"))
-            {
-                if (_outline != null)
-                    _outline.SetActive(false);
-            }
+            if (cardPicker != null)
+                cardPicker.CloseCardPicker();
+            else if (station != null)
+                station.SetActive(false);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            if (_outline != null)
+                _outline.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            if (_outline != null)
+                _outline.SetActive(false);
         }
     }
 }
