@@ -37,23 +37,18 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [HideInInspector] public bool openedFromPassage = false;
     [HideInInspector] public PassageInteractable currentPassage = null;
 
-    void Start()
-    {
-        if (confirmButton != null) confirmButton.SetActive(true);
-        if (cancelButton != null) cancelButton.SetActive(true);
+    void Awake()
+{
+    if (confirmButton != null) confirmButton.SetActive(true);
+    if (cancelButton != null) cancelButton.SetActive(true);
+    if (messageText != null) messageText.gameObject.SetActive(false);
+    if (damagedText != null) damagedText.gameObject.SetActive(false);
+    if (normalText != null) normalText.gameObject.SetActive(false);
 
-        if (messageText != null)
-            messageText.gameObject.SetActive(false);
-        if (damagedText != null)
-            damagedText.gameObject.SetActive(false);
-        if (normalText != null)
-            normalText.gameObject.SetActive(false);
-
-        cardHolder = FindObjectOfType<HorizontalCardHolder>();
-
-        if (gameController == null)
-            gameController = FindObjectOfType<GameController>();
-    }
+    cardHolder = FindObjectOfType<HorizontalCardHolder>();
+    if (gameController == null)
+        gameController = FindObjectOfType<GameController>();
+}
 
     public void UpdateStationMessage(bool isDamaged)
     {

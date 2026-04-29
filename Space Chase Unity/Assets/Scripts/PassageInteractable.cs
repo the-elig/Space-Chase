@@ -17,6 +17,7 @@ public class PassageInteractable : MonoBehaviour
     void Awake()
 {
     damaged = false;
+    if (_outline != null) _outline.SetActive(false);
     _player.Interact += OpenDoor;
     _player.LeftInteractZone += CloseDoor;
 }

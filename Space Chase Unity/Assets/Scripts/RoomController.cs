@@ -12,11 +12,11 @@ public class RoomController : MonoBehaviour
     [SerializeField] public int id;
     public List<PassageController> _adjacentPassages;
 
-    void Start()
-    {
-        gameController.damageRoom += DamageRoom;
-        damaged = false;
-    }
+    void Awake()
+{
+    gameController.damageRoom += DamageRoom;
+    damaged = false;
+}
 
     void Update()
     {
