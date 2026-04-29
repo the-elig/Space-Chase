@@ -9,11 +9,11 @@ public class PassageController : MonoBehaviour
     [SerializeField] private GameObject warning;
     [SerializeField] private int id;
     private bool damaged;
-    void Start()
-    {
-        gameController.damageRoom += DamagePassage;
-        damaged = false;
-    }
+    void Awake()
+{
+    gameController.damageRoom += DamagePassage;
+    damaged = false;
+}
     void Update()
     {
 

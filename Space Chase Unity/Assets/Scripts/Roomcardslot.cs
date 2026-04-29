@@ -108,79 +108,80 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     public void OnConfirm()
+{
+    Debug.Log("Card: " + currentCard.cardData?.cardName + " Room: " + gameController._currentRoom + " Requirement: " + currentCard.cardData?.requirement);
+    if (currentCard == null) return;
+
+    if (currentCard.cardData != null)
     {
-        Debug.Log("Card: " + currentCard.cardData?.cardName + " Room: " + gameController._currentRoom + " Requirement: " + currentCard.cardData?.requirement);
-        if (currentCard == null) return;
+        CardData data = currentCard.cardData;
 
-        if (currentCard.cardData != null)
+        // check energy cost
+        if (gameController._energy < data.energyCost)
         {
-            CardData data = currentCard.cardData;
+            StartCoroutine(ShowMessage("Not enough energy!"));
+            OnCancel();
+            return;
+        }
 
-            // check energy cost
-            if (gameController._energy < data.energyCost)
+        // check station type restriction
+        if (data.allowedStation != StationType.Any)
+        {
+            string currentRoom = gameController._currentRoom.ToString().ToLower();
+            string requiredStation = data.allowedStation.ToString().ToLower();
+
+            if (currentRoom != requiredStation)
             {
-                StartCoroutine(ShowMessage("Not enough energy!"));
+                StartCoroutine(ShowMessage("This card can't be used here!"));
                 OnCancel();
                 return;
             }
+        }
 
-            // check station type restriction
-            if (data.allowedStation != StationType.Any)
+        // check station healthy requirement
+        if (data.requirement == CardRequirement.StationHealthy)
+        {
+            string currentRoomName = gameController._currentRoom.ToString();
+            bool isDamaged = gameController._damagedRooms.Exists(r =>
+                r.ToLower() == currentRoomName.ToLower());
+
+            if (isDamaged)
             {
-                string currentRoom = gameController._currentRoom.ToString().ToLower();
-                string requiredStation = data.allowedStation.ToString().ToLower();
-
-                if (currentRoom != requiredStation)
-                {
-                    StartCoroutine(ShowMessage("This card can't be used here!"));
-                    OnCancel();
-                    return;
-                }
+                StartCoroutine(ShowMessage("This station is damaged! Repair it first."));
+                OnCancel();
+                return;
             }
+        }
 
-            // check station healthy requirement
-            if (data.requirement == CardRequirement.StationHealthy)
+        // check station damaged requirement
+        if (data.requirement == CardRequirement.StationDamaged)
+        {
+            Debug.Log("openedFromPassage = " + openedFromPassage + " | currentPassage = " + currentPassage);
+            if (openedFromPassage)
+            {
+                // passage repair - always valid
+            }
+            else
             {
                 string currentRoomName = gameController._currentRoom.ToString();
                 bool isDamaged = gameController._damagedRooms.Exists(r =>
                     r.ToLower() == currentRoomName.ToLower());
 
-                if (isDamaged)
+                if (!isDamaged)
                 {
-                    StartCoroutine(ShowMessage("This station is damaged! Repair it first."));
+                    StartCoroutine(ShowMessage("This station isn't damaged!"));
                     OnCancel();
                     return;
                 }
             }
-
-            // check station damaged requirement
-            if (data.requirement == CardRequirement.StationDamaged)
-            {
-                if (openedFromPassage)
-                {
-                    // passage repair - always valid
-                }
-                else
-                {
-                    string currentRoomName = gameController._currentRoom.ToString();
-                    bool isDamaged = gameController._damagedRooms.Exists(r =>
-                        r.ToLower() == currentRoomName.ToLower());
-
-                    if (!isDamaged)
-                    {
-                        StartCoroutine(ShowMessage("This station isn't damaged!"));
-                        OnCancel();
-                        return;
-                    }
-                }
-            }
-
-            // deduct energy
-            gameController._energy -= data.energyCost;
         }
 
-        ExecuteConfirm();
+        // deduct energy
+        gameController._energy -= data.energyCost;
     }
+
+    ExecuteConfirm();
+}
 
     private void ExecuteConfirm()
 {
@@ -273,12 +274,14 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     IEnumerator CloseStationDelay()
-    {
-        yield return new WaitForSeconds(0.4f);
-        GameObject stationPanel = GameObject.Find("StationPanel");
-        if (stationPanel != null)
-            stationPanel.SetActive(false);
-    }
+{
+    yield return new WaitForSeconds(0.4f);
+    openedFromPassage = false;
+    currentPassage = null;
+    GameObject stationPanel = GameObject.Find("StationPanel");
+    if (stationPanel != null)
+        stationPanel.SetActive(false);
+}
 
     public void OnCancel()
     {

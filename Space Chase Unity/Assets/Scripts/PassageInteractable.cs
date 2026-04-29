@@ -13,14 +13,16 @@ public class PassageInteractable : MonoBehaviour
 
     private bool doorClosed;
     private bool damaged;
+    private bool playerInRange;
 
     void Awake()
-{
-    damaged = false;
-    if (_outline != null) _outline.SetActive(false);
-    _player.Interact += OpenDoor;
-    _player.LeftInteractZone += CloseDoor;
-}
+    {
+        damaged = false;
+        playerInRange = false;
+        if (_outline != null) _outline.SetActive(false);
+        _player.Interact += OpenDoor;
+        _player.LeftInteractZone += CloseDoor;
+    }
 
     void Update()
     {
@@ -43,13 +45,14 @@ public class PassageInteractable : MonoBehaviour
 
     void OpenDoor()
     {
+        if (!playerInRange) return;
+
         if (damaged)
         {
             doorClosed = true;
             door.SetActive(doorClosed);
             stationPanel.SetActive(true);
 
-            // hide station messages
             RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
             if (slot != null)
             {
@@ -75,7 +78,7 @@ public class PassageInteractable : MonoBehaviour
             door.SetActive(doorClosed);
 
             RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
-            if (slot != null)
+            if (slot != null && !slot.openedFromPassage)
             {
                 slot.openedFromPassage = false;
                 slot.currentPassage = null;
@@ -87,7 +90,7 @@ public class PassageInteractable : MonoBehaviour
     {
         if (damaged)
         {
-            if (!stationPanel.activeSelf)
+            if (stationPanel.activeSelf)
             {
                 RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
                 if (slot != null)
@@ -106,29 +109,30 @@ public class PassageInteractable : MonoBehaviour
     }
 
     public void RepairPassage()
-{
-    damaged = false;
-    gameObject.tag = "Passage";
-    doorClosed = false;
-    door.SetActive(doorClosed);
-
-    // find controller by searching all controllers
-    PassageController[] controllers = FindObjectsOfType<PassageController>();
-    foreach (PassageController controller in controllers)
     {
-        if (controller.passage == this)
+        damaged = false;
+        gameObject.tag = "Passage";
+        doorClosed = false;
+        door.SetActive(doorClosed);
+
+        PassageController[] controllers = FindObjectsOfType<PassageController>();
+        foreach (PassageController controller in controllers)
         {
-            controller.RepairPassage();
-            break;
+            if (controller.passage == this)
+            {
+                controller.RepairPassage();
+                break;
+            }
         }
     }
-}
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player") && !damaged)
+        if (col.gameObject.CompareTag("Player"))
         {
-            _outline.SetActive(true);
+            playerInRange = true;
+            if (!damaged)
+                _outline.SetActive(true);
         }
     }
 
@@ -136,6 +140,7 @@ public class PassageInteractable : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
+            playerInRange = false;
             _outline.SetActive(false);
         }
     }
