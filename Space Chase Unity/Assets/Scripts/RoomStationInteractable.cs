@@ -29,29 +29,70 @@ public class RoomStationInteractable : MonoBehaviour
     }
 
     void OpenStation()
+<<<<<<< Updated upstream
     {
         
 
         if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
             return;
+=======
+{
+    if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
+        return;
+>>>>>>> Stashed changes
 
+    bool isDamaged = gameController._damagedRooms.Exists(r =>
+        r.ToLower() == roomID.ToLower());
+
+    if (isDamaged)
+    {
+        if (station != null)
+        {
+            station.SetActive(true);
+            RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
+            if (slot != null)
+                slot.UpdateStationMessage(true);
+        }
+    }
+    else
+    {
         if (cardPicker != null)
             cardPicker.OpenCardPicker();
         else if (station != null)
+        {
             station.SetActive(true);
+<<<<<<< Updated upstream
 
         m_MyAudioSource.Play();
+=======
+            RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
+            if (slot != null)
+                slot.UpdateStationMessage(false);
+        }
+>>>>>>> Stashed changes
     }
+}
 
     void CloseStation()
 {
     if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
         return;
 
-    if (cardPicker != null)
-        cardPicker.CloseCardPicker();
-    else if (station != null)
-        station.SetActive(false);
+    bool isDamaged = gameController._damagedRooms.Exists(r =>
+        r.ToLower() == roomID.ToLower());
+
+    if (isDamaged)
+    {
+        if (station != null)
+            station.SetActive(false);
+    }
+    else
+    {
+        if (cardPicker != null)
+            cardPicker.CloseCardPicker();
+        else if (station != null)
+            station.SetActive(false);
+    }
 }
 
     void OnTriggerEnter2D(Collider2D col)
