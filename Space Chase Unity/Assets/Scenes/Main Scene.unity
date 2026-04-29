@@ -532,6 +532,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: stationPanel
+      value: 
+      objectReference: {fileID: 754843618}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1823,6 +1827,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: stationPanel
+      value: 
+      objectReference: {fileID: 754843618}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4447,6 +4455,8 @@ MonoBehaviour:
   OnCardConfirmed:
     m_PersistentCalls:
       m_Calls: []
+  openedFromPassage: 0
+  currentPassage: {fileID: 0}
 --- !u!114 &1018085523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7608,6 +7618,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: stationPanel
+      value: 
+      objectReference: {fileID: 754843618}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7936,6 +7950,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: stationPanel
+      value: 
+      objectReference: {fileID: 754843618}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8017,6 +8035,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: stationPanel
+      value: 
+      objectReference: {fileID: 754843618}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9537,6 +9559,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: stationPanel
+      value: 
+      objectReference: {fileID: 754843618}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -81,10 +81,11 @@ public class PlayerMovement : MonoBehaviour
         {
             canInteract = true;
         }
-        if (col.gameObject.CompareTag("Passage"))
-        {
-            inPassage = true;
-        }
+        if (col.gameObject.CompareTag("Passage") || 
+    col.gameObject.CompareTag("DamagedPassage"))
+{
+    inPassage = true;
+}
         if (col.gameObject.CompareTag("Station"))
         {
             atStation = true;
@@ -96,11 +97,12 @@ public class PlayerMovement : MonoBehaviour
         {
             canInteract = false;
         }
-        if(col.gameObject.CompareTag("Passage")||col.gameObject.CompareTag("DamagedPassage"))
-        {
-            LeftInteractZone?.Invoke();
-            inPassage = false;
-        }
+        if (col.gameObject.CompareTag("Passage") || 
+    col.gameObject.CompareTag("DamagedPassage"))
+{
+    LeftInteractZone?.Invoke();
+    inPassage = false;
+}
         if (col.gameObject.CompareTag("Station"))
         {
             LeftStation?.Invoke();

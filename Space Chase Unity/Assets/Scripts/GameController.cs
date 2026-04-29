@@ -140,7 +140,6 @@ public class GameController : MonoBehaviour
 
     private void useStation()
     {
-        _energy -= 1;
         Debug.Log("Used station");
         Debug.Log("Energy = " + _energy);
     }

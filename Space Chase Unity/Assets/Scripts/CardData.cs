@@ -14,7 +14,8 @@ public enum CardRequirement
 {
     None,
     StationDamaged,
-    StationHealthy
+    StationHealthy,
+    PassageDamaged
 }
 
 [CreateAssetMenu(fileName = "NewCard", menuName = "Cards/CardData")]

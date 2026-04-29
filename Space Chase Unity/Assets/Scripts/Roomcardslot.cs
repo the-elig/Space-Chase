@@ -30,6 +30,9 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     private GameObject cardOriginalSlot;
     private HorizontalCardHolder cardHolder;
 
+    [HideInInspector] public bool openedFromPassage = false;
+    [HideInInspector] public PassageInteractable currentPassage = null;
+
     void Start()
     {
         if (confirmButton != null) confirmButton.SetActive(true);
@@ -118,15 +121,22 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             // check damage requirement
             if (data.requirement == CardRequirement.StationDamaged)
             {
-                string currentRoomName = gameController._currentRoom.ToString();
-                bool isDamaged = gameController._damagedRooms.Exists(r =>
-                    r.ToLower() == currentRoomName.ToLower());
-
-                if (!isDamaged)
+                if (openedFromPassage)
                 {
-                    Debug.Log("Station is not damaged!");
-                    OnCancel();
-                    return;
+                    // passage repair - always valid since we only open from damaged passages
+                }
+                else
+                {
+                    string currentRoomName = gameController._currentRoom.ToString();
+                    bool isDamaged = gameController._damagedRooms.Exists(r =>
+                        r.ToLower() == currentRoomName.ToLower());
+
+                    if (!isDamaged)
+                    {
+                        Debug.Log("Station is not damaged!");
+                        OnCancel();
+                        return;
+                    }
                 }
             }
 
@@ -147,25 +157,32 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         if (slotImage != null)
             slotImage.color = emptyColor;
 
-        // if it was a repair card, fix the room
+        // if it was a repair card, fix the room or passage
         if (cardToDestroy.cardData != null &&
             cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
         {
-            string currentRoomName = gameController._currentRoom.ToString();
-
-            // remove from damaged rooms list
-            gameController._damagedRooms.RemoveAll(r =>
-                r.ToLower() == currentRoomName.ToLower());
-
-            // find the RoomController and set damaged to false
-            RoomController[] rooms = FindObjectsOfType<RoomController>();
-            foreach (RoomController room in rooms)
+            if (openedFromPassage && currentPassage != null)
             {
-                if (room.gameObject.name.ToLower().Contains(currentRoomName.ToLower()))
+                currentPassage.RepairPassage();
+                openedFromPassage = false;
+                currentPassage = null;
+            }
+            else
+            {
+                string currentRoomName = gameController._currentRoom.ToString();
+
+                gameController._damagedRooms.RemoveAll(r =>
+                    r.ToLower() == currentRoomName.ToLower());
+
+                RoomController[] rooms = FindObjectsOfType<RoomController>();
+                foreach (RoomController room in rooms)
                 {
-                    room.damaged = false;
-                    room.warning.SetActive(false);
-                    break;
+                    if (room.gameObject.name.ToLower().Contains(currentRoomName.ToLower()))
+                    {
+                        room.damaged = false;
+                        room.warning.SetActive(false);
+                        break;
+                    }
                 }
             }
         }
@@ -193,7 +210,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     IEnumerator CloseStationDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
         GameObject stationPanel = GameObject.Find("StationPanel");
         if (stationPanel != null)
             stationPanel.SetActive(false);
