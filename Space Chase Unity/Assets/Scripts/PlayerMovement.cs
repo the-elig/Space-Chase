@@ -21,11 +21,16 @@ public class PlayerMovement : MonoBehaviour
     public event EmptyDelegate LeftStation;
     public event EmptyDelegate StationInteract;
 
+    AudioSource m_MyAudioSource;
+
     void Start()
     {
         canInteract = false;
         inPassage = false;
         atStation = false;
+
+        m_MyAudioSource = GetComponent<AudioSource>();
+
     }
 
     void Update()
@@ -63,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (inPassage && controller._energy >= 1) //doors
             {
+                m_MyAudioSource.Play();
                 Interact?.Invoke();
                 canInteract = false;
             }
