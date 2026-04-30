@@ -6,16 +6,13 @@ using DG.Tweening;
 using System.Collections;
 using TMPro;
 
-public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [Header("Room")]
-    public string roomName = "Weapons";
-
     [Header("References")]
     [SerializeField] private Image slotImage;
-    [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject cancelButton;
     [SerializeField] private GameController gameController;
+    [SerializeField] private CardUpgraderUI cardUpgrader;
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private TMP_Text damagedText;
     [SerializeField] private TMP_Text normalText;
@@ -39,7 +36,6 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     void Awake()
 {
-    if (confirmButton != null) confirmButton.SetActive(true);
     if (cancelButton != null) cancelButton.SetActive(true);
     if (messageText != null) messageText.gameObject.SetActive(false);
     if (damagedText != null) damagedText.gameObject.SetActive(false);

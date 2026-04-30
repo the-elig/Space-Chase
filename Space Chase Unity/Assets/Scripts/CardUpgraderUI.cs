@@ -10,6 +10,8 @@ public class CardUpgraderUI : MonoBehaviour
     [SerializeField] private PlayerMovement player;
     [SerializeField] private Deck deck;
     [SerializeField] private GameObject cardUpgraderPanel;
+    [SerializeField] private UpgradeCardSlot slot1;
+    [SerializeField] private UpgradeCardSlot slot2;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private TMP_Text messageText;
 
@@ -53,14 +55,17 @@ public class CardUpgraderUI : MonoBehaviour
             stationPanel.SetActive(true);
 
             // hide station specific elements
+            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
+            if (trippy != null) trippy.SetActive(true);
+
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(false);
 
             GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
-            if (crt != null) crt.SetActive(false);
+            if (crt != null) crt.SetActive(true);
 
             GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
-            if (border != null) border.SetActive(false);
+            if (border != null) border.SetActive(true);
         }
     }
     IEnumerator HideMessage()
@@ -71,6 +76,8 @@ public class CardUpgraderUI : MonoBehaviour
     }
     public void CloseCardUpgrader()
 {
+    slot1.OnCancel();
+    slot2.OnCancel();
     if (cardUpgraderPanel.activeSelf)
     {
         cardUpgraderPanel.SetActive(false);
@@ -78,6 +85,9 @@ public class CardUpgraderUI : MonoBehaviour
         if (stationPanel != null)
         {
             confirmButton.SetActive(false);
+
+            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
+            if (trippy != null) trippy.SetActive(true);
 
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(true);

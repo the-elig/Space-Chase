@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     public event IntDelegate damageRoom;
 
     public int _energy; // add five at the beginning of each player turn
+    [SerializeField] private int _gainEnergy;
     public int _turnsLeft;
     public bool _isEnemyTurn;
 
@@ -65,7 +66,7 @@ public class GameController : MonoBehaviour
             playerLoss();
         }
         int room_id = GetRan();
-        _energy += 5; // energy gain is before damage so we'll need to add another thing later to switch to player turn!
+        _energy += _gainEnergy; // energy gain is before damage so we'll need to add another thing later to switch to player turn!
         Debug.Log("Energy = " + _energy);
         DamagePlayerShip(room_id);
     }
