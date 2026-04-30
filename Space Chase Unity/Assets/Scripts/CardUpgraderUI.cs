@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class CardUpgraderUI : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GameController gameController;
+    [SerializeField] private PlayerMovement player;
     [SerializeField] private Deck deck;
-    [SerializeField] private GameObject trippyBg;
     [SerializeField] private GameObject cardUpgraderPanel;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private TMP_Text messageText;
+
     private HorizontalCardHolder cardHolder;
     private GameObject stationPanel;
     void Start()
     {
+        player.LeftStation += CloseCardUpgrader;
         cardHolder = FindObjectOfType<HorizontalCardHolder>(true);
         if (gameController == null)
             gameController = FindObjectOfType<GameController>();
@@ -36,7 +39,7 @@ public class CardUpgraderUI : MonoBehaviour
             }
             return;
         }
-        this.gameObject.SetActive(true);
+        cardUpgraderPanel.SetActive(true);
         // find StationPanel even if inactive
         if (stationPanel == null)
         {
@@ -49,10 +52,7 @@ public class CardUpgraderUI : MonoBehaviour
         {
             stationPanel.SetActive(true);
 
-            trippyBg.SetActive(true);
             // hide station specific elements
-            
-
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(false);
 
@@ -77,8 +77,7 @@ public class CardUpgraderUI : MonoBehaviour
         
         if (stationPanel != null)
         {
-            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
-            if (trippy != null) trippy.SetActive(true);
+            confirmButton.SetActive(false);
 
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(true);
