@@ -7,6 +7,7 @@ public class RoomStationInteractable : MonoBehaviour
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private GameObject station;
     [SerializeField] private CardPickerUI cardPicker;
+    [SerializeField] private CardUpgraderUI cardUpgrader;
     [SerializeField] private GameController gameController;
     [SerializeField] private string roomID;
     [SerializeField] private GameObject _outline;
@@ -32,7 +33,7 @@ public class RoomStationInteractable : MonoBehaviour
 
         bool isDamaged = gameController._damagedRooms.Exists(r =>
             r.ToLower() == roomID.ToLower());
-
+        
         if (isDamaged)
         {
             if (station != null)
@@ -46,14 +47,18 @@ public class RoomStationInteractable : MonoBehaviour
         else
         {
             if (cardPicker != null)
-                cardPicker.OpenCardPicker();
+                cardPicker.OpenCardPicker(); //for engine and shields rn
+            else if(cardUpgrader != null) {
+                Debug.Log("card upgrader station");
+                cardUpgrader.OpenCardUpgrader();
+                return; }
             else if (station != null)
             {
                 station.SetActive(true);
                 m_MyAudioSource.Play();
                 RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
-                if (slot != null)
-                    slot.UpdateStationMessage(false);
+                if (slot != null) {
+                    slot.UpdateStationMessage(false); } //updates damaged message to no longer appear
             }
         }
     }

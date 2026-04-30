@@ -1,0 +1,96 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class CardUpgraderUI : MonoBehaviour
+{
+    [SerializeField] private GameController gameController;
+    [SerializeField] private Deck deck;
+    [SerializeField] private GameObject trippyBg;
+    [SerializeField] private GameObject cardUpgraderPanel;
+    [SerializeField] private GameObject confirmButton;
+    [SerializeField] private TMP_Text messageText;
+    private HorizontalCardHolder cardHolder;
+    private GameObject stationPanel;
+    void Start()
+    {
+        cardHolder = FindObjectOfType<HorizontalCardHolder>(true);
+        if (gameController == null)
+            gameController = FindObjectOfType<GameController>();
+
+        confirmButton.SetActive(false);
+    }
+    void Update()
+    {
+    }
+    public void OpenCardUpgrader()
+    {
+        if (gameController._energy < 1)
+        {
+            if (messageText != null)
+            {
+                messageText.text = "Not enough energy!";
+                messageText.gameObject.SetActive(true);
+                StartCoroutine(HideMessage());
+            }
+            return;
+        }
+        this.gameObject.SetActive(true);
+        // find StationPanel even if inactive
+        if (stationPanel == null)
+        {
+            Canvas canvas = FindObjectOfType<Canvas>(true);
+            if (canvas != null)
+                stationPanel = canvas.transform.Find("StationPanel")?.gameObject;
+        }
+        // enable StationPanel so cards work
+        if (stationPanel != null)
+        {
+            stationPanel.SetActive(true);
+
+            trippyBg.SetActive(true);
+            // hide station specific elements
+            
+
+            GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
+            if (weaponSlot != null) weaponSlot.SetActive(false);
+
+            GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
+            if (crt != null) crt.SetActive(false);
+
+            GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
+            if (border != null) border.SetActive(false);
+        }
+    }
+    IEnumerator HideMessage()
+    {
+        yield return new WaitForSeconds(2f);
+        if (messageText != null)
+            messageText.gameObject.SetActive(false);
+    }
+    public void CloseCardUpgrader()
+{
+    if (cardUpgraderPanel.activeSelf)
+    {
+        cardUpgraderPanel.SetActive(false);
+        
+        if (stationPanel != null)
+        {
+            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
+            if (trippy != null) trippy.SetActive(true);
+
+            GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
+            if (weaponSlot != null) weaponSlot.SetActive(true);
+
+            GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
+            if (crt != null) crt.SetActive(true);
+
+            GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
+            if (border != null) border.SetActive(true);
+
+            stationPanel.SetActive(false);
+        }
+    }
+}
+}

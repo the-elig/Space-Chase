@@ -28,6 +28,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [Header("Events")]
     public UnityEvent<Card> OnCardConfirmed;
 
+    [SerializeField] private bool upgradeStation;
     private Card currentCard = null;
     private Transform cardOriginalParent;
     private int cardOriginalSiblingIndex;
@@ -260,6 +261,10 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         if (cardOriginalSlot != null)
             Destroy(cardOriginalSlot);
     }
+}
+public void UpgradeConfirm()
+{
+        
 }
 
     IEnumerator ShowMessage(string message, float duration = 2f)
