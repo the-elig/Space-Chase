@@ -4266,6 +4266,14 @@ PrefabInstance:
       propertyPath: roomName
       value: Upgrade
       objectReference: {fileID: 0}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: confirmButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: upgradeStation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4047895611071197661, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9848,6 +9856,14 @@ PrefabInstance:
     - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: roomName
       value: Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: confirmButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: upgradeStation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4047895611071197661, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: m_Pivot.x

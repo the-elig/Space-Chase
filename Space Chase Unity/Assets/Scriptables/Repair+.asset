@@ -15,6 +15,7 @@ MonoBehaviour:
   cardName: Repair+
   cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
   upgradedCardName: 
+  upgradedCard: 1
   cardDescription: Upgraded version of Repair Card, repair two rooms at the cost
     of one energy
   energyCost: 1
