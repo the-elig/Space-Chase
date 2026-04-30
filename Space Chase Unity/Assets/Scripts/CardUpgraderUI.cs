@@ -28,6 +28,7 @@ public class CardUpgraderUI : MonoBehaviour
     }
     void Update()
     {
+
     }
     public void OpenCardUpgrader()
     {
@@ -75,31 +76,41 @@ public class CardUpgraderUI : MonoBehaviour
             messageText.gameObject.SetActive(false);
     }
     public void CloseCardUpgrader()
-{
-    slot1.OnCancel();
-    slot2.OnCancel();
-    if (cardUpgraderPanel.activeSelf)
     {
-        cardUpgraderPanel.SetActive(false);
-        
-        if (stationPanel != null)
+        slot1.OnCancel();
+        slot2.OnCancel();
+        if (cardUpgraderPanel.activeSelf)
         {
-            confirmButton.SetActive(false);
+            cardUpgraderPanel.SetActive(false);
+            
+            if (stationPanel != null)
+            {
+                confirmButton.SetActive(false);
 
-            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
-            if (trippy != null) trippy.SetActive(true);
+                GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
+                if (trippy != null) trippy.SetActive(true);
 
-            GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
-            if (weaponSlot != null) weaponSlot.SetActive(true);
+                GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
+                if (weaponSlot != null) weaponSlot.SetActive(true);
 
-            GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
-            if (crt != null) crt.SetActive(true);
+                GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
+                if (crt != null) crt.SetActive(true);
 
-            GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
-            if (border != null) border.SetActive(true);
+                GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
+                if (border != null) border.SetActive(true);
 
-            stationPanel.SetActive(false);
+                stationPanel.SetActive(false);
+            }
         }
     }
-}
+    
+    public void AllowUpgrade()
+    {
+        if(slot1.GetCardName() == slot2.GetCardName())
+        {
+            Debug.Log("upgrade confirmed!");
+            confirmButton.SetActive(true);
+        }
+
+    }
 }

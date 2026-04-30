@@ -5816,7 +5816,7 @@ GameObject:
   - component: {fileID: 1260868654}
   - component: {fileID: 1260868653}
   m_Layer: 5
-  m_Name: Button
+  m_Name: UpgradeConfirmButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5885,7 +5885,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1260868654}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1444854706}
+        m_TargetAssemblyTypeName: CardUpgraderUI, Assembly-CSharp
+        m_MethodName: ConfirmUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1260868654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8619,7 +8631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Combine Two Cards to Upgrade Them!
+  m_text: Combine Two Cards to obtain an Upgraded Version of them!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
   m_sharedMaterial: {fileID: 522495681595056605, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
@@ -8653,7 +8665,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

@@ -74,6 +74,7 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
     void AcceptCard(Card card)
     {
+
         currentCard = card;
         cardOriginalParent = card.transform.parent;
         cardOriginalSiblingIndex = card.transform.GetSiblingIndex();
@@ -99,10 +100,20 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
                 tiltParent.DORotate(Vector3.zero, 0.2f);
         }
 
-        if (slotImage != null)
-            slotImage.color = filledColor;
+        if (slotImage != null) {
+            slotImage.color = filledColor; }
+
+        cardUpgrader.AllowUpgrade();
     }
 
+    public string GetCardName()
+    {
+        if (currentCard.cardData != null)
+        {
+            CardData data = currentCard.cardData;
+            return data.cardName;
+        } else return string.Empty;
+    }
     public void OnConfirm()
 {
     Debug.Log("Card: " + currentCard.cardData?.cardName + " Room: " + gameController._currentRoom + " Requirement: " + currentCard.cardData?.requirement);
@@ -118,20 +129,6 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
             StartCoroutine(ShowMessage("Not enough energy!"));
             OnCancel();
             return;
-        }
-
-        // check station type restriction
-        if (data.allowedStation != StationType.Any)
-        {
-            string currentRoom = gameController._currentRoom.ToString().ToLower();
-            string requiredStation = data.allowedStation.ToString().ToLower();
-
-            if (currentRoom != requiredStation)
-            {
-                StartCoroutine(ShowMessage("This card can't be used here!"));
-                OnCancel();
-                return;
-            }
         }
 
         // check station healthy requirement
