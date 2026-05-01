@@ -5418,6 +5418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6576cdbf4c94c452d9ca6cd700e288f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomName: Weapons
   slotImage: {fileID: 1141077004}
   cancelButton: {fileID: 655289519}
   gameController: {fileID: 1356453479}
@@ -7531,6 +7532,7 @@ MonoBehaviour:
   slot2: {fileID: 1141077006}
   confirmButton: {fileID: 1260868651}
   messageText: {fileID: 1616328448}
+  cardHolder: {fileID: 0}
 --- !u!1 &1461093865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7990387429854959164, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
@@ -10953,6 +10955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6576cdbf4c94c452d9ca6cd700e288f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomName: Weapons
   slotImage: {fileID: 2005458049}
   cancelButton: {fileID: 657663906}
   gameController: {fileID: 1356453479}
