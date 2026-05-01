@@ -15,7 +15,7 @@ public class CardUpgraderUI : MonoBehaviour
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private TMP_Text messageText;
 
-    private HorizontalCardHolder cardHolder;
+    [SerializeField] private HorizontalCardHolder cardHolder;
     private GameObject stationPanel;
     void Start()
     {

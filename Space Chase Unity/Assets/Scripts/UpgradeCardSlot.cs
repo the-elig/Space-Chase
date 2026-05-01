@@ -8,6 +8,9 @@ using TMPro;
 
 public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [Header("Room")]
+    public string roomName = "Weapons";
+    
     [Header("References")]
     [SerializeField] private Image slotImage;
     [SerializeField] private GameObject cancelButton;
@@ -81,7 +84,7 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
         cardOriginalSlot = card.transform.parent.gameObject;
 
         if (cardHolder != null)
-            cardHolder.RemoveCard(card);
+            cardHolder.RemoveCard(card); 
 
         if (card.cardVisual != null)
             card.cardVisual.pauseFollow = true;
@@ -108,11 +111,11 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
     public string GetCardName()
     {
-        if (currentCard.cardData != null)
-        {
+        //if (currentCard.cardData != null)
+        //{
             CardData data = currentCard.cardData;
             return data.cardName;
-        } else return string.Empty;
+        //} else return string.Empty;
     }
     public CardData GetCardUpgrade()
     {
@@ -140,7 +143,7 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
     if (slotImage != null)
         slotImage.color = emptyColor;
 
-    //StartCoroutine(CloseStationDelay());
+    StartCoroutine(CloseStationDelay());
 
     if (cardToDestroy.cardVisual != null)
     {

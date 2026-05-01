@@ -143,6 +143,7 @@ public class HorizontalCardHolder : MonoBehaviour
 
     void Update()
     {
+        RemoveNulls();
         if (Input.GetKeyDown(KeyCode.Delete))
         {
             if (hoveredCard != null)
@@ -227,5 +228,10 @@ public class HorizontalCardHolder : MonoBehaviour
             card.name = cards.Count.ToString();
             StartCoroutine(ReflowCards());
         }
+    }
+
+    void RemoveNulls()
+    {
+        cards = cards.Where(Card => Card != null).ToList();
     }
 }
