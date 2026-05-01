@@ -106,10 +106,30 @@ public class CardUpgraderUI : MonoBehaviour
     
     public void AllowUpgrade()
     {
+        confirmButton.SetActive(false);
         if(slot1.GetCardName() == slot2.GetCardName())
         {
-            Debug.Log("upgrade confirmed!");
             confirmButton.SetActive(true);
+        }
+    }
+
+    public void ConfirmUpgrade()
+    {
+        // if you don't have enough energy, cancel both
+        if (gameController._energy < 1)
+        {
+            slot1.OnCancel();
+            slot2.OnCancel();
+            return;
+        } else
+        {
+            cardHolder.AddCardToHand(slot1.GetCardUpgrade());
+            // delete cards and deduct energy
+            slot1.OnConfirm();
+            slot2.OnConfirm();
+            gameController._energy -= 1;
+
+
         }
 
     }

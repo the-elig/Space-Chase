@@ -114,63 +114,17 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
             return data.cardName;
         } else return string.Empty;
     }
+    public CardData GetCardUpgrade()
+    {
+        CardData data = currentCard.cardData;
+        return data.upgrade;
+    }
     public void OnConfirm()
 {
-    Debug.Log("Card: " + currentCard.cardData?.cardName + " Room: " + gameController._currentRoom + " Requirement: " + currentCard.cardData?.requirement);
-    if (currentCard == null) return;
-
     if (currentCard.cardData != null)
     {
         CardData data = currentCard.cardData;
 
-        // check energy cost
-        if (gameController._energy < data.energyCost)
-        {
-            StartCoroutine(ShowMessage("Not enough energy!"));
-            OnCancel();
-            return;
-        }
-
-        // check station healthy requirement
-        if (data.requirement == CardRequirement.StationHealthy)
-        {
-            string currentRoomName = gameController._currentRoom.ToString();
-            bool isDamaged = gameController._damagedRooms.Exists(r =>
-                r.ToLower() == currentRoomName.ToLower());
-
-            if (isDamaged)
-            {
-                StartCoroutine(ShowMessage("This station is damaged! Repair it first."));
-                OnCancel();
-                return;
-            }
-        }
-
-        // check station damaged requirement
-        if (data.requirement == CardRequirement.StationDamaged)
-        {
-            Debug.Log("openedFromPassage = " + openedFromPassage + " | currentPassage = " + currentPassage);
-            if (openedFromPassage)
-            {
-                // passage repair - always valid
-            }
-            else
-            {
-                string currentRoomName = gameController._currentRoom.ToString();
-                bool isDamaged = gameController._damagedRooms.Exists(r =>
-                    r.ToLower() == currentRoomName.ToLower());
-
-                if (!isDamaged)
-                {
-                    StartCoroutine(ShowMessage("This station isn't damaged!"));
-                    OnCancel();
-                    return;
-                }
-            }
-        }
-
-        // deduct energy
-        gameController._energy -= data.energyCost;
     }
 
     ExecuteConfirm();
@@ -186,56 +140,7 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
     if (slotImage != null)
         slotImage.color = emptyColor;
 
-    if (cardToDestroy.cardData != null)
-    {
-        // if it was a repair card, fix the room or passage
-        if (cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
-        {
-            if (openedFromPassage && currentPassage != null)
-            {
-                currentPassage.RepairPassage();
-                openedFromPassage = false;
-                currentPassage = null;
-            }
-            else
-            {
-                // remove from damaged rooms list
-                string currentRoomName = gameController._currentRoom.ToString();
-                gameController._damagedRooms.RemoveAll(r =>
-                    r.ToLower() == currentRoomName.ToLower());
-
-                // find room by ID and repair it
-                int currentRoomId = -1;
-                switch (gameController._currentRoom)
-                {
-                    case GameController.PlayerLocation.comms: currentRoomId = 0; break;
-                    case GameController.PlayerLocation.engine: currentRoomId = 1; break;
-                    case GameController.PlayerLocation.weapons: currentRoomId = 2; break;
-                    case GameController.PlayerLocation.bridge: currentRoomId = 3; break;
-                    case GameController.PlayerLocation.shields: currentRoomId = 4; break;
-                }
-
-                RoomController[] rooms = FindObjectsOfType<RoomController>();
-                foreach (RoomController room in rooms)
-                {
-                    if (room.id == currentRoomId)
-                    {
-                        room.damaged = false;
-                        room.warning.SetActive(false);
-                        break;
-                    }
-                }
-            }
-        }
-        // if it was a station card, reduce turns left
-        else if (cardToDestroy.cardData.requirement == CardRequirement.StationHealthy &&
-                 cardToDestroy.cardData.allowedStation != StationType.Any)
-        {
-            gameController._turnsLeft--;
-        }
-    }
-
-    StartCoroutine(CloseStationDelay());
+    //StartCoroutine(CloseStationDelay());
 
     if (cardToDestroy.cardVisual != null)
     {
@@ -254,11 +159,6 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
             Destroy(cardOriginalSlot);
     }
 }
-public void UpgradeConfirm()
-{
-        
-}
-
     IEnumerator ShowMessage(string message, float duration = 2f)
     {
         if (messageText != null)
@@ -298,6 +198,7 @@ public void UpgradeConfirm()
             slotImage.color = emptyColor;
 
         StartCoroutine(CancelAnimation(cardToReturn));
+        cardUpgrader.AllowUpgrade();
     }
 
     IEnumerator CancelAnimation(Card card)

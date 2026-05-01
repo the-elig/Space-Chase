@@ -24,7 +24,7 @@ public class CardData : ScriptableObject
     [Header("Card Info")]
     public string cardName;
     public Sprite cardArt;
-    public string upgradedCardName;
+    public CardData upgrade;
     public bool upgradedCard;
     [TextArea] public string cardDescription;
 
