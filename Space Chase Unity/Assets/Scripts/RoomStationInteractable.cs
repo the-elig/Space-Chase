@@ -9,6 +9,7 @@ public class RoomStationInteractable : MonoBehaviour
     [SerializeField] private CardPickerUI cardPicker;
     [SerializeField] private CardUpgraderUI cardUpgrader;
     [SerializeField] private GameController gameController;
+    [SerializeField] private CanvasController canvas;
     [SerializeField] private string roomID;
     [SerializeField] private GameObject _outline;
     AudioSource m_MyAudioSource;
@@ -39,6 +40,7 @@ public class RoomStationInteractable : MonoBehaviour
             if (station != null)
             {
                 station.SetActive(true);
+                canvas.UIBackground(true);
                 RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
                 if (slot != null)
                     slot.UpdateStationMessage(true);
@@ -46,6 +48,7 @@ public class RoomStationInteractable : MonoBehaviour
         }
         else
         {
+            canvas.UIBackground(true);
             if (cardPicker != null)
                 cardPicker.OpenCardPicker(); //for engine and shields rn
             else if(cardUpgrader != null) {
@@ -73,15 +76,22 @@ public class RoomStationInteractable : MonoBehaviour
 
         if (isDamaged)
         {
-            if (station != null)
+            if (station != null) {
                 station.SetActive(false);
+                canvas.UIBackground(false);
+            }
         }
         else
         {
-            if (cardPicker != null)
+            if (cardPicker != null) {
                 cardPicker.CloseCardPicker();
-            else if (station != null)
                 station.SetActive(false);
+                canvas.UIBackground(false);
+            }
+            else if (station != null) {
+                station.SetActive(false);
+                canvas.UIBackground(false);
+            }
         }
     }
 

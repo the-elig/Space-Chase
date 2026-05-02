@@ -8,7 +8,8 @@ public class CanvasController : MonoBehaviour
 {
     [SerializeField] private GameController _gameController;
 
-    // UI elements
+    [Header("UI Elements")]
+    [SerializeField] private GameObject uiTemplate;
     [SerializeField] private GameObject map;
 
     [SerializeField] private TMP_Text energyText;
@@ -79,6 +80,11 @@ public class CanvasController : MonoBehaviour
         turnsLeftSmallObj.SetActive(!enemy);
         endTurnObj.SetActive(!enemy);
         turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
+    }
+
+    public void UIBackground(bool active)
+    {
+        uiTemplate.SetActive(active);
     }
    
 }

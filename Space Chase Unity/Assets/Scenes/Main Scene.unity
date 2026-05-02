@@ -529,6 +529,10 @@ PrefabInstance:
       value: EngineToShields
       objectReference: {fileID: 0}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
@@ -1157,17 +1161,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141990615}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 754843619}
+  m_Father: {fileID: 1777170612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.005004883, y: 0.0024719238}
-  m_SizeDelta: {x: -0.01001, y: -0.005127}
+  m_SizeDelta: {x: 789.99, y: 429.99487}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141990617
 MonoBehaviour:
@@ -2057,12 +2061,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 754843619}
+  m_Father: {fileID: 1777170612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 790, y: 430}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &298510128
 MonoBehaviour:
@@ -2373,6 +2377,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EngineToWeapons
       objectReference: {fileID: 0}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: _player
       value: 
@@ -3341,81 +3349,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594074175}
   m_CullTransparentMesh: 1
---- !u!1 &600175522
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 600175523}
-  - component: {fileID: 600175525}
-  - component: {fileID: 600175524}
-  m_Layer: 5
-  m_Name: Trippy-BG
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &600175523
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600175522}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2112370403}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.005004883, y: 0.0024719238}
-  m_SizeDelta: {x: -0.01001, y: -0.005127}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &600175524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600175522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.54509807, b: 0, a: 0.6156863}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &600175525
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600175522}
-  m_CullTransparentMesh: 1
 --- !u!1001 &622490860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3424,6 +3357,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: roomID
       value: weapons
@@ -3440,6 +3377,10 @@ PrefabInstance:
       propertyPath: cardUpgrader
       value: 
       objectReference: {fileID: 1444854706}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: stationSlotObj
       value: 
@@ -3660,6 +3601,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1777170612}
   - {fileID: 242682320}
   - {fileID: 981561008}
   - {fileID: 1751827890}
@@ -3692,6 +3634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameController: {fileID: 1356453479}
+  uiTemplate: {fileID: 1777170611}
   map: {fileID: 242682319}
   energyText: {fileID: 1511679024}
   energyTextObj: {fileID: 1511679022}
@@ -3993,10 +3936,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 141990616}
-  - {fileID: 298510127}
   - {fileID: 1108764742}
-  - {fileID: 1424164809}
   - {fileID: 1736219480}
   - {fileID: 1018085521}
   - {fileID: 1587067317}
@@ -4016,7 +3956,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754843618}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -5557,6 +5497,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: roomID
       value: engine
       objectReference: {fileID: 0}
@@ -5572,6 +5516,14 @@ PrefabInstance:
       propertyPath: cardPicker
       value: 
       objectReference: {fileID: 1764551610}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: cardUpgrader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: stationSlotObj
       value: 
@@ -7376,12 +7328,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 754843619}
+  m_Father: {fileID: 1777170612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 8009.82, y: 1323.03}
+  m_SizeDelta: {x: 8799.82, y: 1753.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1773428102 &1424164810
 ParentConstraint:
@@ -7525,6 +7477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1356453479}
+  canvas: {fileID: 632731572}
   player: {fileID: 1469062236}
   deck: {fileID: 11400000, guid: 28ec63f4ccc53ea49bad1846786a2424, type: 2}
   cardUpgraderPanel: {fileID: 1035703970}
@@ -7533,6 +7486,7 @@ MonoBehaviour:
   confirmButton: {fileID: 1260868651}
   messageText: {fileID: 1616328448}
   cardHolder: {fileID: 0}
+  stationPanel: {fileID: 754843618}
 --- !u!1 &1461093865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7990387429854959164, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
@@ -7810,6 +7764,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: roomID
       value: comms
       objectReference: {fileID: 0}
@@ -7825,6 +7783,10 @@ PrefabInstance:
       propertyPath: _outline
       value: 
       objectReference: {fileID: 1071106772}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: stationSlotObj
       value: 
@@ -9221,6 +9183,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   deck: {fileID: 11400000, guid: 28ec63f4ccc53ea49bad1846786a2424, type: 2}
   cardPickerPanel: {fileID: 2112370402}
+  canvas: {fileID: 632731572}
   card1Image: {fileID: 1656108147}
   card2Image: {fileID: 155427429}
   card1Highlight: {fileID: 1097069083}
@@ -9376,6 +9339,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774832071}
   m_CullTransparentMesh: 1
+--- !u!1 &1777170611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1777170612}
+  m_Layer: 5
+  m_Name: StationUITemplate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1777170612
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777170611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 141990616}
+  - {fileID: 298510127}
+  - {fileID: 1424164809}
+  m_Father: {fileID: 632731571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1787195757
 GameObject:
   m_ObjectHideFlags: 0
@@ -9740,6 +9741,10 @@ PrefabInstance:
       value: BridgeToShields
       objectReference: {fileID: 0}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
@@ -10074,6 +10079,10 @@ PrefabInstance:
       value: EngineToBridge
       objectReference: {fileID: 0}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
@@ -10293,6 +10302,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 270
       objectReference: {fileID: 0}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: _player
       value: 
@@ -11607,6 +11620,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: roomID
       value: bridge
       objectReference: {fileID: 0}
@@ -11622,6 +11639,10 @@ PrefabInstance:
       propertyPath: _outline
       value: 
       objectReference: {fileID: 1437252837}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: stationSlotObj
       value: 
@@ -11894,7 +11915,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2112370403}
   - component: {fileID: 2112370405}
-  - component: {fileID: 2112370404}
   m_Layer: 5
   m_Name: CardPickerPanel
   m_TagString: Untagged
@@ -11914,7 +11934,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 600175523}
   - {fileID: 1656108150}
   - {fileID: 155427432}
   - {fileID: 1097069085}
@@ -11928,36 +11947,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2112370404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112370402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &2112370405
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11975,6 +11964,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 782774915}
     m_Modifications:
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: roomID
       value: shields
       objectReference: {fileID: 0}
@@ -11990,6 +11983,14 @@ PrefabInstance:
       propertyPath: cardPicker
       value: 
       objectReference: {fileID: 1764551610}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: cardUpgrader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: stationSlotObj
       value: 
@@ -12127,6 +12128,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: normalText
       value: 
       objectReference: {fileID: 146469933}
@@ -12138,6 +12143,10 @@ PrefabInstance:
       propertyPath: messageText
       value: 
       objectReference: {fileID: 1587067318}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 4047895611071197661, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12279,6 +12288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EngineToComms
       objectReference: {fileID: 0}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 632731572}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: _player
       value: 

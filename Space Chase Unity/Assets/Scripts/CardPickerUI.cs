@@ -10,6 +10,7 @@ public class CardPickerUI : MonoBehaviour
     [SerializeField] private GameController gameController;
     [SerializeField] private Deck deck;
     [SerializeField] private GameObject cardPickerPanel;
+    [SerializeField] private CanvasController canvas;
     [SerializeField] private Image card1Image;
     [SerializeField] private Image card2Image;
     [SerializeField] private Image card1Highlight;
@@ -59,19 +60,11 @@ public class CardPickerUI : MonoBehaviour
         if (stationPanel != null)
         {
             stationPanel.SetActive(true);
+            canvas.UIBackground(true);
 
             // hide station specific elements
-            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
-            if (trippy != null) trippy.SetActive(false);
-
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(false);
-
-            GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
-            if (crt != null) crt.SetActive(false);
-
-            GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
-            if (border != null) border.SetActive(false);
         }
 
         // get 2 random cards from deck
@@ -135,25 +128,19 @@ public class CardPickerUI : MonoBehaviour
     IEnumerator CloseAfterDelay()
     {
         yield return new WaitForSeconds(0.4f);
+        canvas.UIBackground(false);
         cardPickerPanel.SetActive(false);
 
         // restore hidden elements then close station panel
         if (stationPanel != null)
         {
-            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
-            if (trippy != null) trippy.SetActive(true);
-
+            
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(true);
 
-            GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
-            if (crt != null) crt.SetActive(true);
-
-            GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
-            if (border != null) border.SetActive(true);
-
             stationPanel.SetActive(false);
         }
+
     }
 
     IEnumerator HideMessage()
@@ -170,18 +157,10 @@ public class CardPickerUI : MonoBehaviour
         
         if (stationPanel != null)
         {
-            GameObject trippy = stationPanel.transform.Find("Trippy-BG")?.gameObject;
-            if (trippy != null) trippy.SetActive(true);
-
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(true);
 
-            GameObject crt = stationPanel.transform.Find("CRT")?.gameObject;
-            if (crt != null) crt.SetActive(true);
-
-            GameObject border = stationPanel.transform.Find("scBorder640x360")?.gameObject;
-            if (border != null) border.SetActive(true);
-
+            canvas.UIBackground(false);
             stationPanel.SetActive(false);
         }
     }

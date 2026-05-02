@@ -5,6 +5,7 @@ using TMPro;
 
 public class PassageInteractable : MonoBehaviour
 {
+    [SerializeField] private CanvasController canvas;
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private GameObject door;
     [SerializeField] private GameObject _outline;
@@ -52,6 +53,7 @@ public class PassageInteractable : MonoBehaviour
             doorClosed = true;
             door.SetActive(doorClosed);
             stationPanel.SetActive(true);
+            canvas.UIBackground(true);
 
             RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
             if (slot != null)
@@ -100,6 +102,7 @@ public class PassageInteractable : MonoBehaviour
                 }
             }
             stationPanel.SetActive(false);
+            canvas.UIBackground(false);
         }
         else
         {

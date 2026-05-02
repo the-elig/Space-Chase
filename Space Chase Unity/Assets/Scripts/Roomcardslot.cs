@@ -16,6 +16,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject cancelButton;
     [SerializeField] private GameController gameController;
+    [SerializeField] private CanvasController canvas;
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private TMP_Text damagedText;
     [SerializeField] private TMP_Text normalText;
@@ -261,10 +262,6 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             Destroy(cardOriginalSlot);
     }
 }
-public void UpgradeConfirm()
-{
-        
-}
 
     IEnumerator ShowMessage(string message, float duration = 2f)
     {
@@ -283,6 +280,8 @@ public void UpgradeConfirm()
     openedFromPassage = false;
     currentPassage = null;
     GameObject stationPanel = GameObject.Find("StationPanel");
+    if(canvas != null) 
+        canvas.UIBackground(false);
     if (stationPanel != null)
         stationPanel.SetActive(false);
 }
