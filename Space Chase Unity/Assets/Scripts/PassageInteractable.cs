@@ -11,6 +11,8 @@ public class PassageInteractable : MonoBehaviour
     [SerializeField] private GameObject _outline;
     [SerializeField] private GameObject _bandage;
     [SerializeField] private GameObject stationPanel;
+    [SerializeField] private RoomCardSlot cardSlot;
+    [SerializeField] private GameObject warningText;
 
     private bool doorClosed;
     private bool damaged;
@@ -53,6 +55,7 @@ public class PassageInteractable : MonoBehaviour
             doorClosed = true;
             door.SetActive(doorClosed);
             stationPanel.SetActive(true);
+            warningText.SetActive(true);
             canvas.UIBackground(true);
 
             RoomCardSlot slot = stationPanel.GetComponentInChildren<RoomCardSlot>();
@@ -61,17 +64,6 @@ public class PassageInteractable : MonoBehaviour
                 slot.openedFromPassage = true;
                 slot.currentPassage = this;
                 slot.HideStationMessages();
-            }
-
-            TMP_Text[] texts = stationPanel.GetComponentsInChildren<TMP_Text>(true);
-            foreach (TMP_Text text in texts)
-            {
-                if (text.gameObject.name == "MessageText")
-                {
-                    text.text = "Uh oh! This passageway has been damaged! Use a repair card to fix it.";
-                    text.gameObject.SetActive(true);
-                    break;
-                }
             }
         }
         else
@@ -144,6 +136,8 @@ public class PassageInteractable : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             playerInRange = false;
+            cardSlot.OnCancel();
+            warningText.SetActive(false);
             _outline.SetActive(false);
         }
     }

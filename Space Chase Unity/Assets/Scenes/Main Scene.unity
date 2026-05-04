@@ -537,6 +537,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1469062236}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: warningText
+      value: 
+      objectReference: {fileID: 1587067316}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
@@ -1810,7 +1818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &242682320
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2385,6 +2393,14 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: warningText
+      value: 
+      objectReference: {fileID: 1587067316}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: stationPanel
       value: 
@@ -3373,6 +3389,10 @@ PrefabInstance:
       propertyPath: station
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: cardUpgrader
       value: 
@@ -5014,6 +5034,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4047895611071197661, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
   m_PrefabInstance: {fileID: 4545233540339276647}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1018085522 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+  m_PrefabInstance: {fileID: 4545233540339276647}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018085520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd767350f879444996c6e250c8ba69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1030577708
 GameObject:
   m_ObjectHideFlags: 0
@@ -5362,6 +5393,7 @@ MonoBehaviour:
   slotImage: {fileID: 1141077004}
   cancelButton: {fileID: 655289519}
   gameController: {fileID: 1356453479}
+  cardHolder: {fileID: 1736219484}
   cardUpgrader: {fileID: 1444854706}
   messageText: {fileID: 0}
   damagedText: {fileID: 0}
@@ -5372,7 +5404,6 @@ MonoBehaviour:
   OnCardConfirmed:
     m_PersistentCalls:
       m_Calls: []
-  cardHolder: {fileID: 1736219484}
   openedFromPassage: 0
   currentPassage: {fileID: 0}
 --- !u!1 &1173261058
@@ -5513,6 +5544,10 @@ PrefabInstance:
       propertyPath: station
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: cardPicker
       value: 
@@ -7785,6 +7820,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1071106772}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 1356453479}
@@ -8374,7 +8413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1587067317
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8389,10 +8428,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 754843619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0.018000001, y: 0.63932073}
+  m_AnchorMax: {x: 0.66975284, y: 0.94900006}
+  m_AnchoredPosition: {x: 2.9871216, y: -6.0844727}
+  m_SizeDelta: {x: -10.530884, y: 3.9980927}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1587067318
 MonoBehaviour:
@@ -8414,10 +8453,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: This passageway is damaged! Use a Repair card to fix it!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
-  m_sharedMaterial: {fileID: -694714394106287039, guid: e3731d3db10496449b254baa5de39226, type: 2}
+  m_sharedMaterial: {fileID: 522495681595056605, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8477,10 +8516,10 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -463.25574, y: -148.91476, z: 217.35516, w: 1.8604736}
+  m_margin: {x: -2.8700867, y: -1.90094, z: 0.70306396, w: 1.8604736}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1587067319
@@ -9750,6 +9789,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1469062236}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: warningText
+      value: 
+      objectReference: {fileID: 1587067316}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
@@ -10088,6 +10135,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1469062236}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: warningText
+      value: 
+      objectReference: {fileID: 1587067316}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
@@ -10311,6 +10366,14 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: warningText
+      value: 
+      objectReference: {fileID: 1587067316}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: stationPanel
       value: 
@@ -10973,6 +11036,7 @@ MonoBehaviour:
   slotImage: {fileID: 2005458049}
   cancelButton: {fileID: 657663906}
   gameController: {fileID: 1356453479}
+  cardHolder: {fileID: 1736219484}
   cardUpgrader: {fileID: 1444854706}
   messageText: {fileID: 0}
   damagedText: {fileID: 0}
@@ -10983,7 +11047,6 @@ MonoBehaviour:
   OnCardConfirmed:
     m_PersistentCalls:
       m_Calls: []
-  cardHolder: {fileID: 1736219484}
   openedFromPassage: 0
   currentPassage: {fileID: 0}
 --- !u!1 &2013059007 stripped
@@ -11642,6 +11705,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1437252837}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 1356453479}
@@ -11982,6 +12049,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 754843618}
     - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
       propertyPath: cardPicker
       value: 
       objectReference: {fileID: 1764551610}
@@ -12298,6 +12369,14 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1469062236}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: cardSlot
+      value: 
+      objectReference: {fileID: 1018085522}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: warningText
+      value: 
+      objectReference: {fileID: 1587067316}
     - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: stationPanel
       value: 

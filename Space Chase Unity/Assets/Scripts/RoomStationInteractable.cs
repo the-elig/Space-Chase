@@ -8,6 +8,7 @@ public class RoomStationInteractable : MonoBehaviour
     [SerializeField] private GameObject station;
     [SerializeField] private CardPickerUI cardPicker;
     [SerializeField] private CardUpgraderUI cardUpgrader;
+    [SerializeField] private RoomCardSlot cardSlot;
     [SerializeField] private GameController gameController;
     [SerializeField] private CanvasController canvas;
     [SerializeField] private string roomID;
@@ -74,6 +75,7 @@ public class RoomStationInteractable : MonoBehaviour
         bool isDamaged = gameController._damagedRooms.Exists(r =>
             r.ToLower() == roomID.ToLower());
 
+        cardSlot.OnCancel();
         if (isDamaged)
         {
             if (station != null) {
