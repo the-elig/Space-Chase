@@ -86,8 +86,13 @@ public class CardUpgraderUI : MonoBehaviour
     
     public void AllowUpgrade()
     {
-        confirmButton.SetActive(false);
-        if(slot1.GetCardName() == slot2.GetCardName())
+        if(confirmButton.activeSelf)
+        {
+            confirmButton.SetActive(false);
+            return;
+        }
+        
+        if(slot1.GetCardName() == slot2.GetCardName() && slot1.GetCardName() != "noUpgrade")
         {
             confirmButton.SetActive(true);
         }
@@ -107,6 +112,7 @@ public class CardUpgraderUI : MonoBehaviour
             // delete cards and deduct energy
             slot1.OnConfirm();
             slot2.OnConfirm();
+            confirmButton.SetActive(false);
             gameController._energy -= 1;
 
             StartCoroutine(CloseAfterDelay());
@@ -121,7 +127,6 @@ public class CardUpgraderUI : MonoBehaviour
         // restore hidden elements then close station panel
         if (stationPanel != null)
         {
-            
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(true);
 

@@ -106,16 +106,17 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
         if (slotImage != null) {
             slotImage.color = filledColor; }
 
-        cardUpgrader.AllowUpgrade();
+        if(card != null)
+            cardUpgrader.AllowUpgrade();
     }
 
     public string GetCardName()
     {
-        //if (currentCard.cardData != null)
-        //{
+        if (currentCard != null)
+        {
             CardData data = currentCard.cardData;
             return data.cardName;
-        //} else return string.Empty;
+        } else return "noUpgrade";
     }
     public CardData GetCardUpgrade()
     {
