@@ -5372,6 +5372,7 @@ MonoBehaviour:
   OnCardConfirmed:
     m_PersistentCalls:
       m_Calls: []
+  cardHolder: {fileID: 1736219484}
   openedFromPassage: 0
   currentPassage: {fileID: 0}
 --- !u!1 &1173261058
@@ -10982,6 +10983,7 @@ MonoBehaviour:
   OnCardConfirmed:
     m_PersistentCalls:
       m_Calls: []
+  cardHolder: {fileID: 1736219484}
   openedFromPassage: 0
   currentPassage: {fileID: 0}
 --- !u!1 &2013059007 stripped

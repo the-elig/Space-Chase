@@ -15,6 +15,7 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
     [SerializeField] private Image slotImage;
     [SerializeField] private GameObject cancelButton;
     [SerializeField] private GameController gameController;
+    [SerializeField] private HorizontalCardHolder cardHolder;
     [SerializeField] private CardUpgraderUI cardUpgrader;
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private TMP_Text damagedText;
@@ -32,7 +33,6 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
     private Transform cardOriginalParent;
     private int cardOriginalSiblingIndex;
     private GameObject cardOriginalSlot;
-    private HorizontalCardHolder cardHolder;
 
     [HideInInspector] public bool openedFromPassage = false;
     [HideInInspector] public PassageInteractable currentPassage = null;
@@ -44,7 +44,6 @@ public class UpgradeCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler
     if (damagedText != null) damagedText.gameObject.SetActive(false);
     if (normalText != null) normalText.gameObject.SetActive(false);
 
-    cardHolder = FindObjectOfType<HorizontalCardHolder>();
     if (gameController == null)
         gameController = FindObjectOfType<GameController>();
 }
