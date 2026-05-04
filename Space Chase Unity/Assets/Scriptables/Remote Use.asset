@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac47430e962db5468af76319eea0403, type: 3}
   m_Name: Remote Use
   m_EditorClassIdentifier: 
-  cardName: 
-  cardArt: {fileID: 0}
+  cardName: Remote Use
+  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 0
-  cardDescription: 
-  energyCost: 0
+  cardDescription: Use the function of any room regardless of your location.
+  energyCost: 2
   allowedStation: 0
   requirement: 0

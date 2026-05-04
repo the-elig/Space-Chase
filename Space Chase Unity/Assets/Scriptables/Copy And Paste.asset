@@ -16,7 +16,7 @@ MonoBehaviour:
   cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 0
-  cardDescription: 'Next card you play '
-  energyCost: 0
+  cardDescription: Pick a card currently in your hand to duplicate.
+  energyCost: 3
   allowedStation: 0
   requirement: 0

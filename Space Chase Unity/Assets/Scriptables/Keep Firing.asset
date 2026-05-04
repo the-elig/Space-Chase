@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac47430e962db5468af76319eea0403, type: 3}
   m_Name: Keep Firing
   m_EditorClassIdentifier: 
-  cardName: 
-  cardArt: {fileID: 0}
+  cardName: Keep Firing
+  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
   upgrade: {fileID: 0}
-  upgradedCard: 0
-  cardDescription: 
-  energyCost: 0
-  allowedStation: 0
-  requirement: 0
+  upgradedCard: 1
+  cardDescription: While in Weapons, Use Weapons twice. The card's cost decreases
+    by 1 for every damaged Room and Passage.
+  energyCost: 5
+  allowedStation: 1
+  requirement: 2

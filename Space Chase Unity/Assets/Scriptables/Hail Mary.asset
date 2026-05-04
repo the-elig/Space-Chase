@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac47430e962db5468af76319eea0403, type: 3}
   m_Name: Hail Mary
   m_EditorClassIdentifier: 
-  cardName: 
-  cardArt: {fileID: 0}
+  cardName: Hail Mary
+  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 0
-  cardDescription: 
-  energyCost: 0
+  cardDescription: If at least 8 rooms and passages are damaged, repair all of them.
+    For the next 3 turns, you cannot repair any rooms or passages
+  energyCost: 3
   allowedStation: 0
   requirement: 0
