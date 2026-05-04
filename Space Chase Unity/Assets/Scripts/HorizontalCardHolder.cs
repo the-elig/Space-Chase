@@ -226,7 +226,8 @@ public class HorizontalCardHolder : MonoBehaviour
             card.BeginDragEvent.AddListener(BeginDrag);
             card.EndDragEvent.AddListener(EndDrag);
             card.name = cards.Count.ToString();
-            StartCoroutine(ReflowCards());
+            if(this.gameObject != null)
+                StartCoroutine(ReflowCards());
         }
     }
 
