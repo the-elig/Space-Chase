@@ -11,7 +11,7 @@ public class PassageController : MonoBehaviour
     private bool damaged;
     void Awake()
 {
-    gameController.damageRoom += DamagePassage;
+    gameController.DamageRoom += DamagePassage;
     damaged = false;
 }
     void Update()

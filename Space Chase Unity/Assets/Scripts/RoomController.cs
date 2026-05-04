@@ -14,7 +14,7 @@ public class RoomController : MonoBehaviour
 
     void Awake()
 {
-    gameController.damageRoom += DamageRoom;
+    gameController.DamageRoom += DamageRoom;
     damaged = false;
 }
 

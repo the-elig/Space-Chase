@@ -23,11 +23,16 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private GameObject endTurnObj;
 
     [SerializeField] private TMP_Text turnsLeftBig;
+    [SerializeField] private TMP_Text damagedRoomBig;
     [SerializeField] private GameObject enemyTurnObj;
 
 
     // logic variables
     private bool mapActive;
+    private string[] roomNames =
+        {"Communications", "Engine", "Weapons", "Bridge", "Shields",
+        "Hallway", "Hallway", "Hallway", "Hallway", "Hallway", "Hallway"};
+
 
     private void Start()
     {
@@ -68,18 +73,28 @@ public class CanvasController : MonoBehaviour
         _gameController.enemyTurn();
     }
 
-    private void playEnemyTurn(bool enemy)
+    private void playEnemyTurn(bool enemyTurn)
     {
-        enemyTurnObj.SetActive(enemy);
+        int roomID = _gameController.recentlyDamagedRoom;
+
+        enemyTurnObj.SetActive(enemyTurn);
         if (mapActive)
         {
-            map.SetActive(!enemy);
+            map.SetActive(!enemyTurn);
         }
-        roomTextObj.SetActive(!enemy);
-        energyTextObj.SetActive(!enemy);
-        turnsLeftSmallObj.SetActive(!enemy);
-        endTurnObj.SetActive(!enemy);
+        roomTextObj.SetActive(!enemyTurn);
+        energyTextObj.SetActive(!enemyTurn);
+        turnsLeftSmallObj.SetActive(!enemyTurn);
+        endTurnObj.SetActive(!enemyTurn);
+
         turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
+
+        if (roomID <= 10)
+            damagedRoomBig.text = roomNames[roomID] + " was damaged";
+        else
+            damagedRoomBig.text = "Enemy missed";
+
+
     }
 
     public void UIBackground(bool active)

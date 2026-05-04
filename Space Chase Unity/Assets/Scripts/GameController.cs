@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _bg;
     public delegate void IntDelegate(int x);
     public delegate void EmptyDelegate();
-    public event IntDelegate damageRoom;
+    public event IntDelegate DamageRoom;
 
     public int _energy; // add five at the beginning of each player turn
     [SerializeField] private int _gainEnergy;
@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
 
     public List<string> _rooms;
     public List<string> _damagedRooms;
+    public int recentlyDamagedRoom;
 
     AudioSource m_MyAudioSource;
 
@@ -88,7 +89,8 @@ public class GameController : MonoBehaviour
                 Debug.Log(_damagedRooms[i] + " is damaged!");
                 m_MyAudioSource.Play();
             }
-            damageRoom?.Invoke(room_id); // sends out an event to all of the room controllers, child scripts handle if the number matches the room damaged
+            recentlyDamagedRoom = room_id;
+            DamageRoom?.Invoke(room_id); // sends out an event to all of the room controllers, child scripts handle if the number matches the room damaged
         }
         else
         {
