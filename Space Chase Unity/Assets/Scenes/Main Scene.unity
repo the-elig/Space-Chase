@@ -13473,8 +13473,11 @@ MonoBehaviour:
   _camera: {fileID: 519420028}
   _bg: {fileID: 1584297867}
   _energy: 0
-  _gainEnergy: 30
+  _gainEnergy: 5
   _turnsLeft: 15
+  _enemyTurnsTaken: 0
+  _enemyScalingSpeed: 4
+  _damageCount: 0
   _isEnemyTurn: 0
   _rooms:
   - Comms

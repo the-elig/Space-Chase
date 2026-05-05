@@ -22,7 +22,11 @@ public class GameController : MonoBehaviour
     public int _energy; // add five at the beginning of each player turn
     [SerializeField] private int _gainEnergy;
     public int _turnsLeft;
+    public int _enemyTurnsTaken;
+    [SerializeField] private int _enemyScalingSpeed; // int how many turns it takes for the enemy to scale more
+    [SerializeField] private int _damageCount;
     public bool _isEnemyTurn;
+    private int _lastHit; // make sure turn count doesn't lower multiple times when enemy attacks multiple times
 
     public List<string> _rooms;
     public List<string> _damagedRooms;
@@ -39,6 +43,8 @@ public class GameController : MonoBehaviour
         m_MyAudioSource = GetComponent<AudioSource>();
 
         _energy = 0;
+        _lastHit = 0;
+        _damageCount = 1;
         _turnsLeft = 15;
         _currentRoom = PlayerLocation.engine;
 
@@ -47,6 +53,8 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        ScaleEnemyDamage();
+
         if (_turnsLeft == 0)
         {
             playerWin();
@@ -62,27 +70,33 @@ public class GameController : MonoBehaviour
 
         // check for game over
         _energy = 0;
+        _energy += _gainEnergy;
         if (_damagedRooms.Count >= 5) // 5 is arbitrary rn
         {
             playerLoss();
         }
-        int room_id = GetRan();
-        _energy += _gainEnergy; // energy gain is before damage so we'll need to add another thing later to switch to player turn!
-        Debug.Log("Energy: " + _energy);
-        DamagePlayerShip(room_id);
+        for(int i = 0; i < _damageCount; i++)
+        {
+            int room_id = GetRan();
+            DamagePlayerShip(room_id);
+        }
     }
+
+    private void ScaleEnemyDamage()
+    {
+        if(_enemyTurnsTaken > _enemyScalingSpeed) // every five turns, increase the amount of times the enemy attacks by one
+        {
+            _damageCount++;
+            _enemyScalingSpeed += 1;
+        }
+    }
+
     private void DamagePlayerShip(int room_id)
     {
+        _lastHit++;
         if (room_id != 11)
         {
             _damagedRooms.Add(_rooms[room_id]);
-            if (_damagedRooms.Count != _damagedRooms.Distinct().Count())
-            {
-                Debug.Log("duplicate room damaged, rerolling...");
-                _damagedRooms.RemoveAt(_damagedRooms.Count - 1);
-                enemyTurn(); // restarts the enemy turn to reroll value if duplicate value
-                return;
-            }
 
             for (int i = 0; i < _damagedRooms.Count; i++)
             {
@@ -96,13 +110,17 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Enemy missed.");
         }
-        StartCoroutine(WaitEnemyTurn()); // play cutscene
+        if(_lastHit == _damageCount)
+            StartCoroutine(WaitEnemyTurn()); // play cutscene
     }
     IEnumerator WaitEnemyTurn() // play enemy turn screen and pause player movement
     {
         _bg.SetActive(true);
         _turnsLeft--;
+        _enemyTurnsTaken++;
         yield return new WaitForSeconds(3f);
+        Debug.Log("player turn");
+        _lastHit = 0;
         _isEnemyTurn = false;
         _bg.SetActive(false);
         _player.PauseMovement(false);
@@ -111,7 +129,8 @@ public class GameController : MonoBehaviour
     private int GetRan() // gets a random value for damaged rooms
     {
         int ran = Random.Range(0, 12); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
-                                       // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
+        if (ran == recentlyDamagedRoom) // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
+            ran++;
         return ran;
     }
 
