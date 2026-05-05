@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class CanvasController : MonoBehaviour
 {
     [SerializeField] private GameController _gameController;
 
     [Header("UI Elements")]
+    [SerializeField] private RawImage _bg;
     [SerializeField] private GameObject uiTemplate;
     [SerializeField] private GameObject map;
 
@@ -28,6 +30,7 @@ public class CanvasController : MonoBehaviour
 
 
     // logic variables
+    private float backgroundX;
     private bool mapActive;
     private string[] roomNames =
         {"Communications", "Engine", "Weapons", "Bridge", "Shields",
@@ -36,11 +39,16 @@ public class CanvasController : MonoBehaviour
 
     private void Start()
     {
+        backgroundX = 0.05f;
         mapActive = false;
     }
 
     private void Update()
     {
+        //scroll background
+        _bg.uvRect = new Rect(_bg.uvRect.position + new Vector2(backgroundX, 0) * Time.deltaTime, _bg.uvRect.size);
+
+
         // open/close map with TAB
         if (Input.GetKeyDown(KeyCode.Tab))
         {

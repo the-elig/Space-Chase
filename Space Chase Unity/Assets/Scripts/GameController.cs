@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
         }
         int room_id = GetRan();
         _energy += _gainEnergy; // energy gain is before damage so we'll need to add another thing later to switch to player turn!
-        Debug.Log("Energy = " + _energy);
+        Debug.Log("Energy: " + _energy);
         DamagePlayerShip(room_id);
     }
     private void DamagePlayerShip(int room_id)
