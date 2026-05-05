@@ -14,16 +14,13 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private GameObject uiTemplate;
     [SerializeField] private GameObject map;
 
+    //player turn ui elements
+    [SerializeField] private GameObject playerTurnUIElements;
     [SerializeField] private TMP_Text energyText;
-    [SerializeField] private GameObject energyTextObj;
-
     [SerializeField] private TMP_Text roomText;
-    [SerializeField] private GameObject roomTextObj;
-
     [SerializeField] private TMP_Text turnsLeftSmall;
-    [SerializeField] private GameObject turnsLeftSmallObj;
-    [SerializeField] private GameObject endTurnObj;
-
+    
+    //enemy turn ui elements
     [SerializeField] private TMP_Text turnsLeftBig;
     [SerializeField] private TMP_Text damagedRoomBig;
     [SerializeField] private GameObject enemyTurnObj;
@@ -90,19 +87,20 @@ public class CanvasController : MonoBehaviour
         {
             map.SetActive(!enemyTurn);
         }
-        roomTextObj.SetActive(!enemyTurn);
-        energyTextObj.SetActive(!enemyTurn);
-        turnsLeftSmallObj.SetActive(!enemyTurn);
-        endTurnObj.SetActive(!enemyTurn);
+
+        playerTurnUIElements.SetActive(!enemyTurn);
+
 
         turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
 
         if (roomID <= 10)
+        {
             damagedRoomBig.text = roomNames[roomID] + " was damaged";
+        }
         else
+        {
             damagedRoomBig.text = "Enemy missed";
-
-
+        }
     }
 
     public void UIBackground(bool active)
