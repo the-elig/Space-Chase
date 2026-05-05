@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2077851720498966987
 Transform:
   m_ObjectHideFlags: 0
@@ -131,10 +131,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee262daeb22fb84fb1566c7826e79d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   _player: {fileID: 0}
   door: {fileID: 8937063468119093652}
   _outline: {fileID: 6277277997742074504}
   _bandage: {fileID: 3639530840867605594}
+  stationPanel: {fileID: 0}
+  cardSlot: {fileID: 0}
+  warningText: {fileID: 0}
 --- !u!58 &6985734069577687781
 CircleCollider2D:
   m_ObjectHideFlags: 0
