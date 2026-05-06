@@ -10,6 +10,9 @@ public class MapSelector : MonoBehaviour
     [SerializeField] private GameObject b_Bridge;
     [SerializeField] private GameObject b_Shields;
 
+    public delegate void EmptyDelegate();
+    public event EmptyDelegate endMapSelection;
+
     public enum RoomState
     {
         comms, engine, weapons, bridge, shields, all
@@ -42,9 +45,11 @@ public class MapSelector : MonoBehaviour
 
     void Update()
     {
-        if(roomsToRepair.Count == buttonPresses)
+        if(roomsToRepair.Count == buttonPresses) // close map selector and execute confirm
         {
-
+            endMapSelection?.Invoke();
+            roomsToRepair.Clear();
+            buttonPresses = 5;
         }
     }
 

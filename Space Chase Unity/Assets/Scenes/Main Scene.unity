@@ -5923,7 +5923,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1777170612}
-  - {fileID: 242682320}
   - {fileID: 981561008}
   - {fileID: 1751827890}
   - {fileID: 1311588728}
@@ -5933,6 +5932,7 @@ RectTransform:
   - {fileID: 2112370403}
   - {fileID: 1035703971}
   - {fileID: 192867309}
+  - {fileID: 242682320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6244,7 +6244,7 @@ MonoBehaviour:
   b_Shields: {fileID: 2077555419}
   _currentMap: 5
   roomsToRepair: 
-  buttonPresses: 0
+  buttonPresses: 5
 --- !u!4 &670929850
 Transform:
   m_ObjectHideFlags: 0

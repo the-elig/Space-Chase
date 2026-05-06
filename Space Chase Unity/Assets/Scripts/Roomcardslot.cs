@@ -42,6 +42,8 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     void Awake()
 {
+        map.endMapSelection += ExecuteConfirm;
+
     if (confirmButton != null) confirmButton.SetActive(true);
     if (cancelButton != null) cancelButton.SetActive(true);
     if (messageText != null) messageText.gameObject.SetActive(false);
@@ -193,13 +195,13 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         CardData data = currentCard.cardData;
         mapSelectorObj.SetActive(true);
         map.AllowPresses(data.roomUseCount);
-        if (openedFromPassage)
+        if (openedFromPassage) // if repairing a passage, don't open map
         {
             ExecuteConfirm();
             return;
-        } else if (data.useAnywhere) {
+        } else if (data.useAnywhere) { // if can used anywhere, open map with all buttons
             map.UpdateMapState(5);
-        } else 
+        } else // otherwise, only show the button of the current room
         {
             int buttonId = -1;
             switch (gameController._currentRoom)
@@ -214,7 +216,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         }
     }
 
-    private void ExecuteConfirm()
+    public void ExecuteConfirm()
     {
     OnCardConfirmed?.Invoke(currentCard);
     mapSelectorObj.SetActive(false);
@@ -230,38 +232,40 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         // if it was a repair card, fix the room or passage
         if (cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
         {
-            if (openedFromPassage && currentPassage != null)
+            if (openedFromPassage && currentPassage != null) // passage repair -------
             {
                 currentPassage.RepairPassage();
                 openedFromPassage = false;
                 currentPassage = null;
-            }
+            } // ---------------------------------------------------------------------
             else
             {
-                // remove from damaged rooms list
-                string currentRoomName = gameController._currentRoom.ToString();
-                gameController._damagedRooms.RemoveAll(r =>
-                    r.ToLower() == currentRoomName.ToLower());
-
-                // find room by ID and repair it
                 int currentRoomId = -1;
-                switch (gameController._currentRoom)
+                for(int i = 0; i < map.roomsToRepair.Count; i++)
                 {
-                    case GameController.PlayerLocation.comms: currentRoomId = 0; break;
-                    case GameController.PlayerLocation.engine: currentRoomId = 1; break;
-                    case GameController.PlayerLocation.weapons: currentRoomId = 2; break;
-                    case GameController.PlayerLocation.bridge: currentRoomId = 3; break;
-                    case GameController.PlayerLocation.shields: currentRoomId = 4; break;
-                }
+                    // remove from damaged rooms list
+                    string currentRoomName = gameController._currentRoom.ToString();
+                    gameController._damagedRooms.RemoveAll(r =>
+                        r.ToLower() == currentRoomName.ToLower());
 
-                RoomController[] rooms = FindObjectsOfType<RoomController>();
-                foreach (RoomController room in rooms)
-                {
-                    if (room.id == currentRoomId)
+                    // find room by ID and repair it
+                    switch (map.roomsToRepair[i])
                     {
-                        room.damaged = false;
-                        room.warning.SetActive(false);
-                        break;
+                        case 0: currentRoomId = 0; break;
+                        case 1: currentRoomId = 1; break;
+                        case 2: currentRoomId = 2; break;
+                        case 3: currentRoomId = 3; break;
+                        case 4: currentRoomId = 4; break;
+                    }
+                    RoomController[] rooms = FindObjectsOfType<RoomController>();
+                    foreach (RoomController room in rooms)
+                    {
+                        if (room.id == currentRoomId)
+                        {
+                            room.damaged = false;
+                            room.warning.SetActive(false);
+                            break;
+                        }
                     }
                 }
             }

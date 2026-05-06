@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Repair+
   m_EditorClassIdentifier: 
   cardName: Repair+
-  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
+  cardArt: {fileID: 21300000, guid: ae6286d72fbcec141a6eec05bc38a3b4, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 1
   cardDescription: Upgraded version of Repair Card, repair two rooms at the cost
