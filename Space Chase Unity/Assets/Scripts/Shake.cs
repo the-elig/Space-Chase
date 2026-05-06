@@ -5,8 +5,12 @@ using UnityEngine;
 public class Shake : MonoBehaviour
 {
     public bool start = false;
-    public float duration = 1.0f;
+    public float duration = 6.0f;
 
+    private void Start()
+    {
+        ShakeWrap();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -29,5 +33,11 @@ public class Shake : MonoBehaviour
             yield return null;
         }
         transform.position = startPosition;
+        Debug.Log("woah");
+    }
+
+    public void ShakeWrap()
+    {
+        StartCoroutine(Shaking());
     }
 }

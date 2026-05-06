@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomStationInteractable : MonoBehaviour
@@ -13,7 +14,9 @@ public class RoomStationInteractable : MonoBehaviour
     [SerializeField] private CanvasController canvas;
     [SerializeField] private string roomID;
     [SerializeField] private GameObject _outline;
+    [SerializeField] private ParticleSystem smoke;
     AudioSource m_MyAudioSource;
+
 
     void Start()
     {
@@ -26,6 +29,7 @@ public class RoomStationInteractable : MonoBehaviour
 
     void Update()
     {
+       
     }
 
     void OpenStation()
