@@ -5206,6 +5206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a34d028cecf6e048844670e9b84d94e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerTransform: {fileID: 1469062238}
   start: 0
   duration: 4.5
 --- !u!1 &527292507 stripped
@@ -15911,8 +15912,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1356453479}
+  stationPanel: {fileID: 754843618}
+  cardPickerPanel: {fileID: 2112370402}
   speed: 10
   playerTransform: {fileID: 1469062238}
+  forcePause: 0
+  canLeaveStation: 0
 --- !u!212 &1469062237
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20606,6 +20611,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 632731572}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1469062236}
     - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: normalText
       value: 

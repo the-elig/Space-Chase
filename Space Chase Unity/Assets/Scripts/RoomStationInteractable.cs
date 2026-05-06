@@ -56,6 +56,7 @@ public class RoomStationInteractable : MonoBehaviour
             canvas.UIBackground(true);
             if (cardPicker != null)
             {
+                _player.canLeaveStation = false;
                 cardPicker.OpenCardPicker(); //for engine and shields rn
                 m_MyAudioSource.Play();
             }

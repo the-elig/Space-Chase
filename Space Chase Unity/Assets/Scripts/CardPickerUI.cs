@@ -109,6 +109,7 @@ public class CardPickerUI : MonoBehaviour
 
     public void ConfirmSelection()
     {
+        confirmButton.SetActive(false);
         if (selectedCard == null) return;
         if (cardHolder == null)
         {

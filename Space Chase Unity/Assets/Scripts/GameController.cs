@@ -44,9 +44,6 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        _player.Interact += useDoor;
-        _player.StationInteract += useStation;
-
         m_MyAudioSource = GetComponent<AudioSource>();
 
         _energy = 0;
@@ -79,7 +76,7 @@ public class GameController : MonoBehaviour
     {
         _isEnemyTurn = true;
         // disable player buttons
-        _player.PauseMovement(true);
+        _player.forcePause = true;
 
         // check for game over
         _energy = 0;
@@ -136,7 +133,7 @@ public class GameController : MonoBehaviour
         _lastHit = 0;
         _isEnemyTurn = false;
         _bg.SetActive(false);
-        _player.PauseMovement(false);
+        _player.forcePause = false;
     }
 
     private int GetRan() // gets a random value for damaged rooms
@@ -171,21 +168,6 @@ public class GameController : MonoBehaviour
             default: return "Passage";
         }
     }
-
-    private void useDoor()
-    {
-        _energy -= 1;
-        Debug.Log("Used door");
-        Debug.Log("Energy = " + _energy);
-    }
-
-    private void useStation()
-    {
-        Debug.Log("Used station");
-        Debug.Log("Energy = " + _energy);
-    }
-
-
     
     private void playerLoss()
     {

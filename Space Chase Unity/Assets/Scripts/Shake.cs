@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shake : MonoBehaviour
 {
+    [SerializeField] private Transform _playerTransform;
+
     public bool start = false;
     public float duration = 6.0f;
 
@@ -32,8 +34,7 @@ public class Shake : MonoBehaviour
             transform.position = startPosition + Random.insideUnitSphere;
             yield return null;
         }
-        transform.position = startPosition;
-        Debug.Log("woah");
+        transform.position = _playerTransform.position - new Vector3(0f, 0f, 10f);
     }
 
     public void ShakeWrap()
