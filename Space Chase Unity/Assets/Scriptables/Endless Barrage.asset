@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac47430e962db5468af76319eea0403, type: 3}
   m_Name: Endless Barrage
   m_EditorClassIdentifier: 
-  cardName: Keep Firing
-  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
-  upgrade: {fileID: 11400000, guid: 4440ea7d041e9be4a8ecfeca2136c3fe, type: 2}
+  cardName: Endless Barrage
+  cardArt: {fileID: 21300000, guid: 4d390f3019d6ed945ab9482652c64489, type: 3}
+  upgrade: {fileID: 0}
   upgradedCard: 0
   cardDescription: If you are in Weapons, use Weapons. If you used Weapons last turn,
     use Weapons again.
