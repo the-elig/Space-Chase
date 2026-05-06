@@ -15,6 +15,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private Image slotImage;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject cancelButton;
+    [SerializeField] private GameObject mapSelector;
     [SerializeField] private GameController gameController;
     [SerializeField] private CanvasController canvas;
     [SerializeField] private TMP_Text messageText;
@@ -179,10 +180,18 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
         // deduct energy
         gameController._energy -= data.energyCost;
-    }
 
-    ExecuteConfirm();
+        if(data.requireMap) {
+        MapSelection();
+        } else ExecuteConfirm();
+    }
 }
+
+    private void MapSelection()
+    {
+        mapSelector.SetActive(true);
+
+    }
 
     private void ExecuteConfirm()
 {
