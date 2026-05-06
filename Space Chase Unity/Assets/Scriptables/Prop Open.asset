@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Prop Open
   m_EditorClassIdentifier: 
   cardName: Prop Open
-  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
+  cardArt: {fileID: 21300000, guid: 3a203d79e521c2a468fbe63b23bf7c13, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 0
-  cardDescription: Choose a Passage connedted to the Room you play this card in.
+  cardDescription: Choose a Passage connected to the Room you play this card in.
     It will remain open until next time it is damaged.
   energyCost: 3
   allowedStation: 0
