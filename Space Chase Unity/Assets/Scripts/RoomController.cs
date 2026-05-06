@@ -25,7 +25,7 @@ public class RoomController : MonoBehaviour
         if (damaged)
         {
             smoke.GetComponentInParent<Renderer>().enabled = true;
-            Debug.Log("smoki");
+            //Debug.Log("smoki");
         }
         else
         {
