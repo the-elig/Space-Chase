@@ -17,17 +17,20 @@ public class RoomController : MonoBehaviour
 {
     gameController.DamageRoom += DamageRoom;
     damaged = false;
-}
+    smoke.GetComponentInParent<Renderer>().enabled = false;
+    }
 
     void Update()
     {
         if (damaged)
         {
-            smoke.Play();
+            smoke.GetComponentInParent<Renderer>().enabled = true;
+            Debug.Log("smoki");
         }
         else
         {
             smoke.Stop();
+            smoke.GetComponentInParent<Renderer>().enabled = false;
         }
     }
     void OnTriggerEnter2D(Collider2D col)
