@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -14,11 +15,13 @@ public class GameController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private PlayerMovement _player;
+    [SerializeField] private CanvasController _canvas;
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _endTurnButton;
     [SerializeField] private GameObject _stationPanel;
     [SerializeField] private GameObject _mapUI;
+    [SerializeField] private TMP_Text _winOrLoseText;
 
     public delegate void IntDelegate(int x);
     public delegate void EmptyDelegate();
@@ -33,6 +36,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int _damageCount;
     public bool _isEnemyTurn;
     private int _lastHit; // make sure turn count doesn't lower multiple times when enemy attacks multiple times
+    public bool _endGameState;
 
     [Header("Lists of Rooms")]
     public List<string> _rooms;
@@ -46,6 +50,7 @@ public class GameController : MonoBehaviour
     {
         m_MyAudioSource = GetComponent<AudioSource>();
 
+        _endGameState = false;
         _energy = 0;
         _lastHit = 0;
         _damageCount = 1;
@@ -59,8 +64,9 @@ public class GameController : MonoBehaviour
     {
         ScaleEnemyDamage();
 
-        if (_turnsLeft == 0)
+        if (_turnsLeft <= 0)
         {
+            _endGameState = true;
             playerWin();
         }
 
@@ -69,6 +75,12 @@ public class GameController : MonoBehaviour
             _endTurnButton.SetActive(false);
         } else
             _endTurnButton.SetActive(true);
+
+        if(_endGameState)
+        {
+            _bg.SetActive(true);
+            _canvas.TurnOffPlayerTurnUI();
+        }
     }
 
 
@@ -81,8 +93,9 @@ public class GameController : MonoBehaviour
         // check for game over
         _energy = 0;
         _energy += _gainEnergy;
-        if (_damagedRooms.Count >= 5) // 5 is arbitrary rn
+        if (_damagedRooms.Count >= 7) // 7 is arbitrary
         {
+            _endGameState = true;
             playerLoss();
         }
         for(int i = 0; i < _damageCount; i++)
@@ -171,11 +184,11 @@ public class GameController : MonoBehaviour
     
     private void playerLoss()
     {
-        Debug.Log("player has lost");
+        _winOrLoseText.text = "Your ship was destroyed... Game Over";
     }
     
     private void playerWin()
     {
-        Debug.Log("player has won");
+        _winOrLoseText.text = "You escaped! You Win!!";
     }
 }
