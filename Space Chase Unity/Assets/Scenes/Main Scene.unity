@@ -14731,6 +14731,9 @@ MonoBehaviour:
   _player: {fileID: 1469062236}
   _camera: {fileID: 519420028}
   _bg: {fileID: 1584297867}
+  _endTurnButton: {fileID: 755212537}
+  _stationPanel: {fileID: 754843618}
+  _mapUI: {fileID: 242682319}
   _energy: 0
   _gainEnergy: 5
   _turnsLeft: 15

@@ -12,13 +12,19 @@ public class GameController : MonoBehaviour
     }
     public PlayerLocation _currentRoom;
 
+    [Header("References")]
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _bg;
+    [SerializeField] private GameObject _endTurnButton;
+    [SerializeField] private GameObject _stationPanel;
+    [SerializeField] private GameObject _mapUI;
+
     public delegate void IntDelegate(int x);
     public delegate void EmptyDelegate();
     public event IntDelegate DamageRoom;
 
+    [Header("Variables")]
     public int _energy; // add five at the beginning of each player turn
     [SerializeField] private int _gainEnergy;
     public int _turnsLeft;
@@ -28,6 +34,7 @@ public class GameController : MonoBehaviour
     public bool _isEnemyTurn;
     private int _lastHit; // make sure turn count doesn't lower multiple times when enemy attacks multiple times
 
+    [Header("Lists of Rooms")]
     public List<string> _rooms;
     public List<string> _damagedRooms;
     public int recentlyDamagedRoom;
@@ -59,6 +66,12 @@ public class GameController : MonoBehaviour
         {
             playerWin();
         }
+
+        if(_stationPanel.activeSelf || _mapUI.activeSelf)
+        {
+            _endTurnButton.SetActive(false);
+        } else
+            _endTurnButton.SetActive(true);
     }
 
 
