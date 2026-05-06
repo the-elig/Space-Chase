@@ -15,7 +15,8 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private Image slotImage;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject cancelButton;
-    [SerializeField] private GameObject mapSelector;
+    [SerializeField] private GameObject mapSelectorObj;
+    [SerializeField] private MapSelector map;
     [SerializeField] private GameController gameController;
     [SerializeField] private CanvasController canvas;
     [SerializeField] private TMP_Text messageText;
@@ -189,13 +190,34 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     private void MapSelection()
     {
-        mapSelector.SetActive(true);
-
+        CardData data = currentCard.cardData;
+        mapSelectorObj.SetActive(true);
+        map.AllowPresses(data.roomUseCount);
+        if (openedFromPassage)
+        {
+            ExecuteConfirm();
+            return;
+        } else if (data.useAnywhere) {
+            map.UpdateMapState(5);
+        } else 
+        {
+            int buttonId = -1;
+            switch (gameController._currentRoom)
+            {
+                case GameController.PlayerLocation.comms: buttonId = 0; break;
+                case GameController.PlayerLocation.engine: buttonId = 1; break;
+                case GameController.PlayerLocation.weapons: buttonId = 2; break;
+                case GameController.PlayerLocation.bridge: buttonId = 3; break;
+                case GameController.PlayerLocation.shields: buttonId = 4; break;
+            }
+            map.UpdateMapState(buttonId);
+        }
     }
 
     private void ExecuteConfirm()
-{
+    {
     OnCardConfirmed?.Invoke(currentCard);
+    mapSelectorObj.SetActive(false);
 
     Card cardToDestroy = currentCard;
     currentCard = null;

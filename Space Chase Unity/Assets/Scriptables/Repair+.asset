@@ -20,6 +20,7 @@ MonoBehaviour:
     of one energy
   energyCost: 1
   requireMap: 1
+  useAnywhere: 1
   roomUseCount: 2
   allowedStation: 0
   requirement: 1
