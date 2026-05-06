@@ -300,6 +300,10 @@ PrefabInstance:
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: _gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 6277277997742074504, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -4472,6 +4476,10 @@ PrefabInstance:
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: _gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 6277277997742074504, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -18461,6 +18469,10 @@ PrefabInstance:
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: _gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 6277277997742074504, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -18697,6 +18709,10 @@ PrefabInstance:
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: _gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 6277277997742074504, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -18948,6 +18964,10 @@ PrefabInstance:
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: _gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 6277277997742074504, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -20817,6 +20837,10 @@ PrefabInstance:
       propertyPath: stationPanel
       value: 
       objectReference: {fileID: 754843618}
+    - target: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
+      propertyPath: _gameController
+      value: 
+      objectReference: {fileID: 1356453479}
     - target: {fileID: 6277277997742074504, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
       propertyPath: m_Layer
       value: 0
