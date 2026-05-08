@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Tit For Tat
   m_EditorClassIdentifier: 
   cardName: Tit for Tat
-  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
+  cardArt: {fileID: 21300000, guid: 82b0d9ef20a072d409f68ad4cb9c4deb, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 0
   cardDescription: The enemy ship attacks a random Room or Passage, Repair the Station
     you are currently at.
   energyCost: 0
+  requireMap: 0
+  roomUseCount: 0
   allowedStation: 0
   requirement: 1

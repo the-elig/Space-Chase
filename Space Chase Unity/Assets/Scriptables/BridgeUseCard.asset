@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Bridge Use Card
   cardArt: {fileID: 21300000, guid: 4a1d04465a835064ba009eed8d93c7d0, type: 3}
+  upgrade: {fileID: 11400000, guid: 5024a33ab9a6e2442a1a5d9c2c616dd4, type: 2}
+  upgradedCard: 0
   cardDescription: Use this card at the bridge station to activate bridge use
   energyCost: 1
+  requireMap: 0
+  useAnywhere: 0
+  roomUseCount: 0
   allowedStation: 4
   requirement: 2

@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Copy And Paste
   m_EditorClassIdentifier: 
   cardName: Copy And Paste
-  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
+  cardArt: {fileID: 21300000, guid: 17256a48b8ece2540bb01f000a687d91, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 0
   cardDescription: Pick a card currently in your hand to duplicate.
   energyCost: 3
+  requireMap: 0
+  useAnywhere: 0
+  roomUseCount: 0
   allowedStation: 0
   requirement: 0

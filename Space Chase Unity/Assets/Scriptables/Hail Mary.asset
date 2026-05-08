@@ -19,5 +19,8 @@ MonoBehaviour:
   cardDescription: If at least 8 rooms and passages are damaged, repair all of them.
     For the next 3 turns, you cannot repair any rooms or passages
   energyCost: 3
+  requireMap: 1
+  useAnywhere: 1
+  roomUseCount: 5
   allowedStation: 0
-  requirement: 0
+  requirement: 1

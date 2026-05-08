@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -12,18 +13,32 @@ public class GameController : MonoBehaviour
     }
     public PlayerLocation _currentRoom;
 
+    [Header("References")]
     [SerializeField] private PlayerMovement _player;
+    [SerializeField] private CanvasController _canvas;
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _bg;
+    [SerializeField] private GameObject _endTurnButton;
+    [SerializeField] private GameObject _stationPanel;
+    [SerializeField] private GameObject _mapUI;
+    [SerializeField] private TMP_Text _winOrLoseText;
+
     public delegate void IntDelegate(int x);
     public delegate void EmptyDelegate();
     public event IntDelegate DamageRoom;
 
+    [Header("Variables")]
     public int _energy; // add five at the beginning of each player turn
     [SerializeField] private int _gainEnergy;
     public int _turnsLeft;
+    public int _enemyTurnsTaken;
+    [SerializeField] private int _enemyScalingSpeed; // int how many turns it takes for the enemy to scale more
+    [SerializeField] private int _damageCount;
     public bool _isEnemyTurn;
+    private int _lastHit; // make sure turn count doesn't lower multiple times when enemy attacks multiple times
+    public bool _endGameState;
 
+    [Header("Lists of Rooms")]
     public List<string> _rooms;
     public List<string> _damagedRooms;
     public int recentlyDamagedRoom;
@@ -33,12 +48,12 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        _player.Interact += useDoor;
-        _player.StationInteract += useStation;
-
         m_MyAudioSource = GetComponent<AudioSource>();
 
+        _endGameState = false;
         _energy = 0;
+        _lastHit = 0;
+        _damageCount = 1;
         _turnsLeft = 15;
         _currentRoom = PlayerLocation.engine;
 
@@ -47,9 +62,24 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (_turnsLeft == 0)
+        ScaleEnemyDamage();
+
+        if (_turnsLeft <= 0)
         {
+            _endGameState = true;
             playerWin();
+        }
+
+        if(_stationPanel.activeSelf || _mapUI.activeSelf)
+        {
+            _endTurnButton.SetActive(false);
+        } else
+            _endTurnButton.SetActive(true);
+
+        if(_endGameState)
+        {
+            _bg.SetActive(true);
+            _canvas.TurnOffPlayerTurnUI();
         }
     }
 
@@ -58,31 +88,38 @@ public class GameController : MonoBehaviour
     {
         _isEnemyTurn = true;
         // disable player buttons
-        _player.PauseMovement(true);
+        _player.forcePause = true;
 
         // check for game over
         _energy = 0;
-        if (_damagedRooms.Count >= 5) // 5 is arbitrary rn
+        _energy += _gainEnergy;
+        if (_damagedRooms.Count >= 7) // 7 is arbitrary
         {
+            _endGameState = true;
             playerLoss();
         }
-        int room_id = GetRan();
-        _energy += _gainEnergy; // energy gain is before damage so we'll need to add another thing later to switch to player turn!
-        Debug.Log("Energy: " + _energy);
-        DamagePlayerShip(room_id);
+        for(int i = 0; i < _damageCount; i++)
+        {
+            int room_id = GetRan();
+            DamagePlayerShip(room_id);
+        }
     }
+
+    private void ScaleEnemyDamage()
+    {
+        if(_enemyTurnsTaken > _enemyScalingSpeed) // every five turns, increase the amount of times the enemy attacks by one
+        {
+            _damageCount++;
+            _enemyScalingSpeed += 1;
+        }
+    }
+
     private void DamagePlayerShip(int room_id)
     {
+        _lastHit++;
         if (room_id != 11)
         {
             _damagedRooms.Add(_rooms[room_id]);
-            if (_damagedRooms.Count != _damagedRooms.Distinct().Count())
-            {
-                Debug.Log("duplicate room damaged, rerolling...");
-                _damagedRooms.RemoveAt(_damagedRooms.Count - 1);
-                enemyTurn(); // restarts the enemy turn to reroll value if duplicate value
-                return;
-            }
 
             for (int i = 0; i < _damagedRooms.Count; i++)
             {
@@ -96,22 +133,27 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Enemy missed.");
         }
-        StartCoroutine(WaitEnemyTurn()); // play cutscene
+        if(_lastHit == _damageCount)
+            StartCoroutine(WaitEnemyTurn()); // play cutscene
     }
     IEnumerator WaitEnemyTurn() // play enemy turn screen and pause player movement
     {
         _bg.SetActive(true);
         _turnsLeft--;
+        _enemyTurnsTaken++;
         yield return new WaitForSeconds(3f);
+        Debug.Log("player turn");
+        _lastHit = 0;
         _isEnemyTurn = false;
         _bg.SetActive(false);
-        _player.PauseMovement(false);
+        _player.forcePause = false;
     }
 
     private int GetRan() // gets a random value for damaged rooms
     {
         int ran = Random.Range(0, 12); // 0=Comms, 1=Engine, 2=Weapons, 3=Bridge, 4=Shields, 
-                                       // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
+        if (ran == recentlyDamagedRoom) // 5=En->Cm 6=En->Wp 7=En->Br 8=En->Sh 9=Br->Wp 10=Br->Sh
+            ran++;
         return ran;
     }
 
@@ -139,29 +181,14 @@ public class GameController : MonoBehaviour
             default: return "Passage";
         }
     }
-
-    private void useDoor()
-    {
-        _energy -= 1;
-        Debug.Log("Used door");
-        Debug.Log("Energy = " + _energy);
-    }
-
-    private void useStation()
-    {
-        Debug.Log("Used station");
-        Debug.Log("Energy = " + _energy);
-    }
-
-
     
     private void playerLoss()
     {
-        Debug.Log("player has lost");
+        _winOrLoseText.text = "Your ship was destroyed... Game Over";
     }
     
     private void playerWin()
     {
-        Debug.Log("player has won");
+        _winOrLoseText.text = "You escaped! You Win!!";
     }
 }

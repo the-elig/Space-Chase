@@ -5,7 +5,9 @@ using TMPro;
 
 public class PassageInteractable : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private CanvasController canvas;
+    [SerializeField] private GameController _gameController;
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private GameObject door;
     [SerializeField] private GameObject _outline;
@@ -42,7 +44,6 @@ public class PassageInteractable : MonoBehaviour
     public void ToggleDamage(bool damage)
     {
         damaged = damage;
-        Debug.Log("ouch");
         gameObject.tag = "DamagedPassage";
     }
 
@@ -68,6 +69,7 @@ public class PassageInteractable : MonoBehaviour
         }
         else
         {
+            _gameController._energy -= 1;
             doorClosed = false;
             door.SetActive(doorClosed);
 

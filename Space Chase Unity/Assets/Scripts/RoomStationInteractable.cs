@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomStationInteractable : MonoBehaviour
@@ -13,7 +14,9 @@ public class RoomStationInteractable : MonoBehaviour
     [SerializeField] private CanvasController canvas;
     [SerializeField] private string roomID;
     [SerializeField] private GameObject _outline;
+    [SerializeField] private ParticleSystem smoke;
     AudioSource m_MyAudioSource;
+
 
     void Start()
     {
@@ -26,6 +29,7 @@ public class RoomStationInteractable : MonoBehaviour
 
     void Update()
     {
+       
     }
 
     void OpenStation()
@@ -51,18 +55,28 @@ public class RoomStationInteractable : MonoBehaviour
         {
             canvas.UIBackground(true);
             if (cardPicker != null)
+            {
+                _player.canLeaveStation = false;
                 cardPicker.OpenCardPicker(); //for engine and shields rn
-            else if(cardUpgrader != null) {
+                m_MyAudioSource.Play();
+            }
+            else if (cardUpgrader != null)
+            {
                 Debug.Log("card upgrader station");
+                m_MyAudioSource.Play();
                 cardUpgrader.OpenCardUpgrader();
-                return; }
+
+                return;
+            }
             else if (station != null)
             {
                 station.SetActive(true);
                 m_MyAudioSource.Play();
                 RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
-                if (slot != null) {
-                    slot.UpdateStationMessage(false); } //updates damaged message to no longer appear
+                if (slot != null)
+                {
+                    slot.UpdateStationMessage(false);
+                } //updates damaged message to no longer appear
             }
         }
     }

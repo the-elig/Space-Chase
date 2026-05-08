@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Overheat
   m_EditorClassIdentifier: 
   cardName: Overheat
-  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
+  cardArt: {fileID: 21300000, guid: eca8872a63bc1074eb9f420951f85f33, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 0
   cardDescription: If you are in Bridge, use 3 times. You may not use Bridge next
-    turn.
+    2 turn.
   energyCost: 2
+  requireMap: 0
+  roomUseCount: 0
   allowedStation: 4
   requirement: 2

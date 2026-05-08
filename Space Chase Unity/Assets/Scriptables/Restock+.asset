@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Restock+
   m_EditorClassIdentifier: 
   cardName: Restock+
-  cardArt: {fileID: 21300000, guid: 2ed4dd708e4004d95982d8bbd36124c0, type: 3}
+  cardArt: {fileID: 21300000, guid: cd74e1b3777d36d42bc46168d4a3a73a, type: 3}
   upgrade: {fileID: 0}
   upgradedCard: 1
   cardDescription: Draw 6 cards from your deck.
   energyCost: 1
+  requireMap: 0
+  roomUseCount: 0
   allowedStation: 0
   requirement: 0

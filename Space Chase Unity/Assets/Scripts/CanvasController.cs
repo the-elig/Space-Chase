@@ -107,5 +107,9 @@ public class CanvasController : MonoBehaviour
     {
         uiTemplate.SetActive(active);
     }
+    public void TurnOffPlayerTurnUI()
+    {
+        playerTurnUIElements.SetActive(false);
+    }
    
 }

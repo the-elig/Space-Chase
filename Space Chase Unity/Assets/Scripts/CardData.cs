@@ -30,6 +30,9 @@ public class CardData : ScriptableObject
 
     [Header("Cost & Restrictions")]
     public int energyCost;
+    public bool requireMap;
+    public bool useAnywhere;
+    public int roomUseCount;
     public StationType allowedStation;
     public CardRequirement requirement;
 }

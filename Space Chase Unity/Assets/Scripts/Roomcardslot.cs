@@ -15,7 +15,10 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private Image slotImage;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private GameObject cancelButton;
+    [SerializeField] private GameObject mapSelectorObj;
+    [SerializeField] private MapSelector map;
     [SerializeField] private GameController gameController;
+    [SerializeField] private PlayerMovement player;
     [SerializeField] private CanvasController canvas;
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private TMP_Text damagedText;
@@ -40,6 +43,8 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     void Awake()
 {
+        map.endMapSelection += ExecuteConfirm;
+
     if (confirmButton != null) confirmButton.SetActive(true);
     if (cancelButton != null) cancelButton.SetActive(true);
     if (messageText != null) messageText.gameObject.SetActive(false);
@@ -50,6 +55,16 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     if (gameController == null)
         gameController = FindObjectOfType<GameController>();
 }
+    void Update()
+    {
+        if(mapSelectorObj.activeSelf)
+        {
+            player.canLeaveStation = false;
+        } else
+        {
+            player.canLeaveStation = true;
+        }
+    }
 
     public void UpdateStationMessage(bool isDamaged)
     {
@@ -161,6 +176,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             if (openedFromPassage)
             {
                 // passage repair - always valid
+                gameController._energy -= 1;
             }
             else
             {
@@ -179,68 +195,100 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
         // deduct energy
         gameController._energy -= data.energyCost;
-    }
 
-    ExecuteConfirm();
+        if(data.requireMap) {
+        MapSelection();
+        } else ExecuteConfirm();
+    }
 }
 
-    private void ExecuteConfirm()
-{
-    OnCardConfirmed?.Invoke(currentCard);
-
-    Card cardToDestroy = currentCard;
-    currentCard = null;
-
-    if (slotImage != null)
-        slotImage.color = emptyColor;
-
-    if (cardToDestroy.cardData != null)
+    private void MapSelection()
     {
-        // if it was a repair card, fix the room or passage
-        if (cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
+        CardData data = currentCard.cardData;
+        mapSelectorObj.SetActive(true);
+        map.AllowPresses(data.roomUseCount);
+        if (openedFromPassage) // if repairing a passage, don't open map
         {
-            if (openedFromPassage && currentPassage != null)
+            ExecuteConfirm();
+            return;
+        } else if (data.useAnywhere) { // if can used anywhere, open map with all buttons
+            map.UpdateMapState(5);
+        } else // otherwise, only show the button of the current room
+        {
+            int buttonId = -1;
+            switch (gameController._currentRoom)
             {
-                currentPassage.RepairPassage();
-                openedFromPassage = false;
-                currentPassage = null;
+                case GameController.PlayerLocation.comms: buttonId = 0; break;
+                case GameController.PlayerLocation.engine: buttonId = 1; break;
+                case GameController.PlayerLocation.weapons: buttonId = 2; break;
+                case GameController.PlayerLocation.bridge: buttonId = 3; break;
+                case GameController.PlayerLocation.shields: buttonId = 4; break;
             }
-            else
+            map.UpdateMapState(buttonId);
+        }
+    }
+
+    public void ExecuteConfirm()
+    {
+        player.canLeaveStation = false;
+        OnCardConfirmed?.Invoke(currentCard);
+        mapSelectorObj.SetActive(false);
+
+        Card cardToDestroy = currentCard;
+        currentCard = null;
+
+        if (slotImage != null)
+            slotImage.color = emptyColor;
+
+        if (cardToDestroy.cardData != null)
+        {
+            // if it was a repair card, fix the room or passage
+            if (cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
             {
-                // remove from damaged rooms list
-                string currentRoomName = gameController._currentRoom.ToString();
-                gameController._damagedRooms.RemoveAll(r =>
-                    r.ToLower() == currentRoomName.ToLower());
-
-                // find room by ID and repair it
-                int currentRoomId = -1;
-                switch (gameController._currentRoom)
+                if (openedFromPassage && currentPassage != null) // passage repair -------
                 {
-                    case GameController.PlayerLocation.comms: currentRoomId = 0; break;
-                    case GameController.PlayerLocation.engine: currentRoomId = 1; break;
-                    case GameController.PlayerLocation.weapons: currentRoomId = 2; break;
-                    case GameController.PlayerLocation.bridge: currentRoomId = 3; break;
-                    case GameController.PlayerLocation.shields: currentRoomId = 4; break;
-                }
-
-                RoomController[] rooms = FindObjectsOfType<RoomController>();
-                foreach (RoomController room in rooms)
+                    currentPassage.RepairPassage();
+                    openedFromPassage = false;
+                    currentPassage = null;
+                } // ---------------------------------------------------------------------
+                else
                 {
-                    if (room.id == currentRoomId)
+                    int currentRoomId = -1;
+                    for(int i = 0; i < map.roomsToRepair.Count; i++)
                     {
-                        room.damaged = false;
-                        room.warning.SetActive(false);
-                        break;
+                        // remove from damaged rooms list
+                        string currentRoomName = gameController._currentRoom.ToString();
+                        gameController._damagedRooms.RemoveAll(r =>
+                            r.ToLower() == currentRoomName.ToLower());
+
+                        // find room by ID and repair it
+                        switch (map.roomsToRepair[i])
+                        {
+                            case 0: currentRoomId = 0; break;
+                            case 1: currentRoomId = 1; break;
+                            case 2: currentRoomId = 2; break;
+                            case 3: currentRoomId = 3; break;
+                            case 4: currentRoomId = 4; break;
+                        }
+                        RoomController[] rooms = FindObjectsOfType<RoomController>();
+                        foreach (RoomController room in rooms)
+                        {
+                            if (room.id == currentRoomId)
+                            {
+                                room.damaged = false;
+                                room.warning.SetActive(false);
+                                break;
+                            }
+                        }
                     }
                 }
             }
-        }
-        // if it was a station card, reduce turns left
-        else if (cardToDestroy.cardData.requirement == CardRequirement.StationHealthy &&
-                 cardToDestroy.cardData.allowedStation != StationType.Any)
-        {
-            gameController._turnsLeft--;
-        }
+            // if it was a station card, reduce turns left
+            else if (cardToDestroy.cardData.requirement == CardRequirement.StationHealthy &&
+                     cardToDestroy.cardData.allowedStation != StationType.Any)
+            {
+                gameController._turnsLeft--;
+            }
     }
 
     StartCoroutine(CloseStationDelay());
@@ -277,6 +325,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     IEnumerator CloseStationDelay()
 {
     yield return new WaitForSeconds(0.4f);
+    player.canLeaveStation = true;
     openedFromPassage = false;
     currentPassage = null;
     GameObject stationPanel = GameObject.Find("StationPanel");

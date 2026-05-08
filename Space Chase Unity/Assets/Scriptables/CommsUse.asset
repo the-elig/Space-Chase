@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: CommsUse
   cardArt: {fileID: 21300000, guid: b895acfed67853b4d91a8f1d7cc79529, type: 3}
+  upgrade: {fileID: 11400000, guid: 5024a33ab9a6e2442a1a5d9c2c616dd4, type: 2}
+  upgradedCard: 0
   cardDescription: Comms use card
   energyCost: 1
+  requireMap: 0
+  useAnywhere: 0
+  roomUseCount: 0
   allowedStation: 5
   requirement: 2
