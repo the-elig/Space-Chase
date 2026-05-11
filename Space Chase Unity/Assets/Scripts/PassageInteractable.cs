@@ -15,6 +15,8 @@ public class PassageInteractable : MonoBehaviour
     [SerializeField] private GameObject stationPanel;
     [SerializeField] private RoomCardSlot cardSlot;
     [SerializeField] private GameObject warningText;
+    [SerializeField] private TMP_Text usedEnergy;
+    [SerializeField] private GameObject energyFix;
 
     private bool doorClosed;
     private bool damaged;
@@ -70,6 +72,8 @@ public class PassageInteractable : MonoBehaviour
         else
         {
             _gameController._energy -= 1;
+            energyFix.SetActive(true);
+            Invoke("removeNotice", 3);
             doorClosed = false;
             door.SetActive(doorClosed);
 
@@ -142,5 +146,10 @@ public class PassageInteractable : MonoBehaviour
             warningText.SetActive(false);
             _outline.SetActive(false);
         }
+    }
+
+    public void removeNotice()
+    {
+        energyFix.SetActive(false);
     }
 }

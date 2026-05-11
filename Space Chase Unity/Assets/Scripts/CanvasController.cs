@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,12 +20,19 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private TMP_Text energyText;
     [SerializeField] private TMP_Text roomText;
     [SerializeField] private TMP_Text turnsLeftSmall;
+    [SerializeField] private TMP_Text usedEnergy;
+    [SerializeField] private GameObject energyFix;
     
     //enemy turn ui elements
     [SerializeField] private TMP_Text turnsLeftBig;
     [SerializeField] private TMP_Text damagedRoomBig;
     [SerializeField] private GameObject enemyTurnObj;
 
+    [SerializeField] private RawImage energy1;
+    [SerializeField] private RawImage energy2;
+    [SerializeField] private RawImage energy3;
+    [SerializeField] private RawImage energy4;
+    [SerializeField] private RawImage energy5;
 
     // logic variables
     private float backgroundX;
@@ -68,6 +76,29 @@ public class CanvasController : MonoBehaviour
         // update energy text
         energyText.text = "Energy = " + _gameController._energy;
 
+        //Remove energy symbol
+        if(_gameController._energy == 4)
+        {
+            energy1.enabled = false;
+        }
+        if (_gameController._energy == 3)
+        {
+            energy2.enabled = false;
+        }
+        if (_gameController._energy == 2)
+        {
+            energy3.enabled = false;
+        }
+        if (_gameController._energy == 1)
+        {
+            energy4.enabled = false;
+        }
+        if (_gameController._energy == 0)
+        {
+            energy5.enabled = false;
+        }
+
+
         // update turns left text
         turnsLeftSmall.text = "Turns Left: " + _gameController._turnsLeft;
     }
@@ -76,6 +107,11 @@ public class CanvasController : MonoBehaviour
         // called with UI button to manually end player turn
         _gameController._energy = 0;
         _gameController.enemyTurn();
+        energy1.enabled = true;
+        energy2.enabled = true;
+        energy3.enabled = true;
+        energy4.enabled = true;
+        energy5.enabled = true;
     }
 
     private void playEnemyTurn(bool enemyTurn)
@@ -101,6 +137,7 @@ public class CanvasController : MonoBehaviour
         {
             damagedRoomBig.text = "Enemy missed";
         }
+
     }
 
     public void UIBackground(bool active)
@@ -112,4 +149,8 @@ public class CanvasController : MonoBehaviour
         playerTurnUIElements.SetActive(false);
     }
    
+    public void removeNotice()
+    {
+        energyFix.SetActive(false);
+    }
 }

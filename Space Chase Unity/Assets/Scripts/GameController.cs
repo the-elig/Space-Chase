@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour
     public List<string> _rooms;
     public List<string> _damagedRooms;
     public int recentlyDamagedRoom;
+
 
     AudioSource m_MyAudioSource;
 
@@ -181,6 +183,7 @@ public class GameController : MonoBehaviour
             default: return "Passage";
         }
     }
+
     
     private void playerLoss()
     {
@@ -191,4 +194,6 @@ public class GameController : MonoBehaviour
     {
         _winOrLoseText.text = "You escaped! You Win!!";
     }
+
+
 }

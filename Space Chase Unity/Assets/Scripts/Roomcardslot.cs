@@ -23,6 +23,8 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private TMP_Text damagedText;
     [SerializeField] private TMP_Text normalText;
+    [SerializeField] private TMP_Text usedEnergy;
+    [SerializeField] private GameObject energyFix;
 
     [Header("Slot Visuals")]
     [SerializeField] private Color emptyColor = new Color(1, 1, 1, 0.3f);
@@ -177,7 +179,9 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             {
                 // passage repair - always valid
                 gameController._energy -= 1;
-            }
+                energyFix.SetActive(true);
+                Invoke("removeNotice", 3);
+                }
             else
             {
                 string currentRoomName = gameController._currentRoom.ToString();
@@ -195,8 +199,10 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
         // deduct energy
         gameController._energy -= data.energyCost;
+        energyFix.SetActive(true);
+        Invoke("removeNotice", 3);
 
-        if(data.requireMap) {
+            if (data.requireMap) {
         MapSelection();
         } else ExecuteConfirm();
     }
@@ -387,5 +393,10 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
         if (currentCard != null) return;
         if (slotImage != null)
             slotImage.color = emptyColor;
+    }
+
+    public void removeNotice()
+    {
+        energyFix.SetActive(false);
     }
 }
