@@ -47,20 +47,24 @@ public class GameController : MonoBehaviour
 
     AudioSource m_MyAudioSource;
 
+    [HideInInspector] public bool skipEnemyTurnOnStart = false;
 
     private void Start()
-    {
-        m_MyAudioSource = GetComponent<AudioSource>();
+{
+    m_MyAudioSource = GetComponent<AudioSource>();
 
-        _endGameState = false;
-        _energy = 0;
-        _lastHit = 0;
-        _damageCount = 1;
-        _turnsLeft = 15;
-        _currentRoom = PlayerLocation.engine;
+    _endGameState = false;
+    _energy = 0;
+    _lastHit = 0;
+    _damageCount = 1;
+    _turnsLeft = 15;
+    _currentRoom = PlayerLocation.engine;
 
+    _energy += _gainEnergy;
+
+    if (!skipEnemyTurnOnStart)
         enemyTurn();
-    }
+}
 
     private void Update()
     {
@@ -194,6 +198,11 @@ public class GameController : MonoBehaviour
     {
         _winOrLoseText.text = "You escaped! You Win!!";
     }
+
+    public void TriggerDamageRoom(int id)
+{
+    DamageRoom?.Invoke(id);
+}
 
 
 }

@@ -55,11 +55,17 @@ public class RoomStationInteractable : MonoBehaviour
         {
             canvas.UIBackground(true);
             if (cardPicker != null)
-            {
+                {
                 _player.canLeaveStation = false;
-                cardPicker.OpenCardPicker(); //for engine and shields rn
-                m_MyAudioSource.Play();
-            }
+    
+                TutorialCardPickerOverride tutorialOverride = cardPicker.GetComponent<TutorialCardPickerOverride>();
+                if (tutorialOverride != null)
+                    tutorialOverride.OpenTutorialCardPicker();
+                else
+                    cardPicker.OpenCardPicker();
+    
+    m_MyAudioSource.Play();
+}
             else if (cardUpgrader != null)
             {
                 Debug.Log("card upgrader station");

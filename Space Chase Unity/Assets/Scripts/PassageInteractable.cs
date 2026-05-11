@@ -33,20 +33,22 @@ public class PassageInteractable : MonoBehaviour
 
     void Update()
     {
-        if (damaged)
-        {
-            _bandage.SetActive(true);
-        }
-        else
-        {
-            _bandage.SetActive(false);
-        }
+        _bandage.SetActive(damaged);
     }
 
     public void ToggleDamage(bool damage)
     {
         damaged = damage;
         gameObject.tag = "DamagedPassage";
+    }
+
+    /// <summary>
+    /// Called by TutorialManager to fully disconnect this passage from player input.
+    /// </summary>
+    public void DisableInteraction()
+    {
+        _player.Interact -= OpenDoor;
+        _player.LeftInteractZone -= CloseDoor;
     }
 
     void OpenDoor()

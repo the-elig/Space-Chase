@@ -166,4 +166,8 @@ public class CardPickerUI : MonoBehaviour
         }
     }
 }
+public Deck GetDeck()
+{
+    return deck;
+}
 }
