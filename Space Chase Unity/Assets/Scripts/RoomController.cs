@@ -8,13 +8,14 @@ public class RoomController : MonoBehaviour
     [SerializeField] private GameController gameController;
     [SerializeField] private RoomStationInteractable station;
     [SerializeField] public GameObject warning;
+    [SerializeField] private GameObject playerIcon;
     [SerializeField] public ParticleSystem smoke;
     public bool damaged;
     [SerializeField] public int id;
     public List<PassageController> _adjacentPassages;
 
     void Awake()
-{
+    {
     gameController.DamageRoom += DamageRoom;
     damaged = false;
     smoke.GetComponentInParent<Renderer>().enabled = false;
@@ -25,7 +26,6 @@ public class RoomController : MonoBehaviour
         if (damaged)
         {
             smoke.GetComponentInParent<Renderer>().enabled = true;
-            //Debug.Log("smoki");
         }
         else
         {
@@ -38,7 +38,12 @@ public class RoomController : MonoBehaviour
         if(col.gameObject.CompareTag("Player"))
         {
             gameController.UpdatePlayerLocation(id);
+            playerIcon.SetActive(true);
         }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        playerIcon.SetActive(false);
     }
 
     private void DamageRoom(int room_id)
