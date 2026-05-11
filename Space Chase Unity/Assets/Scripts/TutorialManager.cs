@@ -9,7 +9,7 @@ public class TutorialManager : MonoBehaviour
 {
 
     [Header("Scene Transition")]
-    [SerializeField] private string mainSceneName = "MainScene";
+    [SerializeField] private string mainSceneName = "Main Scene";
 
     [Header("Core References")]
     [SerializeField] private GameController gameController;
