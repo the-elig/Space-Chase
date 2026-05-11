@@ -141,7 +141,7 @@ public class TutorialManager : MonoBehaviour
     player.disableTab = false;
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "Press Tab to open and close the ship map. It shows all rooms and their current status! If a room or passageway has a hazard symbol, it means that it has been damaged in an enemy attack!"));
+        "Press Tab to open and close the ship map. It shows all rooms and their current status! If a room or hallway has a hazard symbol, it means it has been damaged in an enemy attack!"));
 
     player.disableTab = true;
     if (mapUI != null) mapUI.SetActive(false); // make sure it's closed after
@@ -186,7 +186,7 @@ public class TutorialManager : MonoBehaviour
         "It looks like the enemy damaged the hallway to Communications! Find it and press E to open the repair panel. Any hallways that have been damaged will have a bandage icon over them!"));
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "Drag your repair card onto the slot and confirm to fix it."));
+        "Drag your repair card onto the slot and confirm to fix it. Then, walk through the hallway."));
 
     yield return new WaitUntil(() => 
         gameController._currentRoom == GameController.PlayerLocation.comms);
@@ -312,11 +312,12 @@ yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count <=
     }
 
     public void OnEndTurnPressed()
-    {
-        if (transitionTriggered) return;
-        transitionTriggered = true;
-        StartCoroutine(TransitionToMain());
-    }
+{
+    if (transitionTriggered) return;
+    transitionTriggered = true;
+    HideTutorialBox();
+    StartCoroutine(TransitionToMain());
+}
 
     private IEnumerator TransitionToMain()
     {
