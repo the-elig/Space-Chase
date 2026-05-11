@@ -119,7 +119,7 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator TeachMovement()
     {
         yield return StartCoroutine(ShowTutorialMessage(
-            "Use WASD to move around the ship. Try moving now!"));
+            "Use WASD to move around the ship. Press space and try moving now!"));
 
         player.disableMovement = false;
         player.OnPlayerMoved += OnFirstMove;
