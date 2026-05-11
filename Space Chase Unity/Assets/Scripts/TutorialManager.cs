@@ -100,16 +100,16 @@ public class TutorialManager : MonoBehaviour
         ShowOverlay(true);
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "Welcome to Space Chase, Captain! Let's get you familiar with the interface."));
+            "Welcome to Space Chase, Captain! Let's get you familiar with the interface. Press Space to continue."));
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "In the top left corner you will find your Current Room. This tells you where you are on the ship, and may come in handle when you need to navigate to a different room."));
+            "In the top left corner you will find your Current Room. This tells you where you are on the ship, and may come in handy when navigating to a different room. Press Space to continue."));
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "The top right shows your Turns Left. This is how long you have to survive before a rescue ship responds to your distress calls."));
+            "The top right shows your Turns Left. This is how long you have to survive before a rescue ship responds to your distress calls. Press Space to continue."));
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "Below that is your Energy. You spend energy to use cards and move through hallways, and you have a limited amount of energy each turn."));
+            "Below that is your Energy. You spend energy to use cards and move through hallways, and you have a limited amount of energy each turn. Press Space to continue."));
 
 
         ShowOverlay(false);
