@@ -23,13 +23,17 @@ public class PassageInteractable : MonoBehaviour
     private bool playerInRange;
 
     void Awake()
-    {
-        damaged = false;
-        playerInRange = false;
-        if (_outline != null) _outline.SetActive(false);
-        _player.Interact += OpenDoor;
-        _player.LeftInteractZone += CloseDoor;
-    }
+{
+    damaged = false;
+    playerInRange = false;
+    if (_outline != null) _outline.SetActive(false);
+}
+
+void Start()
+{
+    _player.Interact += OpenDoor;
+    _player.LeftInteractZone += CloseDoor;
+}
 
     void Update()
     {
@@ -42,9 +46,6 @@ public class PassageInteractable : MonoBehaviour
         gameObject.tag = "DamagedPassage";
     }
 
-    /// <summary>
-    /// Called by TutorialManager to fully disconnect this passage from player input.
-    /// </summary>
     public void DisableInteraction()
     {
         _player.Interact -= OpenDoor;
@@ -153,5 +154,11 @@ public class PassageInteractable : MonoBehaviour
     public void removeNotice()
     {
         energyFix.SetActive(false);
+    }
+
+    public void EnableInteraction()
+    {
+        _player.Interact += OpenDoor;
+        _player.LeftInteractZone += CloseDoor;
     }
 }

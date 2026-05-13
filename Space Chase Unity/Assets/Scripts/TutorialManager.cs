@@ -44,10 +44,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private TMP_Text lockedMessageText;
     [SerializeField] private float lockedMessageDuration = 2f;
 
+    [Header("Station References")]
+    [SerializeField] private RoomStationInteractable engineStation;
+
     private bool transitionTriggered = false;
     private bool playerHasMoved = false;
-    private bool playerHasOpenedMap = false;
-    private bool playerHasClosedMap = false;
     private bool playerHasInteractedWithEngine = false;
     private bool hallwayRepaired = false;
     private bool commsStationUsed = false;
@@ -55,6 +56,8 @@ public class TutorialManager : MonoBehaviour
 
     void Awake()
     {
+        CanvasController canvas = FindObjectOfType<CanvasController>();
+        if (canvas != null) canvas.isTutorial = true;
         if (gameController == null)
             gameController = FindObjectOfType<GameController>();
         if (player == null)
@@ -90,6 +93,13 @@ public class TutorialManager : MonoBehaviour
         yield return StartCoroutine(TeachMovement());
         yield return StartCoroutine(TeachMap());
         yield return StartCoroutine(TeachEngineStation());
+
+        if (engineToCommsPassageInteractable != null)
+        {
+            engineToCommsPassageInteractable.enabled = true;
+            engineToCommsPassageInteractable.EnableInteraction();
+        }
+    
         yield return StartCoroutine(TeachRepairHallway());
         yield return StartCoroutine(TeachCommsStation());
         yield return StartCoroutine(TeachEndTurn());
@@ -172,9 +182,10 @@ public class TutorialManager : MonoBehaviour
 
     private void OnEngineInteracted()
     {
-        if (gameController._currentRoom == GameController.PlayerLocation.engine)
-            playerHasInteractedWithEngine = true;
-    }
+    if (gameController._currentRoom == GameController.PlayerLocation.engine 
+        && engineStation.playerInRange)
+        playerHasInteractedWithEngine = true;
+}
 
     private IEnumerator TeachRepairHallway()
 {
@@ -202,24 +213,28 @@ public class TutorialManager : MonoBehaviour
     player.disableInteract = false;
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "You made it to Communications! Notice the smoke, this station is damaged! Walk up to the station and press E to use a repair card."));
+        "You made it to Communications! Notice the smoke — this station is damaged! Walk up to the station and press E to use a repair card."));
 
-    yield return StartCoroutine(ShowTutorialMessage(
-        "Drag your repair card onto the slot and confirm. Some cards can only be used in certain places, so make sure to read them carefully."));
+    yield return StartCoroutine(ShowTutorialMessageNoClick(
+        "Drag your repair card onto the slot and confirm. Some cards can only be used in certain places, so make sure to read them carefully. Press Space to continue."));
 
-    // Wait for comms station to be repaired
+    foreach (string r in gameController._damagedRooms)
+    Debug.Log("Damaged room name: '" + r + "'");
+
     yield return new WaitUntil(() => 
         !gameController._damagedRooms.Exists(r => r.ToLower() == "comms"));
 
+    player.disableInteract = false;
+
+    yield return StartCoroutine(ShowTutorialMessageNoClick(
+        "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape. Press Space to continue."));
+
+    yield return new WaitUntil(() => commsStationUsed);
+
+    player.disableInteract = true;
+
     yield return StartCoroutine(ShowTutorialMessage(
-        "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape."));
-
-        HorizontalCardHolder cardHolder = FindObjectOfType<HorizontalCardHolder>();
-yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count <= 0);
-
-
-    yield return StartCoroutine(ShowTutorialMessage(
-        "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape."));
+        "Well done! Some cards only work in specific rooms — always read them carefully before using."));
     HideTutorialBox();
 }
 
@@ -285,23 +300,29 @@ yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count <=
 
     private void SetupLockedPassages()
     {
+        if (engineToCommsPassageInteractable != null)
+        {
+            engineToCommsPassageInteractable.DisableInteraction();
+            engineToCommsPassageInteractable.enabled = false;
+        }
+
         foreach (PassageInteractable passage in permanentlyLockedPassages)
         {
-            if (passage == null) continue;
+           if (passage == null) continue;
             passage.DisableInteraction();
-            passage.enabled = false;
+           passage.enabled = false;
         }
 
         foreach (PassageInteractable passage in postRepairLockedPassages)
         {
-            if (passage == null) continue;
+           if (passage == null) continue;
             passage.DisableInteraction();
             passage.enabled = false;
-            passage.gameObject.AddComponent<TutorialLockedPassage>()
+           passage.gameObject.AddComponent<TutorialLockedPassage>()
                 .Initialize(lockedMessageText, wrongPassageMessage, lockedMessageDuration, this,
-                    () => postRepairLockActive);
+                   () => postRepairLockActive);
         }
-    }
+}
 
     private void OverrideCardPicker()
     {
@@ -331,8 +352,7 @@ yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count <=
     if (tutorialText != null) tutorialText.text = message;
     yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space) ||
                                      Input.GetMouseButtonDown(0) ||
-                                     Input.GetKeyDown(KeyCode.Tab) ||
-                                     Input.GetKeyDown(KeyCode.E));
+                                     Input.GetKeyDown(KeyCode.Tab));
     yield return null;
 }
 
@@ -362,5 +382,11 @@ private IEnumerator ShowTutorialMessageNoClick(string message)
         lockedMessageText.gameObject.SetActive(true);
         yield return new WaitForSeconds(lockedMessageDuration);
         lockedMessageText.gameObject.SetActive(false);
+    }
+
+    private void ReenableEngineToCommsPassage()
+    {
+        if (engineToCommsPassageInteractable == null) return;
+        engineToCommsPassageInteractable.enabled = true;
     }
 }

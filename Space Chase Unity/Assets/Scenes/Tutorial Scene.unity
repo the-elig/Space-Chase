@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.32936132, y: 0.13239324}
   m_AnchorMax: {x: 0.62837696, y: 0.25800002}
-  m_AnchoredPosition: {x: -0.00091552734, y: -2.6462097}
+  m_AnchoredPosition: {x: -0.00091552734, y: -2.6462402}
   m_SizeDelta: {x: -434.32, y: 5.2924}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &23006780
@@ -373,7 +373,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1474000377}
   warning: {fileID: 193263322}
-  playerIcon: {fileID: 0}
+  playerIcon: {fileID: 1469062235}
   smoke: {fileID: 8187098285614995063}
   damaged: 0
   id: 0
@@ -5068,6 +5068,7 @@ MonoBehaviour:
   tutorialArrow: {fileID: 0}
   lockedMessageText: {fileID: 1949573285}
   lockedMessageDuration: 2
+  engineStation: {fileID: 1254217574}
 --- !u!4 &312666704
 Transform:
   m_ObjectHideFlags: 0
@@ -6205,7 +6206,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1254217574}
   warning: {fileID: 424715384}
-  playerIcon: {fileID: 0}
+  playerIcon: {fileID: 1469062235}
   smoke: {fileID: 160705468}
   damaged: 0
   id: 1
@@ -7984,6 +7985,7 @@ MonoBehaviour:
   energy3: {fileID: 1907478745}
   energy4: {fileID: 622802047}
   energy5: {fileID: 729801642}
+  isTutorial: 0
 --- !u!1 &645127016
 GameObject:
   m_ObjectHideFlags: 0
@@ -8401,7 +8403,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1474000377}
   warning: {fileID: 1979559250}
-  playerIcon: {fileID: 0}
+  playerIcon: {fileID: 1469062235}
   smoke: {fileID: 1693722271}
   damaged: 0
   id: 3
@@ -16722,7 +16724,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1361108171}
   warning: {fileID: 2028424154}
-  playerIcon: {fileID: 0}
+  playerIcon: {fileID: 1469062235}
   smoke: {fileID: 320073025}
   damaged: 0
   id: 4
@@ -22540,7 +22542,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 2083147221}
   warning: {fileID: 772989116}
-  playerIcon: {fileID: 0}
+  playerIcon: {fileID: 1469062235}
   smoke: {fileID: 376248840}
   damaged: 0
   id: 2

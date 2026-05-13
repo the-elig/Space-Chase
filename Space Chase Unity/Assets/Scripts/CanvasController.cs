@@ -101,9 +101,11 @@ public class CanvasController : MonoBehaviour
         // update turns left text
         turnsLeftSmall.text = "Turns Left: " + _gameController._turnsLeft;
     }
+    public bool isTutorial = false;
+
     public void endPlayerTurn()
     {
-        // called with UI button to manually end player turn
+        if (isTutorial) return; // let TutorialManager handle it
         _gameController._energy = 0;
         _gameController.enemyTurn();
         energy1.enabled = true;

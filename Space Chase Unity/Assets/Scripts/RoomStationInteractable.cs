@@ -34,6 +34,8 @@ public class RoomStationInteractable : MonoBehaviour
 
     void OpenStation()
     {
+        if (_player.disableInteract) return; // block during tutorial
+
         if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
             return;
 
@@ -117,11 +119,14 @@ public class RoomStationInteractable : MonoBehaviour
         }
     }
 
+    [HideInInspector] public bool playerInRange = false;
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            if (_outline != null)
+            playerInRange = true;
+           if (_outline != null)
                 _outline.SetActive(true);
         }
     }
@@ -130,6 +135,7 @@ public class RoomStationInteractable : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
+            playerInRange = false;
             if (_outline != null)
                 _outline.SetActive(false);
         }
