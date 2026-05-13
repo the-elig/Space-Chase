@@ -7,7 +7,7 @@ public class Shake : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
 
     public bool start = false;
-    public float duration = 6.0f;
+    public float duration = 3.0f;
 
     private void Start()
     {

@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject cardPickerPanel;
     [SerializeField] private Transform playerTransform;
 
+    [SerializeField] GameObject menuHolder;
+
     [Header("Variables")]
     [SerializeField] private float speed;
 
@@ -72,6 +74,12 @@ public class PlayerMovement : MonoBehaviour
         {
             // swallow the input � do nothing
         }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            menuHolder.SetActive(true);
+        }
+
     }
 
     void Movement()
