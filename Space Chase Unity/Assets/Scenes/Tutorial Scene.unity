@@ -373,6 +373,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1474000377}
   warning: {fileID: 193263322}
+  playerIcon: {fileID: 0}
   smoke: {fileID: 8187098285614995063}
   damaged: 0
   id: 0
@@ -6204,6 +6205,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1254217574}
   warning: {fileID: 424715384}
+  playerIcon: {fileID: 0}
   smoke: {fileID: 160705468}
   damaged: 0
   id: 1
@@ -8399,6 +8401,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1474000377}
   warning: {fileID: 1979559250}
+  playerIcon: {fileID: 0}
   smoke: {fileID: 1693722271}
   damaged: 0
   id: 3
@@ -16719,6 +16722,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 1361108171}
   warning: {fileID: 2028424154}
+  playerIcon: {fileID: 0}
   smoke: {fileID: 320073025}
   damaged: 0
   id: 4
@@ -22513,6 +22517,7 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   station: {fileID: 2083147221}
   warning: {fileID: 772989116}
+  playerIcon: {fileID: 0}
   smoke: {fileID: 376248840}
   damaged: 0
   id: 2

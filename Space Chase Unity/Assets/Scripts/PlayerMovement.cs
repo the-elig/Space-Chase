@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] GameController controller;
-    [SerializeField] GameObject stationPanel;
-    [SerializeField] GameObject cardPickerPanel;
+    [SerializeField] private GameController controller;
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject stationPanel;
+    [SerializeField] private GameObject cardPickerPanel;
+    [SerializeField] private Transform playerTransform;
 
     [Header("Variables")]
     [SerializeField] private float speed;
-    [SerializeField] private Transform playerTransform;
 
     private bool canInteract;
     private bool inPassage;
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private bool paused;
     public bool canLeaveStation;
 
-    // Tutorial flags — set by TutorialManager, ignored in main scene
+    // Tutorial flags ï¿½ set by TutorialManager, ignored in main scene
     [HideInInspector] public bool disableMovement = false;
     [HideInInspector] public bool disableInteract = false;
     [HideInInspector] public bool disableTab = false;
@@ -69,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         // Tab is blocked during tutorial if disableTab is set
         if (Input.GetKeyDown(KeyCode.Tab) && disableTab)
         {
-            // swallow the input — do nothing
+            // swallow the input ï¿½ do nothing
         }
     }
 
@@ -80,9 +81,19 @@ public class PlayerMovement : MonoBehaviour
         if (!disableMovement)
         {
             if (Input.GetKey(KeyCode.W)) { playerTransform.Translate(Vector3.up * speed * Time.deltaTime);    moved = true; }
-            if (Input.GetKey(KeyCode.A)) { playerTransform.Translate(Vector3.left * speed * Time.deltaTime);  moved = true; }
+            if (Input.GetKey(KeyCode.A)) { playerTransform.Translate(Vector3.left * speed * Time.deltaTime);  
+            FlipSprite(true); moved = true; }
             if (Input.GetKey(KeyCode.S)) { playerTransform.Translate(Vector3.down * speed * Time.deltaTime);  moved = true; }
-            if (Input.GetKey(KeyCode.D)) { playerTransform.Translate(Vector3.right * speed * Time.deltaTime); moved = true; }
+            if (Input.GetKey(KeyCode.D)) { playerTransform.Translate(Vector3.right * speed * Time.deltaTime);
+            FlipSprite(false); moved = true; }
+
+            if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                animator.SetBool("isWalking", true);
+            } else
+            {
+                animator.SetBool("isWalking", false);
+            }
 
             if (moved)
                 OnPlayerMoved?.Invoke();
@@ -106,6 +117,11 @@ public class PlayerMovement : MonoBehaviour
                 OnPlayerInteracted?.Invoke();
             }
         }
+    }
+
+    private void FlipSprite(bool right)
+    {
+        GetComponent<SpriteRenderer>().flipX = right;
     }
 
     public void PauseMovement(bool pause)

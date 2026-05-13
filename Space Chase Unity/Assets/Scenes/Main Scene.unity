@@ -19320,6 +19320,7 @@ GameObject:
   - component: {fileID: 1469062239}
   - component: {fileID: 1469062240}
   - component: {fileID: 1469062241}
+  - component: {fileID: 1469062242}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -19340,6 +19341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1356453479}
+  animator: {fileID: 1469062242}
   stationPanel: {fileID: 754843618}
   cardPickerPanel: {fileID: 2112370402}
   speed: 10
@@ -19390,7 +19392,7 @@ SpriteRenderer:
   m_SortingLayerID: 1423417945
   m_SortingLayer: 4
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 2701291038058ea4395e7297501e0afc, type: 3}
+  m_Sprite: {fileID: 883284191, guid: e3150cfe7380f4be9a9743154b6aa2b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -19576,6 +19578,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1469062242
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469062235}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b3236c22422a40ff8d589286b3263c1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1474000375
 PrefabInstance:
   m_ObjectHideFlags: 0
