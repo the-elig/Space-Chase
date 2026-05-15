@@ -15,8 +15,7 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private GameObject map;
 
     //player turn ui elements
-    [SerializeField] private GameObject playerTurnUIElements;
-    [SerializeField] private TMP_Text energyText;
+    [SerializeField] private GameObject HUD;
     [SerializeField] private TMP_Text roomText;
     [SerializeField] private TMP_Text turnsLeftSmall;
     [SerializeField] private TMP_Text usedEnergy;
@@ -68,38 +67,35 @@ public class CanvasController : MonoBehaviour
             }
         }
 
-        roomText.text = "Current Room: " + _gameController.GetPlayerLocation();
+        roomText.text = "" + _gameController.GetPlayerLocation();
 
         playEnemyTurn(_gameController._isEnemyTurn);
 
-        // update energy text
-        energyText.text = "Energy = " + _gameController._energy;
-
         //Remove energy symbol
-        if(_gameController._energy == 4)
+        if(_gameController._energy <= 4)
         {
             energy1.enabled = false;
         }
-        if (_gameController._energy == 3)
+        if (_gameController._energy <= 3)
         {
             energy2.enabled = false;
         }
-        if (_gameController._energy == 2)
+        if (_gameController._energy <= 2)
         {
             energy3.enabled = false;
         }
-        if (_gameController._energy == 1)
+        if (_gameController._energy <= 1)
         {
             energy4.enabled = false;
         }
-        if (_gameController._energy == 0)
+        if (_gameController._energy <= 0)
         {
             energy5.enabled = false;
         }
 
 
         // update turns left text
-        turnsLeftSmall.text = "Turns Left: " + _gameController._turnsLeft;
+        turnsLeftSmall.text = "" + _gameController._turnsLeft;
     }
     public bool isTutorial = false;
 
@@ -125,7 +121,7 @@ public class CanvasController : MonoBehaviour
             map.SetActive(!enemyTurn);
         }
 
-        playerTurnUIElements.SetActive(!enemyTurn);
+        HUD.SetActive(!enemyTurn);
 
 
         turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
@@ -147,7 +143,7 @@ public class CanvasController : MonoBehaviour
     }
     public void TurnOffPlayerTurnUI()
     {
-        playerTurnUIElements.SetActive(false);
+        HUD.SetActive(false);
     }
    
     public void removeNotice()
