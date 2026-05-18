@@ -118,11 +118,31 @@ public class CardVisual : MonoBehaviour
     }
 
     private void SmoothFollow()
+{
+    Vector3 verticalOffset = Vector3.up * (parentCard.isDragging ? 0 : curveYOffset);
+    
+    // Get the card's screen position and convert it properly
+    Canvas parentCanvas = GetComponentInParent<Canvas>();
+    if (parentCanvas != null && parentCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
     {
-        Vector3 verticalOffset = Vector3.up * (parentCard.isDragging ? 0 : curveYOffset);
         Vector3 targetPosition = cardRect.position + verticalOffset;
         transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
     }
+    else
+    {
+        // For Screen Space Camera or World Space, convert through screen space
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, cardRect.position);
+        Vector3 worldPos;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            myRect.parent as RectTransform,
+            screenPos,
+            parentCanvas != null ? parentCanvas.worldCamera : null,
+            out worldPos
+        );
+        worldPos += verticalOffset;
+        transform.position = Vector3.Lerp(transform.position, worldPos, followSpeed * Time.deltaTime);
+    }
+}
 
     private void FollowRotation()
     {
