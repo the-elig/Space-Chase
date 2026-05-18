@@ -113,13 +113,13 @@ public class TutorialManager : MonoBehaviour
             "Welcome to Space Chase, Captain! Let's get you familiar with the interface. Press Space to continue."));
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "In the top left corner you will find your Current Room. This tells you where you are on the ship, and may come in handy when navigating to a different room. Press Space to continue."));
+            "In the top left corner you will find your Current Room. This tells you where you are on the ship, and may come in handy when navigating to a different room."));
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "The top right shows your Turns Left. This is how long you have to survive before a rescue ship responds to your distress calls. Press Space to continue."));
+            "The top right shows your Turns Left. This is how long you have to survive before a rescue ship responds to your distress calls."));
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "Below that is your Energy. You spend energy to use cards and move through hallways, and you have a limited amount of energy each turn. Press Space to continue."));
+            "Below that is your Energy. You spend energy to use cards and move through hallways, and you have a limited amount of energy each turn."));
 
 
         ShowOverlay(false);
@@ -138,7 +138,7 @@ public class TutorialManager : MonoBehaviour
         player.OnPlayerMoved -= OnFirstMove;
 
         yield return StartCoroutine(ShowTutorialMessage(
-            "Great! You've got the hang of moving around. Press Space to continue."));
+            "Great! You've got the hang of moving around."));
         HideTutorialBox();
     }
 
@@ -151,7 +151,7 @@ public class TutorialManager : MonoBehaviour
     player.disableTab = false;
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "Press Tab to open and close the ship map. It shows all rooms and their current status! If a room or hallway has a hazard symbol, it means it has been damaged in an enemy attack!"));
+        "Your map shows all rooms and their current status! If a room or hallway has a hazard symbol, it means it has been damaged in an enemy attack! Press Tab to open and close the ship map."));
 
     player.disableTab = true;
     if (mapUI != null) mapUI.SetActive(false); // make sure it's closed after
@@ -216,7 +216,7 @@ public class TutorialManager : MonoBehaviour
         "You made it to Communications! Notice the smoke — this station is damaged! Walk up to the station and press E to use a repair card."));
 
     yield return StartCoroutine(ShowTutorialMessageNoClick(
-        "Drag your repair card onto the slot and confirm. Some cards can only be used in certain places, so make sure to read them carefully. Press Space to continue."));
+        "Drag your repair card onto the slot and confirm. Some cards can only be used in certain places, so make sure to read them carefully."));
 
     foreach (string r in gameController._damagedRooms)
     Debug.Log("Damaged room name: '" + r + "'");
@@ -227,14 +227,14 @@ public class TutorialManager : MonoBehaviour
     player.disableInteract = false;
 
     yield return StartCoroutine(ShowTutorialMessageNoClick(
-        "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape. Press Space to continue."));
+        "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape."));
 
     yield return new WaitUntil(() => commsStationUsed);
 
     player.disableInteract = true;
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "Well done! Some cards only work in specific rooms — always read them carefully before using."));
+        "Well done! Some cards only work in specific rooms, so always read them carefully before using them!"));
     HideTutorialBox();
 }
 
