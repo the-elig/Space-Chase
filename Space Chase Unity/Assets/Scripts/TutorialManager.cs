@@ -128,7 +128,7 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator TeachMovement()
     {
-        yield return StartCoroutine(ShowTutorialMessage(
+        yield return StartCoroutine(ShowTutorialMessageWASD(
             "Use WASD to move around the ship. Press space and try moving now!"));
 
         player.disableMovement = false;
@@ -362,6 +362,17 @@ private IEnumerator ShowTutorialMessageNoClick(string message)
     if (tutorialText != null) tutorialText.text = message;
     yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space) ||
                                      Input.GetKeyDown(KeyCode.Tab));
+    yield return null;
+}
+
+private IEnumerator ShowTutorialMessageWASD(string message)
+{
+    if (tutorialBox != null) tutorialBox.SetActive(true);
+    if (tutorialText != null) tutorialText.text = message;
+    yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.W) ||
+                                     Input.GetKeyDown(KeyCode.A)||
+                                     Input.GetKeyDown(KeyCode.S)||
+                                     Input.GetKeyDown(KeyCode.D));
     yield return null;
 }
 
