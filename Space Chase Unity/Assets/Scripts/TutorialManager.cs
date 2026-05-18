@@ -166,7 +166,7 @@ public class TutorialManager : MonoBehaviour
     player.disableInteract = false; // unlock FIRST
     player.OnPlayerInteracted += OnEngineInteracted;
 
-    yield return StartCoroutine(ShowTutorialMessage(
+    yield return StartCoroutine(ShowTutorialMessageE(
         "See the Engine station over there? Walk up to it and press E to interact. To interact with any station or hallway aboard your ship, press E."));
 
     yield return new WaitUntil(() => playerHasInteractedWithEngine);
@@ -193,7 +193,7 @@ public class TutorialManager : MonoBehaviour
 
     player.disableInteract = false; // unlock FIRST
 
-    yield return StartCoroutine(ShowTutorialMessage(
+    yield return StartCoroutine(ShowTutorialMessageE(
         "It looks like the enemy damaged the hallway to Communications! Find it and press E to open the repair panel. Any hallways that have been damaged will have a bandage icon over them!"));
 
     yield return StartCoroutine(ShowTutorialMessage(
@@ -373,6 +373,14 @@ private IEnumerator ShowTutorialMessageWASD(string message)
                                      Input.GetKeyDown(KeyCode.A)||
                                      Input.GetKeyDown(KeyCode.S)||
                                      Input.GetKeyDown(KeyCode.D));
+    yield return null;
+}
+
+private IEnumerator ShowTutorialMessageE(string message)
+{
+    if (tutorialBox != null) tutorialBox.SetActive(true);
+    if (tutorialText != null) tutorialText.text = message;
+    yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
     yield return null;
 }
 
