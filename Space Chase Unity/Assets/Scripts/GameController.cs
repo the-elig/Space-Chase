@@ -87,6 +87,11 @@ public class GameController : MonoBehaviour
             _bg.SetActive(true);
             _canvas.TurnOffPlayerTurnUI();
         }
+
+        if(!_player.gameObject.activeSelf) // fix for player deactivating in tutorial scene?
+        {
+            _player.gameObject.SetActive(true);
+        }
     }
 
 

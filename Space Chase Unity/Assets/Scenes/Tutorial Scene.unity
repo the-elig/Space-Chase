@@ -127,17 +127,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 165391827144558066, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
   m_PrefabInstance: {fileID: 1919367393}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &15594082 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
-  m_PrefabInstance: {fileID: 1919367393}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ee262daeb22fb84fb1566c7826e79d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &19960852
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +309,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -586,17 +576,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 165391827144558066, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
   m_PrefabInstance: {fileID: 66892845}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &127401950 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
-  m_PrefabInstance: {fileID: 66892845}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ee262daeb22fb84fb1566c7826e79d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &137692769
 GameObject:
   m_ObjectHideFlags: 0
@@ -5057,9 +5036,9 @@ MonoBehaviour:
   engineToCommsPassageInteractable: {fileID: 280968914}
   commsRoom: {fileID: 75658353}
   permanentlyLockedPassages:
-  - {fileID: 15594082}
-  - {fileID: 127401950}
-  - {fileID: 1960775812}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   postRepairLockedPassages: []
   wrongPassageMessage: That's not the right hallway! Find the damaged one.
   mapUI: {fileID: 242682319}
@@ -5278,7 +5257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1356453479}
-  passage: {fileID: 127401950}
+  passage: {fileID: 0}
   warning: {fileID: 396484566}
   id: 8
 --- !u!1001 &353633966
@@ -5389,7 +5368,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6156,7 +6136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1356453479}
-  passage: {fileID: 1960775812}
+  passage: {fileID: 0}
   warning: {fileID: 1030577708}
   id: 6
 --- !u!1 &492798766
@@ -9267,7 +9247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1356453479}
-  passage: {fileID: 15594082}
+  passage: {fileID: 0}
   warning: {fileID: 791406846}
   id: 7
 --- !u!1 &856162097
@@ -23232,7 +23212,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -23861,17 +23842,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 165391827144558066, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
   m_PrefabInstance: {fileID: 353633966}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1960775812 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3897145013255155075, guid: 231f3d7a5ed3a46b09258f618b7144e0, type: 3}
-  m_PrefabInstance: {fileID: 353633966}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ee262daeb22fb84fb1566c7826e79d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1966264795
 GameObject:
   m_ObjectHideFlags: 0

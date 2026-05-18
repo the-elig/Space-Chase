@@ -21,9 +21,11 @@ public class PassageInteractable : MonoBehaviour
     private bool doorClosed;
     private bool damaged;
     private bool playerInRange;
+    public bool isTutorial; // only for tutorial
 
     void Awake()
 {
+    isTutorial = false;
     damaged = false;
     playerInRange = false;
     if (_outline != null) _outline.SetActive(false);
@@ -91,6 +93,7 @@ void Start()
 
     void CloseDoor()
     {
+        if(isTutorial) return;
         if (damaged)
         {
             if (stationPanel.activeSelf)

@@ -68,6 +68,9 @@ public class TutorialManager : MonoBehaviour
 
     void Start()
     {
+        if (engineToCommsPassageInteractable != null) 
+            engineToCommsPassageInteractable.isTutorial = true;
+        
         player.disableMovement = true;
         player.disableInteract = true;
         player.disableTab = true;
@@ -213,7 +216,7 @@ public class TutorialManager : MonoBehaviour
     player.disableInteract = false;
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "You made it to Communications! Notice the smoke — this station is damaged! Walk up to the station and press E to use a repair card."));
+        "You made it to Communications! Notice the smoke ï¿½ this station is damaged! Walk up to the station and press E to use a repair card."));
 
     yield return StartCoroutine(ShowTutorialMessageNoClick(
         "Drag your repair card onto the slot and confirm. Some cards can only be used in certain places, so make sure to read them carefully."));
