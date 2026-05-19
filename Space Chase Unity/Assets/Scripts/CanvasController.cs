@@ -14,25 +14,25 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private GameObject uiTemplate;
     [SerializeField] private GameObject map;
 
-    //player turn ui elements
+    [Header("Player Turn UI")]
     [SerializeField] private GameObject HUD;
     [SerializeField] private TMP_Text roomText;
     [SerializeField] private TMP_Text turnsLeftSmall;
     [SerializeField] private TMP_Text usedEnergy;
     [SerializeField] private GameObject energyFix;
     
-    //enemy turn ui elements
+    [Header("Enemy Turn UI")]
     [SerializeField] private TMP_Text turnsLeftBig;
     [SerializeField] private TMP_Text damagedRoomBig;
     [SerializeField] private GameObject enemyTurnObj;
 
+    [Header("Energy Symbols")]
     [SerializeField] private RawImage energy1;
     [SerializeField] private RawImage energy2;
     [SerializeField] private RawImage energy3;
     [SerializeField] private RawImage energy4;
     [SerializeField] private RawImage energy5;
 
-    // logic variables
     private float backgroundX;
     private bool mapActive;
     private string[] roomNames =

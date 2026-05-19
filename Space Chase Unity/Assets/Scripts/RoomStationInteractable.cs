@@ -5,31 +5,31 @@ using UnityEngine;
 
 public class RoomStationInteractable : MonoBehaviour
 {
+    [Header("Script References")]
     [SerializeField] private PlayerMovement _player;
-    [SerializeField] private GameObject station;
     [SerializeField] private CardPickerUI cardPicker;
     [SerializeField] private CardUpgraderUI cardUpgrader;
     [SerializeField] private RoomCardSlot cardSlot;
     [SerializeField] private GameController gameController;
     [SerializeField] private CanvasController canvas;
-    [SerializeField] private string roomID;
+
+    [Header("Object References")]
+    [SerializeField] private GameObject station;
     [SerializeField] private GameObject _outline;
+    [SerializeField] private GameObject _choiceMenu;
     [SerializeField] private ParticleSystem smoke;
     AudioSource m_MyAudioSource;
 
+    [SerializeField] private string roomID;
 
     void Start()
     {
+        if (_choiceMenu != null) _choiceMenu.SetActive(false);
         _player.StationInteract += OpenStation;
         _player.LeftStation += CloseStation;
         m_MyAudioSource = GetComponent<AudioSource>();
         if (gameController == null)
             gameController = FindObjectOfType<GameController>();
-    }
-
-    void Update()
-    {
-       
     }
 
     void OpenStation()
@@ -70,23 +70,32 @@ public class RoomStationInteractable : MonoBehaviour
 }
             else if (cardUpgrader != null)
             {
-                Debug.Log("card upgrader station");
                 m_MyAudioSource.Play();
-                cardUpgrader.OpenCardUpgrader();
+                if (_choiceMenu != null) _choiceMenu.SetActive(true);
 
                 return;
             }
             else if (station != null)
             {
-                station.SetActive(true);
-                m_MyAudioSource.Play();
-                RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
-                if (slot != null)
-                {
-                    slot.UpdateStationMessage(false);
-                } //updates damaged message to no longer appear
+                OpenDeckUI();
             }
         }
+    }
+    public void OpenUpgraderUI()
+    {
+        _choiceMenu.SetActive(false);
+        if (_choiceMenu != null) cardUpgrader.OpenCardUpgrader();
+    }
+    public void OpenDeckUI()
+    {
+        if(_choiceMenu != null) _choiceMenu.SetActive(false);
+        station.SetActive(true);
+        m_MyAudioSource.Play();
+        RoomCardSlot slot = station.GetComponentInChildren<RoomCardSlot>();
+        if (slot != null)
+        {
+            slot.UpdateStationMessage(false);
+        } //updates damaged message to no longer appear
     }
 
     void CloseStation()
