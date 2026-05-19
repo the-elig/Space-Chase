@@ -178,7 +178,6 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             if (openedFromPassage)
             {
                 // passage repair - always valid
-                gameController._energy -= 1;
                 energyFix.SetActive(true);
                 Invoke("removeNotice", 3);
                 }
