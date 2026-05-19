@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     public int _enemyTurnsTaken;
     [SerializeField] private int _enemyScalingSpeed; // int how many turns it takes for the enemy to scale more
     [SerializeField] private int _damageCount;
+    [SerializeField] private int _damageLoss;
     public bool _isEnemyTurn;
     private int _lastHit; // make sure turn count doesn't lower multiple times when enemy attacks multiple times
     public bool _endGameState;
@@ -104,7 +105,7 @@ public class GameController : MonoBehaviour
         // check for game over
         _energy = 0;
         _energy += _gainEnergy;
-        if (_damagedRooms.Count >= 7) // 7 is arbitrary
+        if (_damagedRooms.Count >= _damageLoss)
         {
             _endGameState = true;
             playerLoss();
@@ -118,10 +119,10 @@ public class GameController : MonoBehaviour
 
     private void ScaleEnemyDamage()
     {
-        if(_enemyTurnsTaken > _enemyScalingSpeed) // every five turns, increase the amount of times the enemy attacks by one
+        if(_enemyTurnsTaken > _enemyScalingSpeed) // every five/four turns, increase the amount of times the enemy attacks by one
         {
             _damageCount++;
-            _enemyScalingSpeed += 1;
+            _enemyScalingSpeed += 4;
         }
     }
 
