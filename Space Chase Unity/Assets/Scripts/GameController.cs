@@ -20,7 +20,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _endTurnButton;
-    [SerializeField] private GameObject _stationPanel;
+    [SerializeField] private GameObject _seeDeckButton;
+    [SerializeField] private GameObject _stationUI;
     [SerializeField] private GameObject _mapUI;
     [SerializeField] private TMP_Text _winOrLoseText;
 
@@ -77,13 +78,20 @@ public class GameController : MonoBehaviour
             playerWin();
         }
 
-        if(_stationPanel.activeSelf || _mapUI.activeSelf)
+        if (_stationUI.activeSelf || _mapUI.activeSelf)
         {
             _endTurnButton.SetActive(false);
-        } else
+            _seeDeckButton.SetActive(false);
+            _player.forcePause = true;
+        }
+        else if(!_stationUI.activeSelf && !_mapUI.activeSelf)
+        {
             _endTurnButton.SetActive(true);
+            _seeDeckButton.SetActive(true);
+            _player.forcePause = false;
+        }
 
-        if(_endGameState)
+        if (_endGameState)
         {
             _bg.SetActive(true);
             _canvas.TurnOffPlayerTurnUI();
@@ -206,9 +214,9 @@ public class GameController : MonoBehaviour
     }
 
     public void TriggerDamageRoom(int id)
-{
-    DamageRoom?.Invoke(id);
-}
+    {
+        DamageRoom?.Invoke(id);
+    }
 
 
 }

@@ -13,6 +13,7 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private RawImage _bg;
     [SerializeField] private GameObject uiTemplate;
     [SerializeField] private GameObject map;
+    [SerializeField] private GameObject stationPanel;
 
     [Header("Player Turn UI")]
     [SerializeField] private GameObject HUD;
@@ -64,6 +65,21 @@ public class CanvasController : MonoBehaviour
             {
                 map.SetActive(false);
                 mapActive = false;
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Escape) && stationPanel.activeSelf) // close menu for deck viewer
+        {
+            Transform slot = stationPanel.transform.Find("WeaponSlot");
+            if(!slot.gameObject.activeSelf) 
+            {
+                slot.gameObject.SetActive(true);
+                /*Transform normalText = stationPanel.transform.Find("NormalText");
+                normalText.gameObject.SetActive(true);
+                Transform damagedText = stationPanel.transform.Find("DamagedText");
+                damagedText.gameObject.SetActive(true);
+                Transform messageText = stationPanel.transform.Find("MessageText");
+                messageText.gameObject.SetActive(true);*/
+                stationPanel.SetActive(false);
             }
         }
 
@@ -149,5 +165,18 @@ public class CanvasController : MonoBehaviour
     public void removeNotice()
     {
         energyFix.SetActive(false);
+    }
+    public void SeeDeck() // open up deck but without any of the other UI of the normal stations
+    {
+        stationPanel.SetActive(true);
+        Transform slot = stationPanel.transform.Find("WeaponSlot");
+        slot.gameObject.SetActive(false);
+        Transform normalText = stationPanel.transform.Find("NormalText");
+        normalText.gameObject.SetActive(false);
+        Transform damagedText = stationPanel.transform.Find("DamagedText");
+        damagedText.gameObject.SetActive(false);
+        Transform messageText = stationPanel.transform.Find("MessageText");
+        messageText.gameObject.SetActive(false);
+        UIBackground(true);
     }
 }
