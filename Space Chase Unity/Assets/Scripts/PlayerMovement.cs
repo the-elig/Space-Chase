@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Variables")]
     [SerializeField] private float speed;
+    private Vector2 movement;
 
     private bool canInteract;
     private bool inPassage;
@@ -82,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+
     void Movement()
     {
         bool moved = false;
@@ -98,7 +100,8 @@ public class PlayerMovement : MonoBehaviour
             if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 animator.SetBool("isWalking", true);
-            } else
+            } 
+            else
             {
                 animator.SetBool("isWalking", false);
             }

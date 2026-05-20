@@ -20110,7 +20110,7 @@ MonoBehaviour:
   cardPickerPanel: {fileID: 2112370402}
   playerTransform: {fileID: 1469062238}
   menuHolder: {fileID: 1326693878}
-  speed: 10
+  speed: 8
   forcePause: 0
   paused: 0
   canLeaveStation: 0
