@@ -7952,6 +7952,7 @@ MonoBehaviour:
   _bg: {fileID: 1349561812}
   uiTemplate: {fileID: 1777170611}
   map: {fileID: 1491635555}
+  stationPanel: {fileID: 754843618}
   HUD: {fileID: 1955601084}
   roomText: {fileID: 1303026569}
   turnsLeftSmall: {fileID: 1941224058}
@@ -17884,7 +17885,8 @@ MonoBehaviour:
   _camera: {fileID: 519420028}
   _bg: {fileID: 1584297867}
   _endTurnButton: {fileID: 755212537}
-  _stationPanel: {fileID: 754843618}
+  _seeDeckButton: {fileID: 0}
+  _stationUI: {fileID: 1777170611}
   _mapUI: {fileID: 242682319}
   _winOrLoseText: {fileID: 2029257180}
   _energy: 0
@@ -17893,6 +17895,7 @@ MonoBehaviour:
   _enemyTurnsTaken: 0
   _enemyScalingSpeed: 5
   _damageCount: 0
+  _damageLoss: 0
   _isEnemyTurn: 0
   _endGameState: 0
   _rooms:
@@ -19305,14 +19308,14 @@ MonoBehaviour:
   gameController: {fileID: 1356453479}
   canvas: {fileID: 632731572}
   player: {fileID: 1469062236}
+  cardHolder: {fileID: 0}
   deck: {fileID: 11400000, guid: 28ec63f4ccc53ea49bad1846786a2424, type: 2}
-  cardUpgraderPanel: {fileID: 1035703970}
   slot1: {fileID: 2005458051}
   slot2: {fileID: 1141077006}
+  cardUpgraderPanel: {fileID: 1035703970}
+  stationPanel: {fileID: 754843618}
   confirmButton: {fileID: 1260868651}
   messageText: {fileID: 1616328448}
-  cardHolder: {fileID: 0}
-  stationPanel: {fileID: 754843618}
 --- !u!1 &1461093865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7990387429854959164, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
@@ -19354,12 +19357,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1356453479}
   animator: {fileID: 1469062242}
-  stationPanel: {fileID: 754843618}
+  stationUI: {fileID: 1777170611}
   cardPickerPanel: {fileID: 2112370402}
   playerTransform: {fileID: 1469062238}
   menuHolder: {fileID: 0}
   speed: 10
   forcePause: 0
+  paused: 0
   canLeaveStation: 0
   disableMovement: 0
   disableInteract: 0
