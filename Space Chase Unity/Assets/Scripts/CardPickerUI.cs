@@ -17,6 +17,7 @@ public class CardPickerUI : MonoBehaviour
     [SerializeField] private Image card2Highlight;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private TMP_Text messageText;
+    [SerializeField] private CanvasGroup playingCardGroupCanvas;
 
     private CardData selectedCard = null;
     private CardData option1 = null;
@@ -48,7 +49,6 @@ public class CardPickerUI : MonoBehaviour
             return;
         }
 
-        // find StationPanel even if inactive
         if (stationPanel == null)
         {
             Canvas canvas = FindObjectOfType<Canvas>(true);
@@ -56,18 +56,21 @@ public class CardPickerUI : MonoBehaviour
                 stationPanel = canvas.transform.Find("StationPanel")?.gameObject;
         }
 
-        // enable StationPanel so cards work
         if (stationPanel != null)
         {
             stationPanel.SetActive(true);
             canvas.UIBackground(true);
 
-            // hide station specific elements
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
             if (weaponSlot != null) weaponSlot.SetActive(false);
         }
 
-        // get 2 random cards from deck
+        if (playingCardGroupCanvas != null)
+        {
+            playingCardGroupCanvas.alpha = 0;
+            playingCardGroupCanvas.blocksRaycasts = false;
+        }
+
         List<CardData> shuffled = new List<CardData>(deck.cards);
         for (int i = 0; i < shuffled.Count; i++)
         {
@@ -117,10 +120,8 @@ public class CardPickerUI : MonoBehaviour
             if (cardHolder == null) return;
         }
 
-        // deduct energy
         gameController._energy -= 1;
 
-        // add card to hand
         cardHolder.AddCardToHand(selectedCard);
 
         StartCoroutine(CloseAfterDelay());
@@ -132,16 +133,18 @@ public class CardPickerUI : MonoBehaviour
         canvas.UIBackground(false);
         cardPickerPanel.SetActive(false);
 
-        // restore hidden elements then close station panel
-        if (stationPanel != null)
+        if (playingCardGroupCanvas != null)
         {
-            
-            GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
-            if (weaponSlot != null) weaponSlot.SetActive(true);
-
-            stationPanel.SetActive(false);
+            playingCardGroupCanvas.alpha = 1;
+            playingCardGroupCanvas.blocksRaycasts = true;
         }
 
+        if (stationPanel != null)
+        {
+            GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
+            if (weaponSlot != null) weaponSlot.SetActive(true);
+            stationPanel.SetActive(false);
+        }
     }
 
     IEnumerator HideMessage()
@@ -150,24 +153,32 @@ public class CardPickerUI : MonoBehaviour
         if (messageText != null)
             messageText.gameObject.SetActive(false);
     }
-    public void CloseCardPicker()
-{
-    if (cardPickerPanel.activeSelf)
-    {
-        cardPickerPanel.SetActive(false);
-        
-        if (stationPanel != null)
-        {
-            GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
-            if (weaponSlot != null) weaponSlot.SetActive(true);
 
-            canvas.UIBackground(false);
-            stationPanel.SetActive(false);
+    public void CloseCardPicker()
+    {
+        if (cardPickerPanel.activeSelf)
+        {
+            cardPickerPanel.SetActive(false);
+
+            if (playingCardGroupCanvas != null)
+        {
+            playingCardGroupCanvas.alpha = 1;
+            playingCardGroupCanvas.blocksRaycasts = true;
+        }
+
+            if (stationPanel != null)
+            {
+                GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
+                if (weaponSlot != null) weaponSlot.SetActive(true);
+
+                canvas.UIBackground(false);
+                stationPanel.SetActive(false);
+            }
         }
     }
-}
-public Deck GetDeck()
-{
-    return deck;
-}
+
+    public Deck GetDeck()
+    {
+        return deck;
+    }
 }

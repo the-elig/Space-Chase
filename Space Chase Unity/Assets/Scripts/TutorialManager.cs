@@ -44,6 +44,17 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private TMP_Text lockedMessageText;
     [SerializeField] private float lockedMessageDuration = 2f;
 
+    [Header("Tutorial Highlight")]
+    [SerializeField] private GameObject tutorialHighlight;
+
+    [Header("UI Tour Targets")]
+    [SerializeField] private RectTransform currentRoomUI;
+    [SerializeField] private RectTransform turnsLeftUI;
+    [SerializeField] private RectTransform energyUI;
+    [SerializeField] private RectTransform damageUI;
+    [SerializeField] private RectTransform seeDeckUI;
+    [SerializeField] private RectTransform endTurnUI;
+
     [Header("Station References")]
     [SerializeField] private RoomStationInteractable engineStation;
 
@@ -53,6 +64,7 @@ public class TutorialManager : MonoBehaviour
     private bool hallwayRepaired = false;
     private bool commsStationUsed = false;
     private bool postRepairLockActive = false;
+    private int turnsLeftAtCommsStart;
 
     void Awake()
     {
@@ -115,16 +127,27 @@ public class TutorialManager : MonoBehaviour
         yield return StartCoroutine(ShowTutorialMessage(
             "Welcome to Space Chase, Captain! Let's get you familiar with the interface. Press Space to continue."));
 
+        HighlightElement(currentRoomUI);
+
         yield return StartCoroutine(ShowTutorialMessage(
             "In the top left corner you will find your Current Room. This tells you where you are on the ship, and may come in handy when navigating to a different room."));
+
+        HighlightElement(turnsLeftUI);
 
         yield return StartCoroutine(ShowTutorialMessage(
             "The top right shows your Turns Left. This is how long you have to survive before a rescue ship responds to your distress calls."));
 
+        HighlightElement(energyUI);
+
         yield return StartCoroutine(ShowTutorialMessage(
-            "Below that is your Energy. You spend energy to use cards and move through hallways, and you have a limited amount of energy each turn."));
+            "In the middle is your Energy. You spend energy to use cards and move through hallways, and you have a limited amount of energy each turn."));
 
+        HighlightElement(damageUI);
 
+        yield return StartCoroutine(ShowTutorialMessage(
+            "Below that is your ship's current damage. If 7 or more rooms and passageways are damaged, the ship will explode! Be careful monitoring this!"));
+
+        HideHighlight();
         ShowOverlay(false);
         HideTutorialBox();
     }
@@ -132,7 +155,7 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator TeachMovement()
     {
         yield return StartCoroutine(ShowTutorialMessageWASD(
-            "Use WASD to move around the ship. Press space and try moving now!"));
+            "Use WASD to move around the ship. Try it out now!"));
 
         player.disableMovement = false;
         player.OnPlayerMoved += OnFirstMove;
@@ -177,8 +200,12 @@ public class TutorialManager : MonoBehaviour
 
     player.disableInteract = true;
 
-    yield return StartCoroutine(ShowTutorialMessageNoClick(
-        "You can pick a new card to add to your hand! Select the Fix It Repair Card and press confirm. Press Space to continue."));
+    HorizontalCardHolder cardHolder = FindObjectOfType<HorizontalCardHolder>();
+
+       if (tutorialBox != null) tutorialBox.SetActive(true);
+    if (tutorialText != null) tutorialText.text = "You can pick a new card to add to your hand! Select the Fix It Repair Card and press confirm.";
+
+    yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count >= 3);
 
     HideTutorialBox();
 }
@@ -190,23 +217,34 @@ public class TutorialManager : MonoBehaviour
         playerHasInteractedWithEngine = true;
 }
 
+    private bool playerHasOpenedPassage = false;
+
     private IEnumerator TeachRepairHallway()
 {
-    yield return new WaitForSeconds(1f);
 
-    player.disableInteract = false; // unlock FIRST
+    player.disableInteract = false;
 
-    yield return StartCoroutine(ShowTutorialMessageE(
-        "It looks like the enemy damaged the hallway to Communications! Find it and press E to open the repair panel. Any hallways that have been damaged will have a bandage icon over them!"));
+    if (tutorialBox != null) tutorialBox.SetActive(true);
+    if (tutorialText != null) tutorialText.text = "It looks like the enemy damaged the hallway to Communications! Find it and press E to open the repair panel. Any hallways that have been damaged will have a bandage icon over them!";
+
+    // Wait until player is in the passage range AND presses E
+    yield return new WaitUntil(() => 
+        engineToCommsPassageInteractable != null && 
+        engineToCommsPassageInteractable.playerInRange &&
+        GameObject.Find("StationPanel") != null &&
+        GameObject.Find("StationPanel").activeSelf);
+
+    HideTutorialBox();
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "Drag your repair card onto the slot and confirm to fix it. Then, walk through the hallway."));
+        "Drag your repair card onto the slot and confirm to fix it. Then walk through the hallway."));
 
-    yield return new WaitUntil(() => 
-        gameController._currentRoom == GameController.PlayerLocation.comms);
+    HideTutorialBox();
+
+    yield return new WaitUntil(() =>
+    gameController._currentRoom == GameController.PlayerLocation.comms);
 
     player.disableInteract = true;
-    HideTutorialBox();
 }
 
 
@@ -216,28 +254,33 @@ public class TutorialManager : MonoBehaviour
     player.disableInteract = false;
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "You made it to Communications! Notice the smoke � this station is damaged! Walk up to the station and press E to use a repair card."));
+        "You made it to Communications! Notice the smoke? This station is damaged! Walk up to the station and press E to use a repair card."));
 
-    yield return StartCoroutine(ShowTutorialMessageNoClick(
-        "Drag your repair card onto the slot and confirm. Some cards can only be used in certain places, so make sure to read them carefully."));
-
-    foreach (string r in gameController._damagedRooms)
-    Debug.Log("Damaged room name: '" + r + "'");
+    if (tutorialBox != null) tutorialBox.SetActive(true);
+    if (tutorialText != null) tutorialText.text = "Drag your repair card onto the slot and confirm. Some cards can only be used in certain places, so make sure to read them carefully.";
 
     yield return new WaitUntil(() => 
         !gameController._damagedRooms.Exists(r => r.ToLower() == "comms"));
 
     player.disableInteract = false;
 
-    yield return StartCoroutine(ShowTutorialMessageNoClick(
-        "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape."));
+    turnsLeftAtCommsStart = gameController._turnsLeft;
 
-    yield return new WaitUntil(() => commsStationUsed);
+    if (tutorialText != null) tutorialText.text = "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape. You may need to leave the area before reactivating the station!";
+
+    yield return new WaitUntil(() => 
+        gameController._turnsLeft < turnsLeftAtCommsStart);
 
     player.disableInteract = true;
 
     yield return StartCoroutine(ShowTutorialMessage(
-        "Well done! Some cards only work in specific rooms, so always read them carefully before using them!"));
+        "Well done! Some cards only work in specific rooms, so always read them carefully before using them! Press space to continue."));
+
+    yield return StartCoroutine(ShowTutorialMessage(
+        "If you ever forget what cards you currently have, press the See Deck button in the right corner to view your inventory!"));
+
+    yield return StartCoroutine(ShowTutorialMessage(
+        "Once you run out of energy, you cannot use stations or move between rooms. You will have to press the End Turn button to move on to the next turn. Press space to continue."));
     HideTutorialBox();
 }
 
@@ -410,5 +453,20 @@ private IEnumerator ShowTutorialMessageE(string message)
     {
         if (engineToCommsPassageInteractable == null) return;
         engineToCommsPassageInteractable.enabled = true;
+    }
+
+    private void HighlightElement(RectTransform target)
+    {
+        if (tutorialHighlight == null || target == null) return;
+        tutorialHighlight.SetActive(true);
+        RectTransform highlightRect = tutorialHighlight.GetComponent<RectTransform>();
+        highlightRect.position = target.position;
+        highlightRect.sizeDelta = target.sizeDelta + new Vector2(20, 20);
+    }
+
+    private void HideHighlight()
+    {
+        if (tutorialHighlight != null)
+            tutorialHighlight.SetActive(false);
     }
 }

@@ -20,7 +20,7 @@ public class PassageInteractable : MonoBehaviour
 
     private bool doorClosed;
     private bool damaged;
-    private bool playerInRange;
+    [HideInInspector] public bool playerInRange;
     public bool isTutorial; // only for tutorial
 
     void Awake()
