@@ -14,6 +14,7 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private GameObject uiTemplate;
     [SerializeField] private GameObject map;
     [SerializeField] private GameObject stationPanel;
+    [SerializeField] private GameObject cardDeck;
 
     [Header("Player Turn UI")]
     [SerializeField] private GameObject HUD;
@@ -33,6 +34,9 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private RawImage energy3;
     [SerializeField] private RawImage energy4;
     [SerializeField] private RawImage energy5;
+
+    [Header("Healthbar")]
+    [SerializeField] private GameObject[] healthbar;
 
     private float backgroundX;
     private bool mapActive;
@@ -87,28 +91,9 @@ public class CanvasController : MonoBehaviour
 
         playEnemyTurn(_gameController._isEnemyTurn);
 
-        //Remove energy symbol
-        if(_gameController._energy <= 4)
-        {
-            energy1.enabled = false;
-        }
-        if (_gameController._energy <= 3)
-        {
-            energy2.enabled = false;
-        }
-        if (_gameController._energy <= 2)
-        {
-            energy3.enabled = false;
-        }
-        if (_gameController._energy <= 1)
-        {
-            energy4.enabled = false;
-        }
-        if (_gameController._energy <= 0)
-        {
-            energy5.enabled = false;
-        }
-
+        //update energy UI and healthbar
+        doEnergyUI();
+        doHealthbar(_gameController._damagedRooms.Count);
 
         // update turns left text
         turnsLeftSmall.text = "" + _gameController._turnsLeft;
@@ -178,5 +163,43 @@ public class CanvasController : MonoBehaviour
         Transform messageText = stationPanel.transform.Find("MessageText");
         messageText.gameObject.SetActive(false);
         UIBackground(true);
+        //cardDeck.SetActive(true);
+
+
+    }
+
+    private void doHealthbar(int damagedRooms)
+    {
+        foreach (GameObject i in healthbar)
+        {
+            i.SetActive(false);
+        }
+
+        if (damagedRooms < 7)
+        healthbar[damagedRooms].SetActive(true);
+    }
+
+    private void doEnergyUI()
+    {
+        if (_gameController._energy <= 4)
+        {
+            energy1.enabled = false;
+        }
+        if (_gameController._energy <= 3)
+        {
+            energy2.enabled = false;
+        }
+        if (_gameController._energy <= 2)
+        {
+            energy3.enabled = false;
+        }
+        if (_gameController._energy <= 1)
+        {
+            energy4.enabled = false;
+        }
+        if (_gameController._energy <= 0)
+        {
+            energy5.enabled = false;
+        }
     }
 }
