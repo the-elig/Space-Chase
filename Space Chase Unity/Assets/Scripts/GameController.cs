@@ -20,7 +20,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _endTurnButton;
-    [SerializeField] private GameObject _stationPanel;
+    [SerializeField] private GameObject _seeDeckButton;
+    [SerializeField] private GameObject _stationUI;
     [SerializeField] private GameObject _mapUI;
     [SerializeField] private TMP_Text _winOrLoseText;
 
@@ -35,6 +36,7 @@ public class GameController : MonoBehaviour
     public int _enemyTurnsTaken;
     [SerializeField] private int _enemyScalingSpeed; // int how many turns it takes for the enemy to scale more
     [SerializeField] private int _damageCount;
+    [SerializeField] private int _damageLoss;
     public bool _isEnemyTurn;
     private int _lastHit; // make sure turn count doesn't lower multiple times when enemy attacks multiple times
     public bool _endGameState;
@@ -76,13 +78,20 @@ public class GameController : MonoBehaviour
             playerWin();
         }
 
-        if(_stationPanel.activeSelf || _mapUI.activeSelf)
+        if (_stationUI.activeSelf || _mapUI.activeSelf)
         {
             _endTurnButton.SetActive(false);
-        } else
+            _seeDeckButton.SetActive(false);
+            _player.forcePause = true;
+        }
+        else if(!_stationUI.activeSelf && !_mapUI.activeSelf)
+        {
             _endTurnButton.SetActive(true);
+            _seeDeckButton.SetActive(true);
+            _player.forcePause = false;
+        }
 
-        if(_endGameState)
+        if (_endGameState)
         {
             _bg.SetActive(true);
             _canvas.TurnOffPlayerTurnUI();
@@ -104,7 +113,7 @@ public class GameController : MonoBehaviour
         // check for game over
         _energy = 0;
         _energy += _gainEnergy;
-        if (_damagedRooms.Count >= 7) // 7 is arbitrary
+        if (_damagedRooms.Count >= _damageLoss)
         {
             _endGameState = true;
             playerLoss();
@@ -118,10 +127,10 @@ public class GameController : MonoBehaviour
 
     private void ScaleEnemyDamage()
     {
-        if(_enemyTurnsTaken > _enemyScalingSpeed) // every five turns, increase the amount of times the enemy attacks by one
+        if(_enemyTurnsTaken > _enemyScalingSpeed) // every five/four turns, increase the amount of times the enemy attacks by one
         {
             _damageCount++;
-            _enemyScalingSpeed += 1;
+            _enemyScalingSpeed += 4;
         }
     }
 
@@ -205,9 +214,9 @@ public class GameController : MonoBehaviour
     }
 
     public void TriggerDamageRoom(int id)
-{
-    DamageRoom?.Invoke(id);
-}
+    {
+        DamageRoom?.Invoke(id);
+    }
 
 
 }

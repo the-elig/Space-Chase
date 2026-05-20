@@ -24,18 +24,18 @@ public class PassageInteractable : MonoBehaviour
     public bool isTutorial; // only for tutorial
 
     void Awake()
-{
-    isTutorial = false;
-    damaged = false;
-    playerInRange = false;
-    if (_outline != null) _outline.SetActive(false);
-}
+    {
+        isTutorial = false;
+        damaged = false;
+        playerInRange = false;
+        if (_outline != null) _outline.SetActive(false);
+    }
 
-void Start()
-{
-    _player.Interact += OpenDoor;
-    _player.LeftInteractZone += CloseDoor;
-}
+    void Start()
+    {
+        _player.Interact += OpenDoor;
+        _player.LeftInteractZone += CloseDoor;
+    }
 
     void Update()
     {
@@ -91,7 +91,7 @@ void Start()
         }
     }
 
-    void CloseDoor()
+    public void CloseDoor()
     {
         if(isTutorial) return;
         if (damaged)

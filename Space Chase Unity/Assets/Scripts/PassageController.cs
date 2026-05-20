@@ -9,15 +9,13 @@ public class PassageController : MonoBehaviour
     [SerializeField] private GameObject warning;
     [SerializeField] private int id;
     private bool damaged;
-    void Awake()
-{
-    gameController.DamageRoom += DamagePassage;
-    damaged = false;
-}
-    void Update()
-    {
 
+    void Awake()
+    {
+        gameController.DamageRoom += DamagePassage;
+        damaged = false;
     }
+
     private void DamagePassage(int pass_id)
     {
         if (pass_id == id)
@@ -31,5 +29,6 @@ public class PassageController : MonoBehaviour
     {
         damaged = false;
         warning.SetActive(false);
+        passage.CloseDoor();
     }
 }

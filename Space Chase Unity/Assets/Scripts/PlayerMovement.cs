@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameController controller;
     [SerializeField] private Animator animator;
-    [SerializeField] private GameObject stationPanel;
+    [SerializeField] private GameObject stationUI;
     [SerializeField] private GameObject cardPickerPanel;
     [SerializeField] private Transform playerTransform;
 
@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private bool inPassage;
     private bool atStation;
     public bool forcePause;
-    private bool paused;
+    public bool paused;
     public bool canLeaveStation;
 
     // Tutorial flags � set by TutorialManager, ignored in main scene
@@ -48,12 +48,12 @@ public class PlayerMovement : MonoBehaviour
         m_MyAudioSource = GetComponent<AudioSource>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (!paused)
             Movement();
 
-        if (!stationPanel.activeSelf && !cardPickerPanel.activeSelf && !forcePause)
+        if (!stationUI.activeSelf && !cardPickerPanel.activeSelf && !forcePause)
         {
             PauseMovement(false);
             canLeaveStation = true;

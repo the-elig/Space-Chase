@@ -5,19 +5,21 @@ using UnityEngine;
 
 public class CardUpgraderUI : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Script References")]
     [SerializeField] private GameController gameController;
     [SerializeField] private CanvasController canvas;
     [SerializeField] private PlayerMovement player;
+    [SerializeField] private HorizontalCardHolder cardHolder;
     [SerializeField] private Deck deck;
-    [SerializeField] private GameObject cardUpgraderPanel;
     [SerializeField] private UpgradeCardSlot slot1;
     [SerializeField] private UpgradeCardSlot slot2;
+
+    [Header("Object References")]
+    [SerializeField] private GameObject cardUpgraderPanel;
+    [SerializeField] private GameObject stationPanel;
     [SerializeField] private GameObject confirmButton;
     [SerializeField] private TMP_Text messageText;
 
-    [SerializeField] private HorizontalCardHolder cardHolder;
-    [SerializeField] private GameObject stationPanel;
     void Start()
     {
         player.LeftStation += CloseCardUpgrader;
@@ -27,7 +29,7 @@ public class CardUpgraderUI : MonoBehaviour
 
         confirmButton.SetActive(false);
     }
-    void Update() {}
+
     public void OpenCardUpgrader()
     {
         if (gameController._energy < 1)
