@@ -172,11 +172,11 @@ public class CanvasController : MonoBehaviour
     {
         foreach (GameObject i in healthbar)
         {
-            i.SetActive(false);
+            if (i != null) i.SetActive(false);
         }
 
-        if (damagedRooms < 7)
-        healthbar[damagedRooms].SetActive(true);
+        if (damagedRooms < healthbar.Length)
+            healthbar[damagedRooms].SetActive(true);
     }
 
     private void doEnergyUI()
