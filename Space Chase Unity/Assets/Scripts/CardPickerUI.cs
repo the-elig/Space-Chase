@@ -65,12 +65,6 @@ public class CardPickerUI : MonoBehaviour
             if (weaponSlot != null) weaponSlot.SetActive(false);
         }
 
-        if (playingCardGroupCanvas != null)
-        {
-            playingCardGroupCanvas.alpha = 0;
-            playingCardGroupCanvas.blocksRaycasts = false;
-        }
-
         List<CardData> shuffled = new List<CardData>(deck.cards);
         for (int i = 0; i < shuffled.Count; i++)
         {
@@ -133,12 +127,6 @@ public class CardPickerUI : MonoBehaviour
         canvas.UIBackground(false);
         cardPickerPanel.SetActive(false);
 
-        if (playingCardGroupCanvas != null)
-        {
-            playingCardGroupCanvas.alpha = 1;
-            playingCardGroupCanvas.blocksRaycasts = true;
-        }
-
         if (stationPanel != null)
         {
             GameObject weaponSlot = stationPanel.transform.Find("WeaponSlot")?.gameObject;
@@ -159,12 +147,6 @@ public class CardPickerUI : MonoBehaviour
         if (cardPickerPanel.activeSelf)
         {
             cardPickerPanel.SetActive(false);
-
-            if (playingCardGroupCanvas != null)
-        {
-            playingCardGroupCanvas.alpha = 1;
-            playingCardGroupCanvas.blocksRaycasts = true;
-        }
 
             if (stationPanel != null)
             {

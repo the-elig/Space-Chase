@@ -205,7 +205,7 @@ public class TutorialManager : MonoBehaviour
        if (tutorialBox != null) tutorialBox.SetActive(true);
     if (tutorialText != null) tutorialText.text = "You can pick a new card to add to your hand! Select the Fix It Repair Card and press confirm.";
 
-    yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count >= 3);
+    yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count >= 6);
 
     HideTutorialBox();
 }

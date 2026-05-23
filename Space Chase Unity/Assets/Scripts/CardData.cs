@@ -35,4 +35,7 @@ public class CardData : ScriptableObject
     public int roomUseCount;
     public StationType allowedStation;
     public CardRequirement requirement;
+
+    [Header("Special")]
+    public bool isRemoteUse;
 }

@@ -25,6 +25,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private TMP_Text normalText;
     [SerializeField] private TMP_Text usedEnergy;
     [SerializeField] private GameObject energyFix;
+    [SerializeField] private GameObject dragInstructionText;
 
     [Header("Slot Visuals")]
     [SerializeField] private Color emptyColor = new Color(1, 1, 1, 0.3f);
@@ -42,56 +43,47 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     [HideInInspector] public bool openedFromPassage = false;
     [HideInInspector] public PassageInteractable currentPassage = null;
-    [SerializeField] private GameObject dragInstructionText;
 
     void Awake()
-{
+    {
         map.endMapSelection += ExecuteConfirm;
 
-    if (confirmButton != null) confirmButton.SetActive(true);
-    if (cancelButton != null) cancelButton.SetActive(true);
-    if (messageText != null) messageText.gameObject.SetActive(false);
-    if (damagedText != null) damagedText.gameObject.SetActive(false);
-    if (normalText != null) normalText.gameObject.SetActive(false);
+        if (confirmButton != null) confirmButton.SetActive(true);
+        if (cancelButton != null) cancelButton.SetActive(true);
+        if (messageText != null) messageText.gameObject.SetActive(false);
+        if (damagedText != null) damagedText.gameObject.SetActive(false);
+        if (normalText != null) normalText.gameObject.SetActive(false);
 
-    cardHolder = FindObjectOfType<HorizontalCardHolder>();
-    if (gameController == null)
-        gameController = FindObjectOfType<GameController>();
-}
+        cardHolder = FindObjectOfType<HorizontalCardHolder>();
+        if (gameController == null)
+            gameController = FindObjectOfType<GameController>();
+    }
+
     void Update()
     {
-        if(mapSelectorObj.activeSelf)
-        {
+        if (mapSelectorObj.activeSelf)
             player.canLeaveStation = false;
-        } else
-        {
+        else
             player.canLeaveStation = true;
-        }
     }
 
     public void UpdateStationMessage(bool isDamaged)
     {
-        if (damagedText != null)
-            damagedText.gameObject.SetActive(isDamaged);
-        if (normalText != null)
-            normalText.gameObject.SetActive(!isDamaged);
+        if (damagedText != null) damagedText.gameObject.SetActive(isDamaged);
+        if (normalText != null) normalText.gameObject.SetActive(!isDamaged);
     }
 
     public void HideStationMessages()
     {
-        if (damagedText != null)
-            damagedText.gameObject.SetActive(false);
-        if (normalText != null)
-            normalText.gameObject.SetActive(false);
+        if (damagedText != null) damagedText.gameObject.SetActive(false);
+        if (normalText != null) normalText.gameObject.SetActive(false);
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         if (currentCard != null) return;
-
         Card droppedCard = eventData.pointerDrag?.GetComponent<Card>();
         if (droppedCard == null) return;
-
         AcceptCard(droppedCard);
     }
 
@@ -127,15 +119,53 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     public void OnConfirm()
-{
-    Debug.Log("Card: " + currentCard.cardData?.cardName + " Room: " + gameController._currentRoom + " Requirement: " + currentCard.cardData?.requirement);
-    if (currentCard == null) return;
-
-    if (currentCard.cardData != null)
     {
+        if (currentCard == null) return;
+        if (currentCard.cardData == null) return;
+
         CardData data = currentCard.cardData;
 
-        // check energy cost
+        // --- Remote Use card ---
+        if (data.isRemoteUse)
+        {
+            if (gameController._energy < data.energyCost)
+            {
+                StartCoroutine(ShowMessage("Not enough energy!"));
+                OnCancel();
+                return;
+            }
+
+            gameController._energy -= data.energyCost;
+
+            Card cardToDestroy = currentCard;
+            currentCard = null;
+
+            if (slotImage != null) slotImage.color = emptyColor;
+
+            RemoteUseManager.instance.StartRemoteUse();
+
+            if (cardToDestroy.cardVisual != null)
+            {
+                cardToDestroy.cardVisual.transform.DOScale(0f, 0.3f)
+                    .SetEase(Ease.InBack)
+                    .OnComplete(() =>
+                    {
+                        Destroy(cardToDestroy.cardVisual.gameObject);
+                        Destroy(cardToDestroy.gameObject);
+                        if (cardOriginalSlot != null)
+                            Destroy(cardOriginalSlot);
+                    });
+            }
+            else
+            {
+                Destroy(cardToDestroy.gameObject);
+                if (cardOriginalSlot != null)
+                    Destroy(cardOriginalSlot);
+            }
+            return;
+        }
+
+        // --- Energy check ---
         if (gameController._energy < data.energyCost)
         {
             StartCoroutine(ShowMessage("Not enough energy!"));
@@ -143,7 +173,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             return;
         }
 
-        // check station type restriction
+        // --- Station type restriction ---
         if (data.allowedStation != StationType.Any)
         {
             string currentRoom = gameController._currentRoom.ToString().ToLower();
@@ -157,7 +187,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             }
         }
 
-        // check station healthy requirement
+        // --- Station healthy requirement ---
         if (data.requirement == CardRequirement.StationHealthy)
         {
             string currentRoomName = gameController._currentRoom.ToString();
@@ -172,16 +202,14 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             }
         }
 
-        // check station damaged requirement
+        // --- Station damaged requirement ---
         if (data.requirement == CardRequirement.StationDamaged)
         {
-            Debug.Log("openedFromPassage = " + openedFromPassage + " | currentPassage = " + currentPassage);
             if (openedFromPassage)
             {
-                // passage repair - always valid
                 energyFix.SetActive(true);
                 Invoke("removeNotice", 3);
-                }
+            }
             else
             {
                 string currentRoomName = gameController._currentRoom.ToString();
@@ -197,37 +225,41 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             }
         }
 
-        // deduct energy
+        // --- Deduct energy ---
         gameController._energy -= data.energyCost;
         energyFix.SetActive(true);
         Invoke("removeNotice", 3);
 
-            if (data.requireMap) {
-        MapSelection();
-        } else ExecuteConfirm();
+        if (data.requireMap)
+            MapSelection();
+        else
+            ExecuteConfirm();
     }
-}
 
     private void MapSelection()
     {
         CardData data = currentCard.cardData;
         mapSelectorObj.SetActive(true);
         map.AllowPresses(data.roomUseCount);
-        if (openedFromPassage) // if repairing a passage, don't open map
+
+        if (openedFromPassage)
         {
             ExecuteConfirm();
             return;
-        } else if (data.useAnywhere) { // if can used anywhere, open map with all buttons
+        }
+        else if (data.useAnywhere)
+        {
             map.UpdateMapState(5);
-        } else // otherwise, only show the button of the current room
+        }
+        else
         {
             int buttonId = -1;
             switch (gameController._currentRoom)
             {
-                case GameController.PlayerLocation.comms: buttonId = 0; break;
-                case GameController.PlayerLocation.engine: buttonId = 1; break;
+                case GameController.PlayerLocation.comms:   buttonId = 0; break;
+                case GameController.PlayerLocation.engine:  buttonId = 1; break;
                 case GameController.PlayerLocation.weapons: buttonId = 2; break;
-                case GameController.PlayerLocation.bridge: buttonId = 3; break;
+                case GameController.PlayerLocation.bridge:  buttonId = 3; break;
                 case GameController.PlayerLocation.shields: buttonId = 4; break;
             }
             map.UpdateMapState(buttonId);
@@ -236,6 +268,8 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     public void ExecuteConfirm()
     {
+        if (currentCard == null) return;
+
         player.canLeaveStation = false;
         OnCardConfirmed?.Invoke(currentCard);
         mapSelectorObj.SetActive(false);
@@ -248,26 +282,23 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
         if (cardToDestroy.cardData != null)
         {
-            // if it was a repair card, fix the room or passage
             if (cardToDestroy.cardData.requirement == CardRequirement.StationDamaged)
             {
-                if (openedFromPassage && currentPassage != null) // passage repair -------
+                if (openedFromPassage && currentPassage != null)
                 {
                     currentPassage.RepairPassage();
                     openedFromPassage = false;
                     currentPassage = null;
-                } // ---------------------------------------------------------------------
+                }
                 else
                 {
                     int currentRoomId = -1;
-                    for(int i = 0; i < map.roomsToRepair.Count; i++)
+                    for (int i = 0; i < map.roomsToRepair.Count; i++)
                     {
-                        // remove from damaged rooms list
                         string currentRoomName = gameController._currentRoom.ToString();
                         gameController._damagedRooms.RemoveAll(r =>
                             r.ToLower() == currentRoomName.ToLower());
 
-                        // find room by ID and repair it
                         switch (map.roomsToRepair[i])
                         {
                             case 0: currentRoomId = 0; break;
@@ -276,6 +307,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
                             case 3: currentRoomId = 3; break;
                             case 4: currentRoomId = 4; break;
                         }
+
                         RoomController[] rooms = FindObjectsOfType<RoomController>();
                         foreach (RoomController room in rooms)
                         {
@@ -289,67 +321,64 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
                     }
                 }
             }
-            // if it was a station card, reduce turns left
             else if (cardToDestroy.cardData.requirement == CardRequirement.StationHealthy &&
                      cardToDestroy.cardData.allowedStation != StationType.Any)
             {
                 gameController._turnsLeft--;
             }
-    }
+        }
 
-    StartCoroutine(CloseStationDelay());
+        StartCoroutine(CloseStationDelay());
 
-    if (cardToDestroy.cardVisual != null)
-    {
-        cardToDestroy.cardVisual.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+        if (cardToDestroy.cardVisual != null)
         {
-            Destroy(cardToDestroy.cardVisual.gameObject);
+            cardToDestroy.cardVisual.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                Destroy(cardToDestroy.cardVisual.gameObject);
+                Destroy(cardToDestroy.gameObject);
+                if (cardOriginalSlot != null)
+                    Destroy(cardOriginalSlot);
+            });
+        }
+        else
+        {
             Destroy(cardToDestroy.gameObject);
             if (cardOriginalSlot != null)
                 Destroy(cardOriginalSlot);
-        });
+        }
     }
-    else
-    {
-        Destroy(cardToDestroy.gameObject);
-        if (cardOriginalSlot != null)
-            Destroy(cardOriginalSlot);
-    }
-}
 
     IEnumerator ShowMessage(string message, float duration = 2f)
     {
         if (messageText != null)
-    {
-        // Hide drag instruction while error shows
-        if (dragInstructionText != null)
-            dragInstructionText.SetActive(false);
+        {
+            if (dragInstructionText != null)
+                dragInstructionText.SetActive(false);
 
-        messageText.text = message;
-        normalText.gameObject.SetActive(false); 
-        messageText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(duration);
-        messageText.gameObject.SetActive(false);
-        normalText.gameObject.SetActive(true); 
+            messageText.text = message;
+            if (normalText != null) normalText.gameObject.SetActive(false);
+            messageText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(duration);
+            messageText.gameObject.SetActive(false);
+            if (normalText != null) normalText.gameObject.SetActive(true);
 
-        // Restore drag instruction
-        if (dragInstructionText != null)
-            dragInstructionText.SetActive(true);
-    }
+            if (dragInstructionText != null)
+                dragInstructionText.SetActive(true);
+        }
     }
 
     IEnumerator CloseStationDelay()
-{
-    yield return new WaitForSeconds(0.4f);
-    player.canLeaveStation = true;
-    openedFromPassage = false;
-    currentPassage = null;
-    GameObject stationPanel = GameObject.Find("StationPanel");
-    if(canvas != null) 
-        canvas.UIBackground(false);
-    if (stationPanel != null)
-        stationPanel.SetActive(false);
-}
+    {
+        yield return new WaitForSeconds(0.4f);
+        player.canLeaveStation = true;
+        openedFromPassage = false;
+        currentPassage = null;
+        GameObject stationPanel = GameObject.Find("StationPanel");
+        if (canvas != null)
+            canvas.UIBackground(false);
+        if (stationPanel != null)
+            stationPanel.SetActive(false);
+    }
 
     public void OnCancel()
     {

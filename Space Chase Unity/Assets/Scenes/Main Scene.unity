@@ -809,7 +809,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.5
+  m_fontSize: 22.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -845,7 +845,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5, y: 5, z: 5, w: 5}
+  m_margin: {x: 5, y: 61.00796, z: 5, w: 5}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.25
+  m_fontSize: 38.85
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4400,7 +4400,6 @@ GameObject:
   - component: {fileID: 249318212}
   - component: {fileID: 249318211}
   - component: {fileID: 249318210}
-  - component: {fileID: 249318209}
   m_Layer: 5
   m_Name: PlayingCardGroup
   m_TagString: Untagged
@@ -4427,18 +4426,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -30}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0, y: 0}
---- !u!225 &249318209
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249318207}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!222 &249318210
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9548,6 +9535,26 @@ PrefabInstance:
     - target: {fileID: 21775830343496765, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontSize
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 522495681595056605, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: roomName
@@ -18524,6 +18531,7 @@ GameObject:
   - component: {fileID: 1356453479}
   - component: {fileID: 1356453481}
   - component: {fileID: 1356453482}
+  - component: {fileID: 1356453483}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -18784,6 +18792,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1356453483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356453478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a56e8e49a5a3744b6fe00036ee70e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 1356453479}
+  map: {fileID: 670929849}
+  mapSelectorObj: {fileID: 192867306}
+  stationPanel: {fileID: 754843618}
+  canvas: {fileID: 632731572}
+  player: {fileID: 1469062236}
+  commsStation: {fileID: 1474000377}
+  engineStation: {fileID: 1254217574}
+  weaponsStation: {fileID: 2083147221}
+  bridgeStation: {fileID: 2093156817}
+  shieldsStation: {fileID: 1361108171}
 --- !u!1 &1356484232
 GameObject:
   m_ObjectHideFlags: 0
@@ -23066,7 +23097,7 @@ MonoBehaviour:
   card2Highlight: {fileID: 230265200}
   confirmButton: {fileID: 1385636135}
   messageText: {fileID: 367767668}
-  playingCardGroupCanvas: {fileID: 249318209}
+  playingCardGroupCanvas: {fileID: 0}
 --- !u!4 &1764551611
 Transform:
   m_ObjectHideFlags: 0
@@ -23558,6 +23589,50 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontSize
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.5557017
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 522495681595056605, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278226670
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120921795521931713, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618335006836898134, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618335006836898134, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: roomName
       value: Upgrade
@@ -23661,6 +23736,18 @@ PrefabInstance:
     - target: {fileID: 5604601229370959080, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UpgradeCardSlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842868022022821644, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842868022022821644, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842868022022821644, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
@@ -25384,6 +25471,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1317625592301553376, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
   m_PrefabInstance: {fileID: 2093156815}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2093156817 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+  m_PrefabInstance: {fileID: 2093156815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461093865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ae2402aa267e24b81799790b2db794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &2093156819
 AudioSource:
   m_ObjectHideFlags: 0

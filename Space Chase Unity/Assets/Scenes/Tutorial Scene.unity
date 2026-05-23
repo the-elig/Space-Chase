@@ -19086,6 +19086,7 @@ GameObject:
   - component: {fileID: 1356453479}
   - component: {fileID: 1356453481}
   - component: {fileID: 1356453482}
+  - component: {fileID: 1356453483}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -19346,6 +19347,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1356453483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356453478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a56e8e49a5a3744b6fe00036ee70e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 1356453479}
+  map: {fileID: 670929849}
+  mapSelectorObj: {fileID: 192867306}
+  stationPanel: {fileID: 754843618}
+  canvas: {fileID: 632731572}
+  player: {fileID: 1469062236}
+  commsStation: {fileID: 1474000377}
+  engineStation: {fileID: 1254217574}
+  weaponsStation: {fileID: 2083147221}
+  bridgeStation: {fileID: 2093156821}
+  shieldsStation: {fileID: 1361108171}
 --- !u!1 &1356484232
 GameObject:
   m_ObjectHideFlags: 0
@@ -23895,7 +23919,6 @@ GameObject:
   - component: {fileID: 1736219483}
   - component: {fileID: 1736219482}
   - component: {fileID: 1736219481}
-  - component: {fileID: 1736219485}
   m_Layer: 5
   m_Name: PlayingCardGroup
   m_TagString: Untagged
@@ -24005,18 +24028,6 @@ MonoBehaviour:
   deck: {fileID: 11400000, guid: 28ec63f4ccc53ea49bad1846786a2424, type: 2}
   cards: []
   tweenCardReturn: 1
---- !u!225 &1736219485
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736219479}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1751827889
 GameObject:
   m_ObjectHideFlags: 0
@@ -24131,7 +24142,7 @@ MonoBehaviour:
   card2Highlight: {fileID: 230265200}
   confirmButton: {fileID: 1385636135}
   messageText: {fileID: 367767668}
-  playingCardGroupCanvas: {fileID: 1736219485}
+  playingCardGroupCanvas: {fileID: 0}
 --- !u!4 &1764551611
 Transform:
   m_ObjectHideFlags: 0
@@ -27395,6 +27406,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2093156821 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 422021415443583981, guid: fb5a4c9da0f206a45a71aefd267dbfe9, type: 3}
+  m_PrefabInstance: {fileID: 2093156815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461093865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ae2402aa267e24b81799790b2db794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2104642864
 GameObject:
   m_ObjectHideFlags: 0
