@@ -42,6 +42,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     [HideInInspector] public bool openedFromPassage = false;
     [HideInInspector] public PassageInteractable currentPassage = null;
+    [SerializeField] private GameObject dragInstructionText;
 
     void Awake()
 {
@@ -319,12 +320,22 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     IEnumerator ShowMessage(string message, float duration = 2f)
     {
         if (messageText != null)
-        {
-            messageText.text = message;
-            messageText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(duration);
-            messageText.gameObject.SetActive(false);
-        }
+    {
+        // Hide drag instruction while error shows
+        if (dragInstructionText != null)
+            dragInstructionText.SetActive(false);
+
+        messageText.text = message;
+        normalText.gameObject.SetActive(false); 
+        messageText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        messageText.gameObject.SetActive(false);
+        normalText.gameObject.SetActive(true); 
+
+        // Restore drag instruction
+        if (dragInstructionText != null)
+            dragInstructionText.SetActive(true);
+    }
     }
 
     IEnumerator CloseStationDelay()

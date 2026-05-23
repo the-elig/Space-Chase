@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
             PauseMovement(true);
         }
 
-        if (Input.GetKey(KeyCode.Escape) && canLeaveStation)
+        if (Input.GetKey(KeyCode.Q) && canLeaveStation)
         {
             LeftStation?.Invoke();
             PauseMovement(false);

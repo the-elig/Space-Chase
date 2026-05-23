@@ -23057,7 +23057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1356453479}
-  deck: {fileID: 11400000, guid: 28ec63f4ccc53ea49bad1846786a2424, type: 2}
+  deck: {fileID: 11400000, guid: 913f119ef11095f4bb657242aefed93a, type: 2}
   cardPickerPanel: {fileID: 2112370402}
   canvas: {fileID: 632731572}
   card1Image: {fileID: 1656108147}

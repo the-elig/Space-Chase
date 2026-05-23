@@ -71,7 +71,7 @@ public class CanvasController : MonoBehaviour
                 mapActive = false;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && stationPanel.activeSelf) // close menu for deck viewer
+        if(Input.GetKeyDown(KeyCode.Q) && stationPanel.activeSelf) // close menu for deck viewer
         {
             Transform slot = stationPanel.transform.Find("WeaponSlot");
             if(!slot.gameObject.activeSelf) 

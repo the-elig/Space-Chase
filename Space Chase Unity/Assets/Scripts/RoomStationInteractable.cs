@@ -99,34 +99,42 @@ public class RoomStationInteractable : MonoBehaviour
     }
 
     void CloseStation()
+{
+    if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
+        return;
+
+    bool isDamaged = gameController._damagedRooms.Exists(r =>
+        r.ToLower() == roomID.ToLower());
+
+    cardSlot.OnCancel();
+
+    // Always close choice menu
+    if (_choiceMenu != null) _choiceMenu.SetActive(false);
+
+    canvas.UIBackground(false);
+
+    if (isDamaged)
     {
-        if (gameController._currentRoom.ToString().ToLower() != roomID.ToLower())
-            return;
-
-        bool isDamaged = gameController._damagedRooms.Exists(r =>
-            r.ToLower() == roomID.ToLower());
-
-        cardSlot.OnCancel();
-        if (isDamaged)
+        if (station != null)
+            station.SetActive(false);
+    }
+    else
+    {
+        if (cardPicker != null)
         {
-            if (station != null) {
-                station.SetActive(false);
-                canvas.UIBackground(false);
-            }
+            cardPicker.CloseCardPicker();
+            if (station != null) station.SetActive(false);
         }
-        else
+        else if (cardUpgrader != null)
         {
-            if (cardPicker != null) {
-                cardPicker.CloseCardPicker();
-                station.SetActive(false);
-                canvas.UIBackground(false);
-            }
-            else if (station != null) {
-                station.SetActive(false);
-                canvas.UIBackground(false);
-            }
+            cardUpgrader.CloseCardUpgrader();
+        }
+        else if (station != null)
+        {
+            station.SetActive(false);
         }
     }
+}
 
     [HideInInspector] public bool playerInRange = false;
 
