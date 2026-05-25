@@ -18585,6 +18585,7 @@ MonoBehaviour:
   _damagedRooms: []
   recentlyDamagedRoom: 0
   skipEnemyTurnOnStart: 0
+  Shake: {fileID: 519420033}
 --- !u!4 &1356453480
 Transform:
   m_ObjectHideFlags: 0

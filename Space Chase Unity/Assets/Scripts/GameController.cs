@@ -50,6 +50,7 @@ public class GameController : MonoBehaviour
     AudioSource m_MyAudioSource;
 
     [HideInInspector] public bool skipEnemyTurnOnStart = false;
+    public Shake Shake;
 
     private void Start()
 {
@@ -63,6 +64,8 @@ public class GameController : MonoBehaviour
     _currentRoom = PlayerLocation.engine;
 
     _energy += _gainEnergy;
+
+        Shake.ShakeWrap();
 
     if (!skipEnemyTurnOnStart)
         enemyTurn();

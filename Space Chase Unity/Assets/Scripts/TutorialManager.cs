@@ -66,6 +66,8 @@ public class TutorialManager : MonoBehaviour
     private bool postRepairLockActive = false;
     private int turnsLeftAtCommsStart;
 
+    public Shake Shake;
+
     void Awake()
     {
         CanvasController canvas = FindObjectOfType<CanvasController>();
@@ -206,8 +208,9 @@ public class TutorialManager : MonoBehaviour
     if (tutorialText != null) tutorialText.text = "You can pick a new card to add to your hand! Select the Fix It Repair Card and press confirm.";
 
     yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count >= 6);
+        Shake.ShakeWrap();
 
-    HideTutorialBox();
+        HideTutorialBox();
 }
 
     private void OnEngineInteracted()

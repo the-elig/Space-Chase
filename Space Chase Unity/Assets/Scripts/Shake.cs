@@ -11,7 +11,7 @@ public class Shake : MonoBehaviour
 
     private void Start()
     {
-        ShakeWrap();
+        //ShakeWrap();
     }
     // Update is called once per frame
     void Update()

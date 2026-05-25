@@ -5132,6 +5132,7 @@ MonoBehaviour:
   seeDeckUI: {fileID: 0}
   endTurnUI: {fileID: 0}
   engineStation: {fileID: 1254217574}
+  Shake: {fileID: 519420033}
 --- !u!4 &312666704
 Transform:
   m_ObjectHideFlags: 0
@@ -6727,6 +6728,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6822,7 +6824,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 1469062238}
   start: 0
-  duration: 4.5
+  duration: 2
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e879cb785d5bcaf4ab1898ad7578c58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &520610690
 GameObject:
   m_ObjectHideFlags: 0
