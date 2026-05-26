@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     private Vector2 movement;
 
-    private bool canInteract;
+    public bool canInteract;
     private bool inPassage;
     private bool atStation;
     public bool forcePause;

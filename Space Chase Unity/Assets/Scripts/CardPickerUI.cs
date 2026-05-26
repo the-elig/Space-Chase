@@ -73,6 +73,10 @@ public class CardPickerUI : MonoBehaviour
             shuffled[i] = shuffled[randomIndex];
             shuffled[randomIndex] = temp;
         }
+        if(cardHolder != null)
+        {
+            cardHolder.gameObject.SetActive(false);
+        }
 
         option1 = shuffled[0];
         option2 = shuffled[1];
@@ -107,6 +111,10 @@ public class CardPickerUI : MonoBehaviour
     public void ConfirmSelection()
     {
         confirmButton.SetActive(false);
+        if (cardHolder != null)
+        {
+            cardHolder.gameObject.SetActive(true);
+        }
         if (selectedCard == null) return;
         if (cardHolder == null)
         {

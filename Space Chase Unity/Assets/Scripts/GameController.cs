@@ -85,12 +85,14 @@ public class GameController : MonoBehaviour
         {
             _endTurnButton.SetActive(false);
             _seeDeckButton.SetActive(false);
+            _player.canInteract = false;
             _player.forcePause = true;
         }
         else if(!_stationUI.activeSelf && !_mapUI.activeSelf)
         {
             _endTurnButton.SetActive(true);
             _seeDeckButton.SetActive(true);
+            _player.canInteract = true;
             _player.forcePause = false;
         }
 
@@ -132,8 +134,8 @@ public class GameController : MonoBehaviour
     {
         if(_enemyTurnsTaken > _enemyScalingSpeed) // every five/four turns, increase the amount of times the enemy attacks by one
         {
-            _damageCount++;
-            _enemyScalingSpeed += 4;
+            _damageCount += 1;
+            _enemyScalingSpeed += 5;
         }
     }
 
