@@ -18,7 +18,6 @@ public class GameController : MonoBehaviour
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private CanvasController _canvas;
     [SerializeField] private GameObject _camera;
-    [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _endTurnButton;
     [SerializeField] private GameObject _seeDeckButton;
     [SerializeField] private GameObject _stationUI;
@@ -98,7 +97,7 @@ public class GameController : MonoBehaviour
 
         if (_endGameState)
         {
-            _bg.SetActive(true);
+            //_bg.SetActive(true);
             _canvas.TurnOffPlayerTurnUI();
         }
 
@@ -157,21 +156,21 @@ public class GameController : MonoBehaviour
         else
         {
             Debug.Log("Enemy missed.");
+            recentlyDamagedRoom = 11;
         }
         if(_lastHit == _damageCount)
             StartCoroutine(WaitEnemyTurn()); // play cutscene
     }
     IEnumerator WaitEnemyTurn() // play enemy turn screen and pause player movement
     {
-        _bg.SetActive(true);
+        _player.disableMovement = true;
         _turnsLeft--;
         _enemyTurnsTaken++;
         yield return new WaitForSeconds(3f);
         Debug.Log("player turn");
         _lastHit = 0;
         _isEnemyTurn = false;
-        _bg.SetActive(false);
-        _player.forcePause = false;
+        _player.disableMovement = false;
     }
 
     private int GetRan() // gets a random value for damaged rooms

@@ -27,6 +27,7 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private TMP_Text turnsLeftBig;
     [SerializeField] private TMP_Text damagedRoomBig;
     [SerializeField] private GameObject enemyTurnObj;
+    [SerializeField] private GameObject enemyTurnLasers;
 
     [Header("Energy Symbols")]
     [SerializeField] private RawImage energy1;
@@ -77,12 +78,6 @@ public class CanvasController : MonoBehaviour
             if(!slot.gameObject.activeSelf) 
             {
                 slot.gameObject.SetActive(true);
-                /*Transform normalText = stationPanel.transform.Find("NormalText");
-                normalText.gameObject.SetActive(true);
-                Transform damagedText = stationPanel.transform.Find("DamagedText");
-                damagedText.gameObject.SetActive(true);
-                Transform messageText = stationPanel.transform.Find("MessageText");
-                messageText.gameObject.SetActive(true);*/
                 stationPanel.SetActive(false);
             }
         }
@@ -127,12 +122,14 @@ public class CanvasController : MonoBehaviour
 
         turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
 
-        if (roomID <= 10)
+        if (roomID != 11)
         {
+            enemyTurnLasers.SetActive(true);
             damagedRoomBig.text = roomNames[roomID] + " was damaged";
         }
         else
         {
+            enemyTurnLasers.SetActive(false);
             damagedRoomBig.text = "Enemy missed";
         }
 
@@ -163,9 +160,6 @@ public class CanvasController : MonoBehaviour
         Transform messageText = stationPanel.transform.Find("MessageText");
         messageText.gameObject.SetActive(false);
         UIBackground(true);
-        //cardDeck.SetActive(true);
-
-
     }
 
     private void doHealthbar(int damagedRooms)

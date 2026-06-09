@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         m_MyAudioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!paused)
             Movement();
