@@ -8342,7 +8342,7 @@ MonoBehaviour:
   turnsLeftBig: {fileID: 1966264797}
   damagedRoomBig: {fileID: 1417123426}
   enemyTurnObj: {fileID: 563050111}
-  enemyTurnLasers: {fileID: 450533688}
+  lasersAnimation: {fileID: 450533690}
   energy1: {fileID: 1303498513}
   energy2: {fileID: 1528403840}
   energy3: {fileID: 1907478745}

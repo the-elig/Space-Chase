@@ -27,7 +27,7 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private TMP_Text turnsLeftBig;
     [SerializeField] private TMP_Text damagedRoomBig;
     [SerializeField] private GameObject enemyTurnObj;
-    [SerializeField] private GameObject enemyTurnLasers;
+    [SerializeField] private Animator lasersAnimation;
 
     [Header("Energy Symbols")]
     [SerializeField] private RawImage energy1;
@@ -124,12 +124,12 @@ public class CanvasController : MonoBehaviour
 
         if (roomID != 11)
         {
-            enemyTurnLasers.SetActive(true);
+            lasersAnimation.SetBool("enemyMiss", false);
             damagedRoomBig.text = roomNames[roomID] + " was damaged";
         }
         else
         {
-            enemyTurnLasers.SetActive(false);
+            lasersAnimation.SetBool("enemyMiss", true);
             damagedRoomBig.text = "Enemy missed";
         }
 
