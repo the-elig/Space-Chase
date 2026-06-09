@@ -211,6 +211,8 @@ public class TutorialManager : MonoBehaviour
         Shake.ShakeWrap();
 
         HideTutorialBox();
+
+        OnEngineInteracted();
 }
 
     private void OnEngineInteracted()

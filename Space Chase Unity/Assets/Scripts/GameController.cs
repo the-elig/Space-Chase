@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _seeDeckButton;
     [SerializeField] private GameObject _stationUI;
     [SerializeField] private GameObject _mapUI;
-    [SerializeField] private TMP_Text _winOrLoseText;
 
     public delegate void IntDelegate(int x);
     public delegate void EmptyDelegate();
@@ -36,6 +35,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int _enemyScalingSpeed; // int how many turns it takes for the enemy to scale more
     [SerializeField] private int _damageCount;
     [SerializeField] private int _damageLoss;
+    private string _winOrLoseText;
     public bool _isEnemyTurn;
     private int _lastHit; // make sure turn count doesn't lower multiple times when enemy attacks multiple times
     public bool _endGameState;
@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
 
     _energy += _gainEnergy;
 
-        Shake.ShakeWrap();
+    if (Shake != null) Shake.ShakeWrap();
 
     if (!skipEnemyTurnOnStart)
         enemyTurn();
@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour
             _player.canInteract = false;
             _player.forcePause = true;
         }
-        else if(!_stationUI.activeSelf && !_mapUI.activeSelf)
+        else if(!_stationUI.activeSelf && !_mapUI.activeSelf && !_endGameState)
         {
             _endTurnButton.SetActive(true);
             _seeDeckButton.SetActive(true);
@@ -97,7 +97,6 @@ public class GameController : MonoBehaviour
 
         if (_endGameState)
         {
-            //_bg.SetActive(true);
             _canvas.TurnOffPlayerTurnUI();
         }
 
@@ -167,10 +166,17 @@ public class GameController : MonoBehaviour
         _turnsLeft--;
         _enemyTurnsTaken++;
         yield return new WaitForSeconds(3f);
-        Debug.Log("player turn");
-        _lastHit = 0;
-        _isEnemyTurn = false;
-        _player.disableMovement = false;
+        if(!_endGameState) // if not the end game, return to player turn
+        {
+            Debug.Log("player turn");
+            _lastHit = 0;
+            _isEnemyTurn = false;
+            _player.disableMovement = false;
+        } else // otherwise don't return to player turn
+        {
+            _canvas.EndGameUI(_winOrLoseText);
+        }
+
     }
 
     private int GetRan() // gets a random value for damaged rooms
@@ -209,12 +215,20 @@ public class GameController : MonoBehaviour
     
     private void playerLoss()
     {
-        _winOrLoseText.text = "Your ship was destroyed... Game Over";
+        _player.disableMovement = true;
+        _player.disableInteract = true;
+        _player.disableTab = true;
+
+        _winOrLoseText = "Game Over...";
     }
     
     private void playerWin()
     {
-        _winOrLoseText.text = "You escaped! You Win!!";
+        _player.disableMovement = true;
+        _player.disableInteract = true;
+        _player.disableTab = true;
+
+        _winOrLoseText = "You Win!!";
     }
 
     public void TriggerDamageRoom(int id)

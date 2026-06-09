@@ -26,8 +26,14 @@ public class CanvasController : MonoBehaviour
     [Header("Enemy Turn UI")]
     [SerializeField] private TMP_Text turnsLeftBig;
     [SerializeField] private TMP_Text damagedRoomBig;
+    [SerializeField] private TMP_Text enemyTurnText;
     [SerializeField] private GameObject enemyTurnObj;
     [SerializeField] private Animator lasersAnimation;
+
+    [Header("End Game UI/Animations")]
+    [SerializeField] private GameObject smoke;
+    [SerializeField] private Animator shipAnimator;
+    [SerializeField] private GameObject retryButton;
 
     [Header("Energy Symbols")]
     [SerializeField] private RawImage energy1;
@@ -119,20 +125,20 @@ public class CanvasController : MonoBehaviour
 
         HUD.SetActive(!enemyTurn);
 
-
-        turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
-
-        if (roomID != 11)
+        if (!_gameController._endGameState)
         {
-            lasersAnimation.SetBool("enemyMiss", false);
-            damagedRoomBig.text = roomNames[roomID] + " was damaged";
+            turnsLeftBig.text = "Turns Left Until Rescue: " + _gameController._turnsLeft;
+            if (roomID != 11)
+            {
+                if (lasersAnimation != null) lasersAnimation.SetBool("enemyMiss", false);
+                damagedRoomBig.text = roomNames[roomID] + " was damaged";
+            }
+            else
+            {
+                if (lasersAnimation != null) lasersAnimation.SetBool("enemyMiss", true);
+                damagedRoomBig.text = "Enemy missed";
+            }
         }
-        else
-        {
-            lasersAnimation.SetBool("enemyMiss", true);
-            damagedRoomBig.text = "Enemy missed";
-        }
-
     }
 
     public void UIBackground(bool active)
@@ -195,5 +201,40 @@ public class CanvasController : MonoBehaviour
         {
             energy5.enabled = false;
         }
+    }
+    
+    public void EndGameUI(string winOrLose)
+    {
+        enemyTurnText.text = winOrLose;
+        turnsLeftBig.text = "";
+        damagedRoomBig.text = "";
+        if(winOrLose == "Game Over...")
+        {
+            StartCoroutine(LoseAnimation());
+        } else
+        {
+            StartCoroutine(WinAnimation());
+        }
+
+    }
+    IEnumerator LoseAnimation()
+    {
+        smoke.SetActive(true);
+        shipAnimator.SetBool("startShake", true);
+        lasersAnimation.SetBool("enemyMiss", false);
+        yield return new WaitForSeconds(3f);
+        smoke.SetActive(false);
+        shipAnimator.SetBool("startExplosion", true);
+        lasersAnimation.gameObject.SetActive(false);
+        retryButton.SetActive(true);
+    }
+    IEnumerator WinAnimation()
+    {
+        shipAnimator.SetBool("startShake", true);
+        lasersAnimation.SetBool("enemyMiss", true);
+        yield return new WaitForSeconds(3f);
+        lasersAnimation.gameObject.SetActive(false);
+        shipAnimator.SetBool("startEscape", true);
+        retryButton.SetActive(true);
     }
 }

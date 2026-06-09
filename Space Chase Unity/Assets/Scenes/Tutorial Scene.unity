@@ -8493,6 +8493,7 @@ MonoBehaviour:
   turnsLeftBig: {fileID: 1966264797}
   damagedRoomBig: {fileID: 1417123426}
   enemyTurnObj: {fileID: 563050111}
+  lasersAnimation: {fileID: 0}
   energy1: {fileID: 644850633}
   energy2: {fileID: 521990007}
   energy3: {fileID: 1199141583}
@@ -19124,7 +19125,6 @@ MonoBehaviour:
   _player: {fileID: 1469062236}
   _canvas: {fileID: 632731572}
   _camera: {fileID: 519420028}
-  _bg: {fileID: 1584297867}
   _endTurnButton: {fileID: 1318968038}
   _seeDeckButton: {fileID: 1712023561}
   _stationUI: {fileID: 1777170611}
@@ -19154,6 +19154,7 @@ MonoBehaviour:
   _damagedRooms: []
   recentlyDamagedRoom: 0
   skipEnemyTurnOnStart: 0
+  Shake: {fileID: 0}
 --- !u!4 &1356453480
 Transform:
   m_ObjectHideFlags: 0
@@ -19988,6 +19989,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CardPickerUI, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1385636138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20811,6 +20824,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1469062238}
   menuHolder: {fileID: 0}
   speed: 10
+  canInteract: 0
   forcePause: 0
   paused: 0
   canLeaveStation: 0
