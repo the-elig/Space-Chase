@@ -172,7 +172,8 @@ public class CanvasController : MonoBehaviour
     {
         foreach (GameObject i in healthbar)
         {
-            if (i != null) i.SetActive(false);
+            if (i != null) 
+                i.SetActive(false);
         }
 
         if (damagedRooms < healthbar.Length)

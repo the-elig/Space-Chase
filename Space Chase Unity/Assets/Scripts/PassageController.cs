@@ -30,5 +30,7 @@ public class PassageController : MonoBehaviour
         damaged = false;
         warning.SetActive(false);
         passage.CloseDoor();
+
+        gameController._damagedRooms.Remove(gameController._rooms[id]);
     }
 }
