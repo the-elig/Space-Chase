@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject stationUI;
     [SerializeField] private GameObject cardPickerPanel;
     [SerializeField] private Transform playerTransform;
-
     [SerializeField] GameObject menuHolder;
 
     [Header("Variables")]
@@ -24,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     public bool paused;
     public bool canLeaveStation;
 
-    // Tutorial flags � set by TutorialManager, ignored in main scene
     [HideInInspector] public bool disableMovement = false;
     [HideInInspector] public bool disableInteract = false;
     [HideInInspector] public bool disableTab = false;
@@ -35,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     public event EmptyDelegate LeftStation;
     public event EmptyDelegate StationInteract;
 
-    // Tutorial events so TutorialManager can detect when player does something
     public event EmptyDelegate OnPlayerMoved;
     public event EmptyDelegate OnPlayerInteracted;
 
@@ -49,67 +46,8 @@ public class PlayerMovement : MonoBehaviour
         m_MyAudioSource = GetComponent<AudioSource>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (!paused)
-            Movement();
-
-        if (!stationUI.activeSelf && !cardPickerPanel.activeSelf && !forcePause)
-        {
-            PauseMovement(false);
-            canLeaveStation = true;
-        }
-        else
-        {
-            PauseMovement(true);
-        }
-
-        if (Input.GetKey(KeyCode.Q) && canLeaveStation)
-        {
-            LeftStation?.Invoke();
-            PauseMovement(false);
-        }
-
-        // Tab is blocked during tutorial if disableTab is set
-        if (Input.GetKeyDown(KeyCode.Tab) && disableTab)
-        {
-            // swallow the input � do nothing
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            menuHolder.SetActive(true);
-        }
-
-    }
-
-
-    void Movement()
-    {
-        bool moved = false;
-
-        if (!disableMovement)
-        {
-            if (Input.GetKey(KeyCode.W)) { playerTransform.Translate(Vector3.up * speed * Time.deltaTime);    moved = true; }
-            if (Input.GetKey(KeyCode.A)) { playerTransform.Translate(Vector3.left * speed * Time.deltaTime);  
-            FlipSprite(true); moved = true; }
-            if (Input.GetKey(KeyCode.S)) { playerTransform.Translate(Vector3.down * speed * Time.deltaTime);  moved = true; }
-            if (Input.GetKey(KeyCode.D)) { playerTransform.Translate(Vector3.right * speed * Time.deltaTime);
-            FlipSprite(false); moved = true; }
-
-            if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-            {
-                animator.SetBool("isWalking", true);
-            } 
-            else
-            {
-                animator.SetBool("isWalking", false);
-            }
-
-            if (moved)
-                OnPlayerMoved?.Invoke();
-        }
-
         if (!disableInteract && Input.GetKeyDown(KeyCode.E) && canInteract)
         {
             if (atStation && controller._energy >= 1)
@@ -127,6 +65,59 @@ public class PlayerMovement : MonoBehaviour
                 canInteract = false;
                 OnPlayerInteracted?.Invoke();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q) && canLeaveStation)
+        {
+            LeftStation?.Invoke();
+            PauseMovement(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Tab) && disableTab)
+        {
+            // blocked
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            menuHolder.SetActive(true);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (!paused)
+            Movement();
+
+        if (!stationUI.activeSelf && !cardPickerPanel.activeSelf && !forcePause)
+        {
+            PauseMovement(false);
+            canLeaveStation = true;
+        }
+        else
+        {
+            PauseMovement(true);
+        }
+    }
+
+    void Movement()
+    {
+        bool moved = false;
+
+        if (!disableMovement)
+        {
+            if (Input.GetKey(KeyCode.W)) { playerTransform.Translate(Vector3.up * speed * Time.deltaTime);    moved = true; }
+            if (Input.GetKey(KeyCode.A)) { playerTransform.Translate(Vector3.left * speed * Time.deltaTime);  FlipSprite(true);  moved = true; }
+            if (Input.GetKey(KeyCode.S)) { playerTransform.Translate(Vector3.down * speed * Time.deltaTime);  moved = true; }
+            if (Input.GetKey(KeyCode.D)) { playerTransform.Translate(Vector3.right * speed * Time.deltaTime); FlipSprite(false); moved = true; }
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
+                Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+                animator.SetBool("isWalking", true);
+            else
+                animator.SetBool("isWalking", false);
+
+            if (moved)
+                OnPlayerMoved?.Invoke();
         }
     }
 

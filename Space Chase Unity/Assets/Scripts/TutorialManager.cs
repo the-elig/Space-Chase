@@ -216,8 +216,10 @@ public class TutorialManager : MonoBehaviour
 }
 
     private void OnEngineInteracted()
-    {
-    if (gameController._currentRoom == GameController.PlayerLocation.engine 
+{
+    Debug.Log("Interacted! Room: " + gameController._currentRoom + " InRange: " + (engineStation != null ? engineStation.playerInRange.ToString() : "null"));
+    if (engineStation == null) return;
+    if (gameController._currentRoom == GameController.PlayerLocation.engine
         && engineStation.playerInRange)
         playerHasInteractedWithEngine = true;
 }
