@@ -202,12 +202,16 @@ public class TutorialManager : MonoBehaviour
 
     player.disableInteract = true;
 
-    HorizontalCardHolder cardHolder = FindObjectOfType<HorizontalCardHolder>();
+    HorizontalCardHolder cardHolder = FindObjectOfType<HorizontalCardHolder>(true);
+int cardCountBefore = cardHolder != null ? cardHolder.cards.Count : 0;
 
-       if (tutorialBox != null) tutorialBox.SetActive(true);
-    if (tutorialText != null) tutorialText.text = "You can pick a new card to add to your hand! Select the Fix It Repair Card and press confirm.";
+if (tutorialBox != null) tutorialBox.SetActive(true);
+if (tutorialText != null) tutorialText.text = "You can pick a new card to add to your hand! Select the Fix It Repair Card and press confirm.";
 
-    yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count >= 6);
+yield return new WaitUntil(() => cardHolder != null && cardHolder.cards.Count > cardCountBefore);
+
+HideTutorialBox();
+
         Shake.ShakeWrap();
 
         HideTutorialBox();
@@ -216,10 +220,8 @@ public class TutorialManager : MonoBehaviour
 }
 
     private void OnEngineInteracted()
-{
-    Debug.Log("Interacted! Room: " + gameController._currentRoom + " InRange: " + (engineStation != null ? engineStation.playerInRange.ToString() : "null"));
-    if (engineStation == null) return;
-    if (gameController._currentRoom == GameController.PlayerLocation.engine
+    {
+    if (gameController._currentRoom == GameController.PlayerLocation.engine 
         && engineStation.playerInRange)
         playerHasInteractedWithEngine = true;
 }
@@ -273,7 +275,7 @@ public class TutorialManager : MonoBehaviour
 
     turnsLeftAtCommsStart = gameController._turnsLeft;
 
-    if (tutorialText != null) tutorialText.text = "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape. You may need to leave the area before reactivating the station!";
+    if (tutorialText != null) tutorialText.text = "Station repaired! Now use your Communications card on the station to reduce your turns needed to escape.";
 
     yield return new WaitUntil(() => 
         gameController._turnsLeft < turnsLeftAtCommsStart);
@@ -306,10 +308,6 @@ public class TutorialManager : MonoBehaviour
     private void OnCardConfirmed(Card card)
 {
     if (card.cardData == null) return;
-
-    Debug.Log("Card confirmed: " + card.cardData.cardName + 
-              " | Requirement: " + card.cardData.requirement + 
-              " | AllowedStation: " + card.cardData.allowedStation);
 
     if (card.cardData.requirement == CardRequirement.StationDamaged)
         hallwayRepaired = true;
