@@ -68,8 +68,11 @@ public class TutorialManager : MonoBehaviour
 
     public Shake Shake;
 
+    public static TutorialManager instance;
+
     void Awake()
     {
+        instance = this;
         CanvasController canvas = FindObjectOfType<CanvasController>();
         if (canvas != null) canvas.isTutorial = true;
         if (gameController == null)

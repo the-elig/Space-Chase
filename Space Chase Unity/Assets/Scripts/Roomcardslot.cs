@@ -20,9 +20,9 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] private GameController gameController;
     [SerializeField] private PlayerMovement player;
     [SerializeField] private CanvasController canvas;
-    [SerializeField] private TMP_Text messageText;
-    [SerializeField] private TMP_Text damagedText;
-    [SerializeField] private TMP_Text normalText;
+    [SerializeField] public TMP_Text messageText;
+    [SerializeField] public TMP_Text damagedText;
+    [SerializeField] public TMP_Text normalText;
     [SerializeField] private TMP_Text usedEnergy;
     [SerializeField] private GameObject energyFix;
     [SerializeField] private GameObject dragInstructionText;
@@ -68,10 +68,20 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     }
 
     public void UpdateStationMessage(bool isDamaged)
+{
+    if (damagedText != null)
     {
-        if (damagedText != null) damagedText.gameObject.SetActive(isDamaged);
-        if (normalText != null) normalText.gameObject.SetActive(!isDamaged);
+        if (openedFromPassage)
+            damagedText.text = "This passageway is damaged! Use a Repair card to fix it.";
+        else
+            damagedText.text = "This station is damaged! Use a Repair card to fix it.";
+        
+        damagedText.gameObject.SetActive(isDamaged);
     }
+    
+    if (normalText != null)
+        normalText.gameObject.SetActive(!isDamaged);
+}
 
     public void HideStationMessages()
     {
