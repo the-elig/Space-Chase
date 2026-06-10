@@ -23,6 +23,7 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
     [SerializeField] public TMP_Text messageText;
     [SerializeField] public TMP_Text damagedText;
     [SerializeField] public TMP_Text normalText;
+    [SerializeField] public TMP_Text passageDamagedText;
     [SerializeField] private TMP_Text usedEnergy;
     [SerializeField] private GameObject energyFix;
     [SerializeField] private GameObject dragInstructionText;
@@ -374,11 +375,14 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
                 dragInstructionText.SetActive(false);
 
             messageText.text = message;
+            if (damagedText != null) damagedText.gameObject.SetActive(false);
+            if (passageDamagedText != null) passageDamagedText.gameObject.SetActive(false);
             if (normalText != null) normalText.gameObject.SetActive(false);
             messageText.gameObject.SetActive(true);
             yield return new WaitForSeconds(duration);
             messageText.gameObject.SetActive(false);
-            if (normalText != null) normalText.gameObject.SetActive(true);
+            if (damagedText != null) damagedText.gameObject.SetActive(true);
+            if (normalText != null && !damagedText.gameObject.activeSelf) normalText.gameObject.SetActive(true);
 
             if (dragInstructionText != null)
                 dragInstructionText.SetActive(true);

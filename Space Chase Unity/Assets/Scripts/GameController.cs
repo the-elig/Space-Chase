@@ -74,10 +74,9 @@ public class GameController : MonoBehaviour
     {
         ScaleEnemyDamage();
 
-        if (_turnsLeft <= 0)
+        if (_turnsLeft < 0)
         {
-            _endGameState = true;
-            playerWin();
+            _turnsLeft = 0;
         }
 
         if (_stationUI.activeSelf || _mapUI.activeSelf)
@@ -112,6 +111,14 @@ public class GameController : MonoBehaviour
         _isEnemyTurn = true;
         // disable player buttons
         _player.forcePause = true;
+
+        // check for win
+        if (_turnsLeft <= 0)
+        {
+            _endGameState = true;
+            playerWin();
+            _damagedRooms.Clear();
+        }
 
         // check for game over
         _energy = 0;
@@ -224,6 +231,7 @@ public class GameController : MonoBehaviour
     
     private void playerWin()
     {
+        m_MyAudioSource.enabled = false;
         _player.disableMovement = true;
         _player.disableInteract = true;
         _player.disableTab = true;

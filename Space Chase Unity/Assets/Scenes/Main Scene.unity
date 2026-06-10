@@ -694,7 +694,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This passageway was damaged! Use a repair card to fix it!
+  m_text: This station was damaged! Use a repair card to fix it!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
   m_sharedMaterial: {fileID: 522495681595056605, guid: f9385b77644d4ea4aa5b9984a0716ac9, type: 2}
@@ -8674,15 +8674,15 @@ RectTransform:
   m_Children:
   - {fileID: 1777170612}
   - {fileID: 703126547}
-  - {fileID: 1491635556}
   - {fileID: 754843619}
   - {fileID: 586491152}
   - {fileID: 563050112}
   - {fileID: 2112370403}
   - {fileID: 1035703971}
-  - {fileID: 192867309}
   - {fileID: 1326693879}
   - {fileID: 1093475628}
+  - {fileID: 192867309}
+  - {fileID: 1491635556}
   - {fileID: 581948067}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26849,6 +26849,10 @@ PrefabInstance:
       propertyPath: mapSelectorObj
       value: 
       objectReference: {fileID: 192867306}
+    - target: {fileID: 2850120394427000901, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
+      propertyPath: passageDamagedText
+      value: 
+      objectReference: {fileID: 125604405}
     - target: {fileID: 4047895611071197661, guid: 35d693485e9504ab1a929cdce773a63d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
