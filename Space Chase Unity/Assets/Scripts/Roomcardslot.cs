@@ -175,17 +175,25 @@ public class RoomCardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
         // --- Station type restriction ---
         if (data.allowedStation != StationType.Any)
+    {
+        // If opened from a passage, only repair cards are valid
+        if (openedFromPassage)
         {
-            string currentRoom = gameController._currentRoom.ToString().ToLower();
-            string requiredStation = data.allowedStation.ToString().ToLower();
-
-            if (currentRoom != requiredStation)
-            {
-                StartCoroutine(ShowMessage("This card can't be used here!"));
-                OnCancel();
-                return;
-            }
+            StartCoroutine(ShowMessage("This card can't be used here!"));
+            OnCancel();
+            return;
         }
+
+        string currentRoom = gameController._currentRoom.ToString().ToLower();
+        string requiredStation = data.allowedStation.ToString().ToLower();
+
+        if (currentRoom != requiredStation)
+        {
+            StartCoroutine(ShowMessage("This card can't be used here!"));
+            OnCancel();
+            return;
+        }
+    }
 
         // --- Station healthy requirement ---
         if (data.requirement == CardRequirement.StationHealthy)
